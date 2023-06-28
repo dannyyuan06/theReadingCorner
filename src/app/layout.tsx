@@ -1,6 +1,7 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 import { Navigation } from './navigationBar/Navigation'
+import styles from './layout.module.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,7 +22,7 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <Navigation/>
-        <div>
+        <div className={styles.bodyContainer}>
           {children}
         </div>
       </body>

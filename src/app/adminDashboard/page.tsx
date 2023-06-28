@@ -1,10 +1,10 @@
 import { PageHeader } from "../components/PageHeader";
 
 
-export default function AboutOurClub() {
+export default function adminDashboard() {
     return (
         <div>
-            <PageHeader>ABOUT OUR CLUB</PageHeader>
+            <PageHeader>ADMINISTRATOR DASHBOARD</PageHeader>
         </div>
     )
 }

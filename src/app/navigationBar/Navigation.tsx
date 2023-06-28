@@ -14,11 +14,6 @@ const imageStyle:CSSProperties = {
 export function Navigation() {
     const [currentPage, setCurrentPage] = useState('adminDashboard')
 
-    useEffect(() => {
-        
-    }, [currentPage])
-
-
     return (
         <nav className={styles.container}>
             <div className={styles.wrapper}>
@@ -31,6 +26,7 @@ export function Navigation() {
                     <NavigationButton currentPage={currentPage} setCurrentPage={setCurrentPage} pageTitle='members'/>
                     <NavigationButton currentPage={currentPage} setCurrentPage={setCurrentPage} pageTitle='currentlyReading'/>
                     <NavigationButton currentPage={currentPage} setCurrentPage={setCurrentPage} pageTitle='meetings'/>
+                    <NavigationButton currentPage={currentPage} setCurrentPage={setCurrentPage} pageTitle='clubSettings' isClub={true}/>
                 </ul>
             </div>
         </nav>

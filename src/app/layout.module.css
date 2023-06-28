@@ -1,0 +1,7 @@
+.bodyContainer {
+    background-color: white;
+    color: black;
+    flex: 1;
+    overflow: scroll;
+    padding: 8vw 0px 0 5vw;
+}

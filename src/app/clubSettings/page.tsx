@@ -1,10 +1,9 @@
 import { PageHeader } from "../components/PageHeader";
 
-
-export default function AboutOurClub() {
+export default function clubSettings() {
     return (
         <div>
-            <PageHeader>ABOUT OUR CLUB</PageHeader>
+            <PageHeader>CLUB SETTINGS</PageHeader>
         </div>
     )
 }

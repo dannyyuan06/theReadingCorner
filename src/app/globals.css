@@ -21,6 +21,12 @@ body, div {
   font-family: "neusa-next-std-condensed", sans-serif;;
 }
 
+body {
+  display: flex;
+  overflow: hidden;
+  background-color: rgb(var(--background-color));
+}
+
 button {
   background-color: transparent;
   color: var(--font-color);
@@ -85,23 +91,7 @@ body {
   font-family: "neusa-next-std-condensed", sans-serif;;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
 a {
   color: inherit;
   text-decoration: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
 }
