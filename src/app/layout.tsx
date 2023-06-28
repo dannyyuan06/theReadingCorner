@@ -16,6 +16,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="stylesheet" href="https://use.typekit.net/gzh2kwv.css"/>
+      </head>
       <body className={inter.className}>
         <Navigation/>
         <div>

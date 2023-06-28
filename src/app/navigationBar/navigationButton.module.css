@@ -1,0 +1,11 @@
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.marker {
+    width: 4px;
+    height: auto;
+    
+    margin-right: 4px;
+}

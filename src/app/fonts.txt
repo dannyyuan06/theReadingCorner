@@ -1,0 +1,64 @@
+Neusa Next Std Regular
+font-family: "neusa-next-std", sans-serif;
+font-weight: 400;
+font-style: normal;
+Neusa Next Std Italic
+font-family: "neusa-next-std", sans-serif;
+font-weight: 400;
+font-style: italic;
+Neusa Next Std Bold
+font-family: "neusa-next-std", sans-serif;
+font-weight: 700;
+font-style: normal;
+Neusa Next Std Bold Italic
+font-family: "neusa-next-std", sans-serif;
+font-weight: 700;
+font-style: italic;
+Neusa Next Std Compact Regular
+font-family: "neusa-next-std-compact", sans-serif;
+font-weight: 400;
+font-style: normal;
+Neusa Next Std Compact Italic
+font-family: "neusa-next-std-compact", sans-serif;
+font-weight: 400;
+font-style: italic;
+Neusa Next Std Compact Bold
+font-family: "neusa-next-std-compact", sans-serif;
+font-weight: 700;
+font-style: normal;
+Neusa Next Std Compact Bold Italic
+font-family: "neusa-next-std-compact", sans-serif;
+font-weight: 700;
+font-style: italic;
+Neusa Next Std Condensed Regular
+font-family: "neusa-next-std-condensed", sans-serif;
+font-weight: 400;
+font-style: normal;
+Neusa Next Std Condensed Italic
+font-family: "neusa-next-std-condensed", sans-serif;
+font-weight: 400;
+font-style: italic;
+Neusa Next Std Condensed Bold
+font-family: "neusa-next-std-condensed", sans-serif;
+font-weight: 700;
+font-style: normal;
+Neusa Next Std Condensed Bold Italic
+font-family: "neusa-next-std-condensed", sans-serif;
+font-weight: 700;
+font-style: italic;
+Neusa Next Std Wide Regular
+font-family: "neusa-next-std-wide", sans-serif;
+font-weight: 400;
+font-style: normal;
+Neusa Next Std Wide Italic
+font-family: "neusa-next-std-wide", sans-serif;
+font-weight: 400;
+font-style: italic;
+Neusa Next Std Wide Bold
+font-family: "neusa-next-std-wide", sans-serif;
+font-weight: 700;
+font-style: normal;
+Neusa Next Std Wide Bold Italic
+font-family: "neusa-next-std-wide", sans-serif;
+font-weight: 700;
+font-style: italic;
