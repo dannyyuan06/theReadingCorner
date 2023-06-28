@@ -1,0 +1,9 @@
+.container {
+    min-width: fit-content;
+    width: 15vw;
+    background-color: white;
+    height: 100vh;
+    position: fixed;
+    color: black;
+    box-shadow: 3px 0 5px rgba(0, 0, 0, 0.188);
+}
