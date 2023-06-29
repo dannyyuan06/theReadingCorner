@@ -1,7 +1,9 @@
 :root {
   --max-width: 1100px;
   --border-radius: 12px;
-  --font-mono: "neusa-next-std-condensed", sans-serif;
+  --font-mono: "neusa-next-std", sans-serif;
+  --font-header: "neusa", sans-serif;
+  --font-small-header: "neusa-next-std-compact", sans-serif;
   --background-color: white;
   --shadow-color: 3px 0 5px rgba(0, 0, 0, 0.188);
   --font-color: black;
@@ -18,7 +20,19 @@
 
 html,
 body, div {
-  font-family: "neusa-next-std-condensed", sans-serif;;
+  font-weight: 500;
+  font-style: normal;
+}
+
+h2 {
+  font-weight: 500;
+  font-size: 2em;
+  font-family: var(--font-header);
+}
+
+h3 {
+  font-weight: 500;
+  font-family: var(--font-small-header);
 }
 
 body {
@@ -43,6 +57,13 @@ button:hover {
   background-color: var(--theme-blue);
   color: white;
   
+}
+
+@font-face {
+  font-family: "neusa";
+  src: url('./fonts/neusa-next-std-condensed-medium.ttf');
+  font-weight: normal;
+  font-style: normal;
 }
 
 @media (prefers-color-scheme: dark) {

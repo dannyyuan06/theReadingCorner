@@ -5,7 +5,7 @@
     height: 100vh;
     color: black;
     box-shadow: var(--shadow-color);
-    font-family: var(--font-mono);
+    font-family: var(--font-header);
     font-weight: 500;
     display: flex;
     align-items: center;
