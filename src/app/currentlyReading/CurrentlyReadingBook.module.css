@@ -8,6 +8,7 @@
 .textContainer {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .headerBodySeparator {
@@ -28,4 +29,29 @@
 
 .displayScore {
     font-size: 3em;
+    font-family: var(--font-header)
+}
+
+.bodyWrapper {
+    margin-top: 20px;
+}
+
+.moreInfoWrapper {
+    margin-top: auto;
+}
+
+.moreInfoButton {
+    float: right;
+    padding: 8px 10px;
+    background-color: var(--theme-purple);
+    font-size: 1.3em;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.moreInfoText {
+    margin-top: 3px;
+    margin-right: 4px;
 }

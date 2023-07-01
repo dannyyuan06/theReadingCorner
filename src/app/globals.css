@@ -6,6 +6,7 @@
   --font-small-header: "neusa-next-std-compact", sans-serif;
   --background-color: white;
   --shadow-color: 3px 0 5px rgba(0, 0, 0, 0.188);
+  --shadow-button-color: 0px 0 5px rgba(0, 0, 0, 0.188);
   --font-color: black;
   --font-size: 1.2em;
 
@@ -15,7 +16,14 @@
   --theme-purple: #a97dff;
   --theme-orange: #ff6409;
 
-  --hover-color: #00d0ec
+  --theme-light-purple: #f0e9ff;
+  --theme-light-blue: #c8f6fc;
+
+  --theme-light-grey: #646464;
+  --theme-light-light-grey: #bcbcbc;
+  --theme-input-light-grey: #ebebeb;
+  --theme-see-through-grey: #4d4d4d78;
+  --hover-color: #00d0ec;
 }
 
 html,
@@ -41,22 +49,32 @@ body {
   background-color: rgb(var(--background-color));
 }
 
-button {
+button, input[type=submit], a {
   background-color: transparent;
   color: var(--font-color);
   border: none;
   text-align: left;
   font-size: var(--font-color);
-  font-family: var(--font-mono);
+  font-family: var(--font-header);
   font-weight: inherit;
   cursor: pointer;
   padding: 2px;
 }
 
-button:hover {
+button:hover, a:hover, input[type=submit]:hover {
   background-color: var(--theme-blue);
   color: white;
   
+}
+
+input {
+  font-family: var(--font-mono);
+}
+
+p {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  font-size: 1.3em;
 }
 
 @font-face {

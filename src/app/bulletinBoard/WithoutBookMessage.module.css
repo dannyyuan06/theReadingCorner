@@ -1,0 +1,26 @@
+.container {
+    width: 100%;
+    border-radius: 18px;
+    
+}
+
+.paragraphs {
+    margin-top: 5px;
+    font-size: 1em;
+    margin-bottom: 5px;
+}
+
+.userContainer {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.userTimestamp {
+    color: var(--theme-light-grey)
+}
+
+.dotsButton:hover {
+    background-color: var(--theme-light-blue);
+    color: black;
+}

@@ -1,0 +1,47 @@
+.splitContainer {
+    display: flex;
+    gap: 30px
+}
+
+.splitWrapper {
+    padding-top: 30px;
+    flex: 6
+}
+
+.splitWrapperBold {
+    width: 100%;
+    flex: 4;
+}
+
+.buttons {
+    color: white;
+    display: block;
+    margin-top: auto;
+    text-align: center;
+    padding: 8px 10px;
+    font-size: 1.4em;
+    margin-top: 30px;
+}
+
+.signUpForNews {
+    background-color: var(--theme-purple);
+    
+}
+
+.lastSection {
+    padding-bottom: 40px;
+    margin-top: 50px;
+}
+
+.goalList {
+    margin-left: 30px;
+    font-size: 1.2em;
+}
+
+.goalList li {
+    margin-bottom: 10px;
+}
+
+.learnMore {
+    background-color: var(--theme-orange);
+}

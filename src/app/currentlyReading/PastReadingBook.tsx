@@ -8,7 +8,7 @@ export function PastReadingBook() {
             <div className={styles.textContainer}>
                 <div className={styles.headerBodySeparator}>
                     <div className={styles.titles}>
-                        <h2>BOOK PLACEHOLDER</h2>
+                        <h2 className={styles.title}>BOOK PLACEHOLDER</h2>
                         <h3>SOME AUTHOR</h3>
                         <h3>START DATE: <span>04/05/2020</span></h3>
                         <h3>GENRE</h3>

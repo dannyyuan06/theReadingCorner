@@ -1,13 +1,18 @@
 .container {
-    margin-top: 20px;
     display: flex;
     gap: 20px;
-    width: 100%
+    width: 100%;
+    margin-bottom: 20px;
 }
 
 .textContainer {
     display: flex;
     flex-direction: column;
+    width: 100%;
+}
+
+.title {
+    font-size: 1.7em;
 }
 
 .headerBodySeparator {
@@ -28,9 +33,6 @@
 
 .displayScore {
     font-size: 3em;
-}
-
-.bodyWrapper {
-    margin-top: 10px;
+    font-family: var(--font-header);
 }
 

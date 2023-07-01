@@ -1,0 +1,88 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px 10px 0
+}
+
+.textWithProfile {
+    flex: 1;
+    display: flex;
+}
+
+
+.textInputContainer {
+    position: relative;
+    margin-left: 10px;
+    flex: 1
+}
+
+.newMessageInput {
+    width: 100%;
+    resize:none;
+    font-family: var(--font-mono);
+    font-size: large;
+    border: none;
+    overflow:visible;
+    min-height: 70px;
+    
+}
+
+.newMessageInput:focus {
+    outline-width: 0;
+}
+
+.placeholder {
+    color: var(--theme-light-grey);
+    position: absolute;
+    pointer-events: none;
+    top: 0
+}
+
+.extraInfoContainer {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.wordCount {
+    margin-left: auto;
+}
+
+.sendToolbar {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.toolbarButton {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 1.7em;
+    color: var(--theme-purple);
+    font-family: var(--font-mono);
+    line-height: 30px;
+}
+
+.toolbarButton:hover {
+    color: var(--theme-purple);
+    background-color: var(--theme-light-purple);
+}
+
+.toolbarSendButton {
+    margin-left: auto;
+    padding: 10px 20px;
+    background-color: var(--theme-purple);
+    color: white
+}
+
+.toolbarButtonCant {
+    background-color: var(--theme-light-light-grey);
+}
+
+.toolbarButtonCant:hover {
+    background-color: var(--theme-light-light-grey);
+}
