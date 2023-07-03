@@ -1,0 +1,15 @@
+.container {
+    position: absolute;
+    left: 0;
+    background-color: white;
+    display: flex;
+    gap: 10px;
+    width: max-content;
+    box-shadow: var(--shadow-button-color);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.name {
+    font-size: 1.4em;
+}

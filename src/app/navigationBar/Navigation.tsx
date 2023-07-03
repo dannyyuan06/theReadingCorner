@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { NavigationButton } from './NavigationButton'
 import Link from 'next/link'
+import { ProfileButton } from './ProfileButton'
 
 
 const imageStyle:CSSProperties = {
@@ -16,7 +17,6 @@ const imageStyle:CSSProperties = {
 export function Navigation() {
     const pathname = usePathname()
     const [currentPage, setCurrentPage] = useState(pathname ? pathname.slice(1) : "adminDashboard")
-    console.log(pathname)
     return (
         <nav className={styles.container}>
             <div className={styles.wrapper}>
@@ -25,7 +25,7 @@ export function Navigation() {
                 </Link>
                 <ul className={styles.ul}>
                     <NavigationButton currentPage={currentPage} setCurrentPage={setCurrentPage} pageTitle='adminDashboard'/>
-                    <NavigationButton currentPage={currentPage} setCurrentPage={setCurrentPage} pageTitle='myProfile'/>
+                    <ProfileButton currentPage={currentPage} setCurrentPage={setCurrentPage} pageTitle='profile'/>
                     <hr color='black'/>
                     <NavigationButton currentPage={currentPage} setCurrentPage={setCurrentPage} pageTitle='aboutOurClub'/>
                     <NavigationButton currentPage={currentPage} setCurrentPage={setCurrentPage} pageTitle='members'/>

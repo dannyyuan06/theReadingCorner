@@ -1,0 +1,9 @@
+.container {
+    display: flex;
+    gap: 8px;
+    position: relative;
+}
+
+.userTimestamp {
+    color: var(--theme-light-grey)
+}

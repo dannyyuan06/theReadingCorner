@@ -13,7 +13,7 @@ export default function bulletinBoard() {
             <InputText/>
             </div>
             <div className={styles.messagesContainer}>
-                <WithoutBookMessage/>
+                <WithoutBookMessage books={["123124"]}/>
                 <WithoutBookMessage/>
                 <WithoutBookMessage/>
                 <WithoutBookMessage/>

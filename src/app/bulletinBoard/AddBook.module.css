@@ -25,7 +25,8 @@
 .form {
     display: flex;
     flex-direction: column;
-    flex: 1
+    flex: 1;
+    overflow: scroll;
 }
 
 .form input {
@@ -44,16 +45,25 @@
     margin-bottom: 5px;
 }
 
-.submitButton{
-    margin-top: auto;
+.finishButtons {
     margin-left: auto;
+}
+
+.submitButton, .cancelButton{
     width: fit-content;
+    font-size: 1.4em;
+    margin-left: 20px;
 }
 
 .booksDropDown {
     flex: 1;
     background-color: var(--theme-input-light-grey);
     margin: 20px 0;
+}
+
+.notSelectedBook {
+    text-align: right;
+    color: var(--theme-orange);
 }
 
 .dropContainer {

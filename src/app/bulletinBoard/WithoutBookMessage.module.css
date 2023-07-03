@@ -16,11 +16,13 @@
     margin-top: 10px;
 }
 
-.userTimestamp {
-    color: var(--theme-light-grey)
-}
-
 .dotsButton:hover {
     background-color: var(--theme-light-blue);
     color: black;
+}
+
+.booksContainer {
+    background-color: var(--theme-light-purple);
+    margin: 5px 0;
+    border-radius: 5px;
 }
