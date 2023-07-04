@@ -1,0 +1,27 @@
+.profilesContainer {
+    margin-top: 20px;
+}
+
+.titles {
+    display: flex;
+    width: 100%;
+    font-size: 0.8em;
+    gap: 10px;
+}
+
+.searchBar {
+    background-color: var(--theme-input-light-grey);
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    gap: 10px;
+    border-radius: 5px;
+}
+
+.searchInput {
+    font-size: 1.2em;
+    background-color: transparent;
+    border: none;
+    flex: 1;
+    outline-width: 0;
+}

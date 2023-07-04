@@ -32,7 +32,7 @@ export function CurrentlyReadingBook() {
                     <button className={styles.moreInfoButton}>
                         <span className={styles.moreInfoText}>MORE INFO</span>
                         <Image alt='Small Share Logo' src='/images/Share_Logo_Small.png' width={30} height={30}
-                            style={{filter: 'invert(1)', marginBottom: 5}}
+                            style={{ marginBottom: 5}}
                         />
                     </button>
                 </div>

@@ -22,7 +22,7 @@
 }
 
 .booksContainer {
-    background-color: var(--theme-light-purple);
+    background-color: var(--theme-light-blue);
     margin: 5px 0;
     border-radius: 5px;
 }

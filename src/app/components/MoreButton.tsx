@@ -1,12 +1,9 @@
 'use client'
 import { useEffect, useState } from 'react'
 import styles from './MoreButton.module.css'
-import { DropDownMenu } from '../components/DropDownMenu'
+import { DropDownMenu } from './DropDownMenu'
 
-const buttons = ["Reply", "Save", "Share", "Report"]
-
-
-export function MoreButton() {
+export function MoreButton({buttons} : {buttons: string[]}) {
     const [clicked, setClicked] = useState(false)
 
     const handleClickOutside = () => {

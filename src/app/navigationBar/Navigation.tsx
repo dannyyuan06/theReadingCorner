@@ -29,6 +29,7 @@ export function Navigation() {
                     <hr color='black'/>
                     <NavigationButton currentPage={currentPage} setCurrentPage={setCurrentPage} pageTitle='aboutOurClub'/>
                     <NavigationButton currentPage={currentPage} setCurrentPage={setCurrentPage} pageTitle='members'/>
+                    <NavigationButton currentPage={currentPage} setCurrentPage={setCurrentPage} pageTitle='clubStatistics'/>
                     <NavigationButton currentPage={currentPage} setCurrentPage={setCurrentPage} pageTitle='bulletinBoard'/>
                     <NavigationButton currentPage={currentPage} setCurrentPage={setCurrentPage} pageTitle='currentlyReading'/>
                     <NavigationButton currentPage={currentPage} setCurrentPage={setCurrentPage} pageTitle='meetings'/>

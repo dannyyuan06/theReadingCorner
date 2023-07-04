@@ -45,7 +45,7 @@
 }
 
 .booksContainer {
-    background-color: var(--theme-light-purple);
+    background-color: var(--theme-light-blue);
     border-radius: 5px;
     margin: 5px 0;
     overflow: hidden;
@@ -83,7 +83,7 @@
     margin-left: auto;
     padding: 10px 20px;
     background-color: var(--theme-purple);
-    color: white
+    color: black
 }
 
 .toolbarButtonCant {

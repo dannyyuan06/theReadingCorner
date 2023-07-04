@@ -1,0 +1,69 @@
+.container {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.textContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.title {
+    flex: 5
+}
+
+.titles .title {
+    font-size:1.4em;
+}
+
+.headerBodySeparator  {
+    display: flex;
+}
+
+.titles h3 {
+    font-size: 0.9em;
+}
+
+.headerBodySeparator {
+    display: flex;
+}
+
+.scoreContainer {
+    margin-left: auto;
+    display: flex;
+    gap: 40px;
+    flex: 1
+}
+
+.scoreWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.displayScore {
+    font-size: 3em;
+    font-family: var(--font-header);
+}
+
+.progress {
+    margin: 0 20px;
+    flex: 5;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.progressOutline {
+    background-color: var(--theme-light-light-grey);
+    flex: 2;
+}
+
+.progressLine {
+    background-color: var(--theme-blue);
+    height: 100%;
+    width: 60%;
+}

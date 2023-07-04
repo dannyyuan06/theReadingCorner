@@ -1,0 +1,15 @@
+.splitContainer {
+    display: flex;
+    flex: 1;
+    align-items: baseline;
+}
+
+.splitLeft {
+    font-family: var(--font-small-header);
+    font-size: 0.95em;
+    color: var(--theme-light-grey);
+}
+
+.splitRight {
+    margin-left: auto;
+}

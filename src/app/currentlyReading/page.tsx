@@ -1,6 +1,6 @@
 import { PageHeader } from "../components/PageHeader";
+import { PastReadingBook } from "../components/PastReadingBook";
 import { CurrentlyReadingBook } from "./CurrentlyReadingBook";
-import { PastReadingBook } from "./PastReadingBook";
 import styles from './page.module.css'
 
 

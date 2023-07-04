@@ -4,7 +4,7 @@ import styles from "./ProfileMini.module.css"
 import { ProfileDropDown } from "./ProfileDropDown";
 import { useState } from "react";
 
-let timeout
+let timeout:ReturnType<typeof setTimeout>
 
 export function ProfileMini() {
 
@@ -16,9 +16,13 @@ export function ProfileMini() {
         }, 500)
     }
 
+    const mouseLeaveHandler = () => {
+        if (timeout) clearTimeout(timeout)
+    }
+
     return (
         <div className={styles.container}>
-            <Image onMouseEnter={mouseEnterHandler} alt='profile picture placeholder' src="/images/profile_picture_placeholder.png" width={40} height={40}/>
+            <Image onMouseEnter={mouseEnterHandler} onMouseLeave={mouseLeaveHandler} alt='profile picture placeholder' src="/images/profile_picture_placeholder.png" width={40} height={40}/>
             <div className={styles.userMeta}>
                 <div className={styles.userName}>Danny Yuan</div>
                 <div className={styles.userTimestamp}>Today at 18:31</div>

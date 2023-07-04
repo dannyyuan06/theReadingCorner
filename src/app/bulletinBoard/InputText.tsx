@@ -1,9 +1,8 @@
 'use client'
-import { ClipboardEvent, SyntheticEvent, useState } from 'react'
+import { ClipboardEvent, useState } from 'react'
 import styles from './InputText.module.css'
 import Image from 'next/image'
 import { AddBook } from './AddBook'
-import { allBooks } from './books'
 import { BookAttackment } from './BookAttachment'
 
 export function InputText() {

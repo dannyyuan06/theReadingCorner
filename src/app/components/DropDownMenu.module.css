@@ -7,6 +7,8 @@
     border-radius: 5px;
     box-shadow: var(--shadow-button-color);
     overflow: scroll;
+    width: max-content;
+    z-index: 3;
 }
 
 .button {

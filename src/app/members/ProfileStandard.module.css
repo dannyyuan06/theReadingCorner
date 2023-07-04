@@ -1,0 +1,40 @@
+.container {
+    display: flex;
+    gap: 8px;
+    position: relative;
+    width: 100%;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 0;
+    font-size: 0.9em;
+}
+
+.userTimestamp {
+    color: var(--theme-light-grey)
+}
+
+.userName {
+    flex: 2;
+}
+
+.userEmail {
+    flex: 4;
+}
+
+.userBooksRead {
+    flex: 3;
+    text-align: right;
+}
+
+.moreButton {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.moreButton:hover {
+    background-color: var(--theme-purple);
+}

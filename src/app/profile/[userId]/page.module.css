@@ -1,3 +1,52 @@
+
 .bodyContainer {
     margin-top: 20px;
+    display: flex;
+    gap: 40px
+}
+
+.profilePic {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.bodyLeft {
+    flex: 1;
+}
+
+.bodyRight {
+    flex: 4
+}
+
+.bodyContainer section {
+    margin-bottom: 20px;
+}
+
+.smallHeader {
+    border-bottom: 1px solid rgb(41, 41, 41);
+    margin-bottom: 5px;
+}
+
+.splitContainer {
+    display: flex;
+    flex: 1;
+    align-items: baseline;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgb(41, 41, 41);
+    margin-bottom: 10px;
+}
+
+.splitLeft {
+    font-family: var(--font-small-header);
+}
+
+.splitRight {
+    margin-left: auto;
+}
+
+.friendContainer {
+    margin: 10px 0;
 }
