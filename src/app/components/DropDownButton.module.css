@@ -1,0 +1,13 @@
+.container {
+    position: relative;
+    margin-left: auto;
+    font-size: 1em;
+}
+
+.button {
+    font-family: var(--font-header);
+    font-weight: 700;
+    min-width: 100px;
+    text-align: right;
+    background-color: var(--theme-input-light-grey);
+}

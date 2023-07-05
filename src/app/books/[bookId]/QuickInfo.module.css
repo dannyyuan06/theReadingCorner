@@ -1,0 +1,15 @@
+.container {
+    display: flex;
+    font-size: 0.8em;
+    gap: 10px;
+}
+
+.title {
+    color: var(--theme-light-grey);
+}
+
+.value {
+    margin-left: auto;
+    text-align: right;
+    display: inline;
+}

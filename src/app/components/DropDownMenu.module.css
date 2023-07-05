@@ -9,6 +9,7 @@
     overflow: scroll;
     width: max-content;
     z-index: 3;
+    font-size: 2em;
 }
 
 .button {

@@ -24,7 +24,7 @@ export default function members() {
                     <span style={{width: 35}}></span>
                 </div>
                 {membersUsers.map((values: user) => (
-                    <ProfileStandard {... values}/>
+                    <ProfileStandard key={values.username} {... values}/>
                 ))}
             </div>
         </div>

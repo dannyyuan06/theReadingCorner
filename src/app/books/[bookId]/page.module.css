@@ -1,0 +1,33 @@
+
+.bodyContainer {
+    display: flex;
+    width: 100%;
+    gap: 20px;
+}
+
+.leftBody {
+    flex: 1;
+}
+
+.rightBody {
+    flex: 4;
+    display: flex;
+}
+
+.bottomBody {
+    margin-top: 10px;
+    display: flex;
+    gap: 20px;
+}
+
+.bottomLeftBody {
+    flex: 1
+}
+
+.bottomRightBody {
+    flex: 4
+}
+
+.blurbParagraph {
+    font-size: 1em;
+}
