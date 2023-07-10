@@ -5,6 +5,7 @@ import { QuickInfo } from './QuickInfo'
 import { camelToTitle } from '@/app/navigationBar/camelAndTitle'
 import { allBooks } from '@/app/bulletinBoard/books'
 import { bookexample } from '@/app/bookexample'
+import Image from 'next/image'
 
 const usefulKeys = [
     "title",
@@ -27,7 +28,7 @@ export default function Books({ params }: {params: {bookId: string}}) {
             <PageHeader>{bookexample[params.bookId].volumeInfo.title}</PageHeader>
             <div className={styles.bodyContainer}>
                 <div className={styles.leftBody}>
-                    <img alt='books image' src={bookexample[params.bookId].volumeInfo.imageLinks.medium} width={200} height={320} style={{objectFit: 'contain', boxShadow: "var(--shadow-button-color)"}}/>
+                    <Image priority={true} alt='books image' src={bookexample[params.bookId].volumeInfo.imageLinks.medium} width={200} height={320} style={{objectFit: 'contain', boxShadow: "var(--shadow-button-color)"}}/>
                 </div>
                 <div className={styles.rightBody}>
                     <BookRatings pageCount={bookexample[params.bookId].volumeInfo.pageCount}/>
@@ -49,7 +50,7 @@ export default function Books({ params }: {params: {bookId: string}}) {
                         <h3>DESCRIPTION</h3>
                         <hr/>
                         <div className={styles.blurbContainer}>
-                            {desc.split("\n").map((str: string) => <p className={styles.blurbParagraph}>{str}</p>)}
+                            {desc.split("\n").map((str: string) => <p key={str} className={styles.blurbParagraph}>{str}</p>)}
                         </div>
                     </div>
                 </div>

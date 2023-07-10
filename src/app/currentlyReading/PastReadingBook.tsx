@@ -7,7 +7,7 @@ export function PastReadingBook({book}: {book: string}) {
     return (
         <div className={styles.container}>
             <DispatchLink link={`/books/${book}`}>
-                <img alt="book placeholder" src={bookexample[book].volumeInfo.imageLinks.medium} width={100} height={155} className={styles.image}/>
+                <Image alt="book placeholder" src={bookexample[book].volumeInfo.imageLinks.medium} width={100} height={155} className={styles.image}/>
             </DispatchLink>
             <div className={styles.textContainer}>
             <div className={styles.headerBodySeparator}>

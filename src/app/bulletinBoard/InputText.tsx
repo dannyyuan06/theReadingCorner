@@ -54,7 +54,7 @@ export function InputText() {
                         </div>
                         <div className={styles.booksContainer}>
                             {books.map((book: string, index:number) => (
-                                <BookAttackment book={book} index={index} setBooks={setBooks}/>
+                                <BookAttackment key={book} book={book} index={index} setBooks={setBooks}/>
                             ))}
                         </div>
                         <div className={styles.sendToolbar}>

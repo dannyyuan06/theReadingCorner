@@ -15,7 +15,7 @@ export function BookStandard({bookTitle, authors, datePublished, genre, image}: 
         <>
             <hr/>
             <div className={styles.container}>
-                <img alt='book image' src={image} width={70} height={100}/>
+                <Image alt='book image' src={image} width={70} height={100}/>
                 <h3 style={{flex: 2}}>{bookTitle}</h3>
                 <h3 style={{flex: 2}}>{authors}</h3>
                 <h3 style={{flex: 1}}>{datePublished}</h3>

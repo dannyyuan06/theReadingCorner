@@ -24,7 +24,7 @@ export function Navigation() {
     const dispatch = useDispatch<AppDispatch>()
     useEffect(() => {
         dispatch(changePage(pathname ? pathname.slice(1) : "adminDashboard"))
-    }, [pathname])
+    }, [pathname, dispatch])
     return (
         <nav className={styles.container}>
             <div className={styles.wrapper}>

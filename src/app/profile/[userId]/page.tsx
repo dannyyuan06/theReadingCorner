@@ -14,7 +14,7 @@ export default function Profile({ params }: {params: {userId: string}}) {
 
     return (
         <div className={styles.container}>
-            <PageHeader>{user.name.toUpperCase()}'S PROFILE</PageHeader>
+            <PageHeader>{user.name.toUpperCase()}&apos;S PROFILE</PageHeader>
             <div className={styles.bodyContainer}>
                 <div className={styles.bodyLeft}>
                     <div className={styles.profilePic}>
@@ -50,8 +50,8 @@ export default function Profile({ params }: {params: {userId: string}}) {
                         </div>
                         <div>
                             {readBooks.map((book) => (
-                                <div>
-                                    <SmallBook book={book.toString()}/>
+                                <div key={book}>
+                                    <SmallBook key={book} book={book.toString()}/>
                                 </div>
                             ))}
                         </div>

@@ -7,7 +7,7 @@ export function CurrentlyReadingBook({book}: {book: string}) {
     return (
         <div className={styles.container}>
             <DispatchLink link={`/books/${book}`}>
-                <img className={styles.image} alt="book placeholder" src={bookexample[book].volumeInfo.imageLinks.large} width={200} height={330}/>
+                <Image className={styles.image} alt="book placeholder" src={bookexample[book].volumeInfo.imageLinks.large} width={200} height={330}/>
             </DispatchLink>
             <div className={styles.textContainer}>
                 <div className={styles.headerBodySeparator}>

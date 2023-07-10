@@ -54,7 +54,7 @@ export function BookRatings({pageCount}: {pageCount: number}) {
         if (status === statusArray[0]) {setPage("");setMyScore("-")}
         else if (status === statusArray[1]) setPage(p => p === "" ? 1 : p)
         else if (status === statusArray[2]) setPage(pageCount)
-    }, [status])
+    }, [status, pageCount])
 
     useEffect(() => {
         clearTimeout(pageTimeout)
@@ -64,7 +64,7 @@ export function BookRatings({pageCount}: {pageCount: number}) {
             else if (page <= pageCount) setStatus("Reading")
         }, 1000);
         setChanged(true)
-    }, [page])
+    }, [page, pageCount])
 
 
     const pageHandler = (e: FormEvent<HTMLInputElement>) => {
