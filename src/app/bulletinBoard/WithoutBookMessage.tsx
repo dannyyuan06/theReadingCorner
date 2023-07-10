@@ -18,7 +18,7 @@ export function WithoutBookMessage({books}: {books?: string[]}) {
             </p>
             <div className={styles.booksContainer}>
                 {books?.map((book: string, index: number) => (
-                    <BookAttackment book={book} index={index}/>
+                    <BookAttackment key={book} book={book} index={index}/>
                 ))}
             </div>
         </div>

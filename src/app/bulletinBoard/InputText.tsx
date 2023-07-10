@@ -44,7 +44,7 @@ export function InputText() {
                             onPaste={pasteHandler}>
                     </div>
                     {textContent === "" && <div className={styles.placeholder + " " + styles.newMessageInput}>
-                            What's new?
+                            What&apos;s new?
                         </div>}
                     <div className={styles.extraInfoContainer}>
                         <div className={styles.wordCount}>
