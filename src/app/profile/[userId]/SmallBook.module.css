@@ -11,8 +11,17 @@
     width: 100%;
 }
 
+.titles {
+    flex: 2
+}
+
 .title {
+    color: black;
     flex: 5
+}
+
+.title:hover {
+    text-decoration: underline;
 }
 
 .titles .title {

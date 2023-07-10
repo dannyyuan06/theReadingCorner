@@ -59,6 +59,7 @@
     flex: 1;
     background-color: var(--theme-input-light-grey);
     margin: 20px 0;
+    overflow: scroll;
 }
 
 .notSelectedBook {

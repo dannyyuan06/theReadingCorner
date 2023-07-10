@@ -2,7 +2,7 @@
 import { Dispatch, SetStateAction, SyntheticEvent, useEffect, useState } from "react"
 import { PageHeader } from "../components/PageHeader"
 import styles from "./AddBook.module.css"
-import { allBooks } from "./books"
+import { allBooks, booksWithTitles } from "./books"
 
 export function AddBook({setDidAddBook, setBooks}: {setDidAddBook: Dispatch<SetStateAction<boolean>>, setBooks: Dispatch<SetStateAction<string[]>>}) {
     const [selectedBook, setSelectedBook] = useState<string|null>(null)
@@ -36,7 +36,7 @@ export function AddBook({setDidAddBook, setBooks}: {setDidAddBook: Dispatch<SetS
                     <label htmlFor="lname">Author</label>
                     <input type="text" name="lname"/>
                     <div className={styles.booksDropDown}>
-                        <DropDownMenu buttons={allBooks} setSelectedBook={setSelectedBook} selectedBook={selectedBook}/>
+                        <DropDownMenu buttons={booksWithTitles} setSelectedBook={setSelectedBook} selectedBook={selectedBook}/>
                     </div>
                     <div className={styles.finishButtons}>
                         <div className={styles.notSelectedBook}>{noBookSelected === 0 && "Please select a book"}</div>

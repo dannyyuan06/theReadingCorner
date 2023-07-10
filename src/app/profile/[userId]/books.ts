@@ -1,1 +1,1 @@
-export const readBooks = Array(10).fill("fdsfd")
+export const readBooks = [1, 2, 3, 4, 5, 6, 7]

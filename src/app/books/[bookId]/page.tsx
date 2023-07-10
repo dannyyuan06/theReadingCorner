@@ -1,10 +1,10 @@
 import { PageHeader } from '@/app/components/PageHeader'
 import styles from './page.module.css'
-import Image from 'next/image'
 import { BookRatings } from './BookRatings'
-import { bookExample } from './books'
 import { QuickInfo } from './QuickInfo'
 import { camelToTitle } from '@/app/navigationBar/camelAndTitle'
+import { allBooks } from '@/app/bulletinBoard/books'
+import { bookexample } from '@/app/bookexample'
 
 const usefulKeys = [
     "title",
@@ -20,17 +20,17 @@ const usefulKeys = [
 
 export default function Books({ params }: {params: {bookId: string}}) {
 
-    const desc = bookExample[params.bookId].volumeInfo.description
+    const desc = allBooks[params.bookId].volumeInfo.description
 
     return (
         <div className={styles.container}>
-            <PageHeader>{bookExample[params.bookId].volumeInfo.title}</PageHeader>
+            <PageHeader>{bookexample[params.bookId].volumeInfo.title}</PageHeader>
             <div className={styles.bodyContainer}>
                 <div className={styles.leftBody}>
-                    <img alt='books image' src={bookExample[params.bookId].volumeInfo.imageLinks.medium} width={200} height={320} style={{objectFit: 'contain', boxShadow: "var(--shadow-button-color)"}}/>
+                    <img alt='books image' src={bookexample[params.bookId].volumeInfo.imageLinks.medium} width={200} height={320} style={{objectFit: 'contain', boxShadow: "var(--shadow-button-color)"}}/>
                 </div>
                 <div className={styles.rightBody}>
-                    <BookRatings pageCount={bookExample[params.bookId].volumeInfo.pageCount}/>
+                    <BookRatings pageCount={bookexample[params.bookId].volumeInfo.pageCount}/>
                 </div>
             </div>
             <div className={styles.bottomBody}>
@@ -39,7 +39,8 @@ export default function Books({ params }: {params: {bookId: string}}) {
                         <h3>QUICK INFO</h3>
                         
                         {usefulKeys.map((key) => (
-                            <QuickInfo key={key} title={camelToTitle(key)} value={bookExample[params.bookId].volumeInfo[key]}/>
+                            // @ts-ignore
+                            <QuickInfo key={key} title={camelToTitle(key)} value={bookexample[params.bookId].volumeInfo[key]}/>
                         ))}
                     </div>
                 </div>

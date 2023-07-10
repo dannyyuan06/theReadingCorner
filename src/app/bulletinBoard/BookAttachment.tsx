@@ -2,6 +2,8 @@ import Image from 'next/image'
 import styles from './BookAttachment.module.css'
 import { allBooks } from './books'
 import { Dispatch, SetStateAction } from 'react'
+import { BookLink } from './BookLink'
+import { DispatchLink } from '../components/DispatchLink'
 
 export function BookAttackment({book, index, setBooks}: {book: string, index: number, setBooks?: Dispatch<SetStateAction<string[]>>}) {
     const crosshandler = () => {
@@ -20,12 +22,14 @@ export function BookAttackment({book, index, setBooks}: {book: string, index: nu
         <>
             {index !== 0 && <hr/>}
             <div className={styles.bookContainer}>
-                <Image style={{objectFit: 'contain', flex: 1}} width={40} height={60} alt='book placeholder' src='/images/book-placeholder.png'/>
+                <BookLink link={`/books/${book}`} book={book}/>
                 <div className={styles.booksInfoTitleAuthor}>
-                    <div className={styles.booksInfoTitle}>{allBooks[book]}</div>
-                    <div className={styles.booksInfoAutho}>Some Author</div>
+                    <DispatchLink link={`/books/${book}`}>
+                        <div className={styles.booksInfoTitle}>{allBooks[book].volumeInfo.title}</div>
+                    </DispatchLink>
+                    <div className={styles.booksInfoAutho}>{allBooks[book].volumeInfo.authors.join(", \n")}</div>
                 </div>
-                <div className={styles.booksInfoBlurb}>aidshfaush oiuahsofiuahs ofiahs oidfhaoisdfhaoisudfgoiausgdfoiag sdioufgaoisd fgoiausd faiudgshfoia sdoifaoidsfh oiadh fo iah sdof hpaosid hfpoa </div>
+                <div className={styles.booksInfoBlurb}>{allBooks[book].volumeInfo.description}</div>
                 <div></div>
                 {
                     setBooks && 

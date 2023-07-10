@@ -8,6 +8,13 @@
 
 .booksInfoTitle {
     font-size: 1.4em;
+    color: black;
+}
+
+.booksInfoTitle:hover {
+    color: black;
+    text-decoration: underline;
+    text-decoration-color: black;
 }
 
 .booksInfoTitleAuthor {
@@ -17,7 +24,7 @@
 .booksInfoBlurb {
     font-size: 0.8em;
     margin-top: 5px;
-    flex: 14
+    flex: 8
 }
 
 .cancelCross {

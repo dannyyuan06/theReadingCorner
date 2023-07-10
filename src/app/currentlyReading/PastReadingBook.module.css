@@ -11,12 +11,25 @@
     width: 100%;
 }
 
+.image {
+    object-fit: contain;
+    box-shadow: var(--shadow-button-color);
+}
+
 .title {
     font-size: 1.7em;
 }
 
 .headerBodySeparator {
     display: flex;
+}
+
+.bookTitle {
+    color: black;
+}
+
+.bookTitle:hover {
+    text-decoration: underline;
 }
 
 .scoreContainer {

@@ -30,8 +30,8 @@ export default function Profile({ params }: {params: {userId: string}}) {
                     </section>
                     <section>
                         <h3 className={styles.smallHeader}>FRIENDS</h3>
-                        {friends.map(() => (
-                            <div className={styles.friendContainer}>
+                        {friends.map((_, index) => (
+                            <div key={index} className={styles.friendContainer}>
                                 <ProfileMini/>
                             </div>
                         ))}
@@ -49,9 +49,9 @@ export default function Profile({ params }: {params: {userId: string}}) {
                             <span className={styles.splitRight}>Mean Score: 5.5</span>
                         </div>
                         <div>
-                            {readBooks.map(() => (
+                            {readBooks.map((book) => (
                                 <div>
-                                    <SmallBook/>
+                                    <SmallBook book={book.toString()}/>
                                 </div>
                             ))}
                         </div>

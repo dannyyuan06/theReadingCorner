@@ -2,6 +2,7 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 import { Navigation } from './navigationBar/Navigation'
 import styles from './layout.module.css'
+import { ReduxProvider } from '@/redux/Provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,10 +22,12 @@ export default function RootLayout({
         <link rel="stylesheet" href="https://use.typekit.net/gzh2kwv.css"/>
       </head>
       <body className={inter.className}>
-        <Navigation/>
-        <div className={styles.bodyContainer}>
-          {children}
-        </div>
+        <ReduxProvider>
+          <Navigation/>
+          <div className={styles.bodyContainer}>
+            {children}
+          </div>
+        </ReduxProvider>
       </body>
     </html>
   )
