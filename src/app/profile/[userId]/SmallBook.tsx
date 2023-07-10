@@ -1,6 +1,7 @@
 import styles from './SmallBook.module.css'
 import { bookexample } from '@/app/bookexample'
 import { DispatchLink } from '@/app/components/DispatchLink'
+import Image from 'next/image'
 
 export function SmallBook({ book }: { book: string}) {
 
@@ -11,7 +12,7 @@ export function SmallBook({ book }: { book: string}) {
     return (
         <div className={styles.container}>
             <DispatchLink link={`/books/${book}`}>
-                <img alt="book placeholder" src={bookexample[book].volumeInfo.imageLinks.small} width={60} height={85} style={{objectFit: 'contain'}}/>
+                <Image alt="book placeholder" src={bookexample[book].volumeInfo.imageLinks.small} width={60} height={85} style={{objectFit: 'contain'}}/>
             </DispatchLink>
             <div className={styles.textContainer}>
                 <div className={styles.headerBodySeparator}>
