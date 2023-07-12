@@ -1,4 +1,3 @@
-'use client'
 import { changePage } from "@/redux/features/pageSlice"
 import { AppDispatch } from "@/redux/store"
 import Link from "next/link"

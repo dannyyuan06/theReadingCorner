@@ -2,7 +2,7 @@
 import { Dispatch, SetStateAction, SyntheticEvent, useEffect, useState } from "react"
 import { PageHeader } from "../components/PageHeader"
 import styles from "./AddBook.module.css"
-import { allBooks, booksWithTitles } from "./books"
+import { booksWithTitles } from "../bulletinBoard/books"
 
 export function AddBook({setDidAddBook, setBooks}: {setDidAddBook: Dispatch<SetStateAction<boolean>>, setBooks: Dispatch<SetStateAction<string[]>>}) {
     const [selectedBook, setSelectedBook] = useState<string|null>(null)

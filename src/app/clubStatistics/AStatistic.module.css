@@ -1,0 +1,15 @@
+.container {
+    display: flex;
+    font-size: 2em;
+    font-family: var(--font-header);
+}
+
+.key {
+    color: var(--theme-light-grey);
+    font-family: var(--font-small-header);
+}
+
+.value {
+    margin-left: auto;
+    margin-top: 5px;
+}

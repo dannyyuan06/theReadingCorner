@@ -1,0 +1,79 @@
+.container {
+    background-color: var(--theme-see-through-grey);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 11;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wrapper {
+    width: 50vw;
+    height: 40vw;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: scroll;
+}
+
+.form input {
+    font-size: 1.4em;
+}
+
+.form input[type=text] {
+    background-color: var(--theme-input-light-grey);
+    border: 0;
+    padding: 10px;
+    outline-width: 0;
+}
+
+.form label {
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+.finishButtons {
+    margin-left: auto;
+}
+
+.submitButton, .cancelButton{
+    width: fit-content;
+    font-size: 1.4em;
+    margin-left: 20px;
+}
+
+.genresDropDown {
+    flex: 1;
+    background-color: var(--theme-input-light-grey);
+    margin: 20px 0;
+    overflow: scroll;
+}
+
+.notSelectedGenre {
+    text-align: right;
+    color: var(--theme-orange);
+}
+
+.dropContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 10px
+}
+
+.button {
+    font-family: var(--font-mono);
+    padding: 5px;
+}

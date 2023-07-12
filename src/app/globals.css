@@ -49,16 +49,20 @@ body {
   background-color: rgb(var(--background-color));
 }
 
-button, input[type=submit], a {
+button, input[type=submit], nav a {
   background-color: transparent;
   color: var(--font-color);
   border: none;
   text-align: left;
-  font-size: var(--font-color);
   font-family: var(--font-header);
+  font-size: var(--font-color);
   font-weight: inherit;
   cursor: pointer;
   padding: 2px;
+}
+
+a {
+  font-family: var(--font-header);
 }
 
 button:hover, a:hover, input[type=submit]:hover {

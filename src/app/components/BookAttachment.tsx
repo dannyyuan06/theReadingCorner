@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import styles from './BookAttachment.module.css'
-import { allBooks } from './books'
 import { Dispatch, SetStateAction } from 'react'
-import { BookLink } from './BookLink'
-import { DispatchLink } from '../components/DispatchLink'
+import { BookLink } from '../bulletinBoard/BookLink'
+import { allBooks } from '../bulletinBoard/books'
+import Link from 'next/link'
 
 export function BookAttackment({book, index, setBooks}: {book: string, index: number, setBooks?: Dispatch<SetStateAction<string[]>>}) {
     const crosshandler = () => {
@@ -24,9 +24,9 @@ export function BookAttackment({book, index, setBooks}: {book: string, index: nu
             <div className={styles.bookContainer}>
                 <BookLink link={`/books/${book}`} book={book}/>
                 <div className={styles.booksInfoTitleAuthor}>
-                    <DispatchLink link={`/books/${book}`}>
+                    <Link href={`/books/${book}`}>
                         <div className={styles.booksInfoTitle}>{allBooks[book].volumeInfo.title}</div>
-                    </DispatchLink>
+                    </Link>
                     <div className={styles.booksInfoAutho}>{allBooks[book].volumeInfo.authors.join(", \n")}</div>
                 </div>
                 <div className={styles.booksInfoBlurb}>{allBooks[book].volumeInfo.description}</div>

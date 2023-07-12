@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import styles from './WithoutBookMessage.module.css'
-import { BookAttackment } from './BookAttachment'
 import { ProfileMini } from '../components/ProfileMini'
 import { MoreButton } from '../components/MoreButton'
+import { BookAttackment } from '../components/BookAttachment'
 
 export function WithoutBookMessage({books}: {books?: string[]}) {
 

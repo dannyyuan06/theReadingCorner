@@ -1,0 +1,51 @@
+.container {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.textContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.image {
+    object-fit: contain;
+    box-shadow: var(--shadow-button-color);
+}
+
+.title {
+    font-size: 1.7em;
+}
+
+.headerBodySeparator {
+    display: flex;
+}
+
+.bookTitle {
+    color: black;
+}
+
+.bookTitle:hover {
+    text-decoration: underline;
+}
+
+.scoreContainer {
+    margin-left: auto;
+    display: flex;
+    gap: 40px
+}
+
+.scoreWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.displayScore {
+    font-size: 3em;
+    font-family: var(--font-header);
+}
+

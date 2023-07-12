@@ -2,13 +2,13 @@
 import { ClipboardEvent, useState } from 'react'
 import styles from './InputText.module.css'
 import Image from 'next/image'
-import { AddBook } from './AddBook'
-import { BookAttackment } from './BookAttachment'
+import { AddBook } from '../components/AddBook'
+import { BookAttackment } from '../components/BookAttachment'
+
+const textCap = 5000
 
 export function InputText() {
 
-    const textCap = 5000
-    
     const [textContent, setTextContent] = useState("")
     const [didAddBook, setDidAddBook] = useState(false)
     const [books, setBooks] = useState<string[]>([])

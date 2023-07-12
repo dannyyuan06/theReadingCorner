@@ -2,6 +2,7 @@ import styles from './SmallBook.module.css'
 import { bookexample } from '@/app/bookexample'
 import { DispatchLink } from '@/app/components/DispatchLink'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export function SmallBook({ book }: { book: string}) {
 
@@ -11,13 +12,13 @@ export function SmallBook({ book }: { book: string}) {
 
     return (
         <div className={styles.container}>
-            <DispatchLink link={`/books/${book}`}>
+            <Link href={`/books/${book}`}>
                 <Image alt="book placeholder" src={bookexample[book].volumeInfo.imageLinks.small} width={60} height={85} style={{objectFit: 'contain'}}/>
-            </DispatchLink>
+            </Link>
             <div className={styles.textContainer}>
                 <div className={styles.headerBodySeparator}>
                     <div className={styles.titles}>
-                        <DispatchLink link={`/books/${book}`}><h3 className={styles.title}>{cut(bookexample[book].volumeInfo.title, 20)}</h3></DispatchLink>
+                        <Link href={`/books/${book}`}><h3 className={styles.title}>{cut(bookexample[book].volumeInfo.title, 20)}</h3></Link>
                         <h3>AUTHOR: {cut(bookexample[book].volumeInfo.authors.join(", "), 25)}</h3>
                         <h3>START DATE: <span>04/05/2020</span></h3>
                         <h3>GENRE: {cut(bookexample[book].volumeInfo.mainCategory, 25)}</h3>
