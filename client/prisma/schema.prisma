@@ -1,0 +1,138 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  uid               Int       @id @default(autoincrement())
+  username          String
+  email             String 
+  firstName         String
+  lastName          String
+  password          String
+  lastOnline        DateTime  
+  joinDate          DateTime  @default(now())
+  numBulletinPosts  Int
+  numReview         Int
+  numBooksRead      Int
+  profilePicture    String
+  accessLevel       Int
+  description       String
+  meanScore         Float
+  daysRead          Float
+  lookedAtBulletin  Boolean
+  booksRead         UserBook[]
+  friend1           Friends[] @relation(name: "friend1")
+  friend2           Friends[] @relation(name: "friend2")
+  messages          BulletinBoardMessages[]
+  meetings          Meetings[]
+  bookSuggestions   BookSuggestions[]
+  genreSuggestions  GenreSuggestion[]
+}
+
+model Book {
+  bookid        Int     @id
+  bookPicture   String
+  title         String
+  author        String
+  description   String
+  usersRead     UserBook[]
+  messages      BulletinBoardMessages[]
+  meetings      Meetings[]
+  currentlyR    CurrentlyReading[]
+  suggestions   BookSuggestions[]
+}
+
+model UserBook {
+  userbookid    Int       @id @default(autoincrement())
+  dateStarted   DateTime  @default(now())
+  dateFinished  DateTime
+  score         Int
+  status        Int
+  page          Int
+  user          Users      @relation(fields: [uid], references: [uid])
+  uid           Int
+  book          Book      @relation(fields: [bookid], references: [bookid])
+  bookid        Int
+}
+
+model Friends {
+  friendid      Int       @id @default(autoincrement())
+  friend1       Users      @relation(fields: [friend1id], references: [uid], name: "friend1")
+  friend1id     Int
+  friend2       Users      @relation(fields: [friend2id], references: [uid], name: "friend2")
+  friend2id     Int
+  status        Int
+  dateStarted   DateTime  @default(now())
+}
+
+model BulletinBoardMessages {
+  messageid     Int       @id @default(autoincrement())
+  title         String
+  body          String
+  dateCreated   DateTime  @default(now())
+  user          Users      @relation(fields: [uid], references: [uid])
+  uid           Int
+  book          Book      @relation(fields: [bookid], references: [bookid])
+  bookid        Int
+}
+
+model Meetings {
+  meetingid     Int     @id @default(autoincrement())
+  title         String 
+  description   String
+  dateOfMeeting DateTime
+  link          String
+  host          Users      @relation(fields: [hostid], references: [uid])
+  hostid        Int
+  book          Book      @relation(fields: [bookid], references: [bookid])
+  bookid        Int
+}
+
+model CurrentlyReading {
+  readid        Int       @id @default(autoincrement())
+  book          Book      @relation(fields: [bookid], references: [bookid])
+  bookid        Int
+  averageRating Float
+  dateStarted   DateTime  @default(now())
+  pageNumber    Int
+  status        Int
+}
+
+model Statistics {
+  statid                Int     @id @default(autoincrement())
+  currentlyReadingBook  String
+  averageRating         Float
+  numOfMembers          Int
+  numOfBooksRead        Int
+  bulletinEngagement    Float
+}
+
+model BookSuggestions {
+  booksuggestionid      Int     @id @default(autoincrement())
+  user          Users       @relation(fields: [uid], references: [uid])
+  uid           Int
+  book          Book        @relation(fields: [bookid], references: [bookid])
+  bookid        Int
+}
+
+model GenreSuggestion {
+  genresuggestionid     Int     @id @default(autoincrement())
+  user          Users       @relation(fields: [uid], references: [uid])
+  uid           Int
+  genre         Genres      @relation(fields: [genreid], references: [genreid])
+  genreid       Int
+}
+
+model Genres {
+  genreid       Int   @id @default(autoincrement())
+  genreName     String
+  suggestions   GenreSuggestion[]
+}
