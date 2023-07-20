@@ -29,11 +29,11 @@ export function Navigation() {
     return (
         <nav className={styles.container}>
             <div className={styles.wrapper}>
-                <Link className={styles.logoButton} href={'/' }>
+                <Link className={styles.logoButton} href={'/dashboard' }>
                 <Image src='/images/TRC_Logo_Primary_RGB_Lge.png' width={160} height={160} alt='TRC Logo' style={imageStyle}/>
                 </Link>
                 <ul className={styles.ul}>
-                    <DashboardButton currentPage={page} pageTitle='dashboard'/>
+                    <NavigationButton currentPage={page} pageTitle='dashboard'/>
                     <ProfileButton currentPage={page} pageTitle='profile'/>
                     <NavigationButton currentPage={page} pageTitle='members'/>
                     <NavigationButton currentPage={page} pageTitle='clubStatistics'/>

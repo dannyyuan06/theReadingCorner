@@ -1,4 +1,6 @@
+import Link from 'next/link'
 import { PageHeader } from './components/PageHeader'
+import { SignInButton } from './components/SignInButton'
 import { BookSuggestionTile } from './dashboard/BookSuggestionTile'
 import { CurrentlyReadingTile } from './dashboard/CurrentlyReadingTile'
 import { MessagesTile } from './dashboard/MessagesTile'
@@ -8,17 +10,9 @@ import styles from './page.module.css'
 export default function Home() {
   return (
     <div className={styles.container}>
-      <PageHeader>DASHBOARD</PageHeader>
-      <div className={styles.body}>
-        <div className={styles.left}>
-          <CurrentlyReadingTile/>
-          <MessagesTile/>
-        </div>
-        <div className={styles.right}>
-          <BookSuggestionTile/>
-          <StatisticsTile/>
-        </div>
-      </div>
+      <PageHeader>WECOME TO THE READING CORNER</PageHeader>
+      <SignInButton/>
+      <Link href="/register">Register</Link>
     </div>
   )
 }
