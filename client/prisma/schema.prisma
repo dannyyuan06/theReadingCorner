@@ -11,8 +11,7 @@ datasource db {
 }
 
 model Users {
-  uid               Int       @id @default(autoincrement())
-  username          String
+  username          String    @id
   email             String 
   firstName         String
   lastName          String
@@ -57,18 +56,18 @@ model UserBook {
   score         Int
   status        Int
   page          Int
-  user          Users      @relation(fields: [uid], references: [uid])
-  uid           Int
+  user          Users      @relation(fields: [username], references: [username])
+  username      String
   book          Book      @relation(fields: [bookid], references: [bookid])
   bookid        Int
 }
 
 model Friends {
   friendid      Int       @id @default(autoincrement())
-  friend1       Users      @relation(fields: [friend1id], references: [uid], name: "friend1")
-  friend1id     Int
-  friend2       Users      @relation(fields: [friend2id], references: [uid], name: "friend2")
-  friend2id     Int
+  friend1       Users      @relation(fields: [friend1id], references: [username], name: "friend1")
+  friend1id     String
+  friend2       Users      @relation(fields: [friend2id], references: [username], name: "friend2")
+  friend2id     String
   status        Int
   dateStarted   DateTime  @default(now())
 }
@@ -78,8 +77,8 @@ model BulletinBoardMessages {
   title         String
   body          String
   dateCreated   DateTime  @default(now())
-  user          Users      @relation(fields: [uid], references: [uid])
-  uid           Int
+  user          Users      @relation(fields: [username], references: [username])
+  username      String
   book          Book      @relation(fields: [bookid], references: [bookid])
   bookid        Int
 }
@@ -90,8 +89,8 @@ model Meetings {
   description   String
   dateOfMeeting DateTime
   link          String
-  host          Users      @relation(fields: [hostid], references: [uid])
-  hostid        Int
+  host          Users      @relation(fields: [hostid], references: [username])
+  hostid        String
   book          Book      @relation(fields: [bookid], references: [bookid])
   bookid        Int
 }
@@ -117,16 +116,16 @@ model Statistics {
 
 model BookSuggestions {
   booksuggestionid      Int     @id @default(autoincrement())
-  user          Users       @relation(fields: [uid], references: [uid])
-  uid           Int
+  user          Users       @relation(fields: [username], references: [username])
+  username      String
   book          Book        @relation(fields: [bookid], references: [bookid])
   bookid        Int
 }
 
 model GenreSuggestion {
   genresuggestionid     Int     @id @default(autoincrement())
-  user          Users       @relation(fields: [uid], references: [uid])
-  uid           Int
+  user          Users       @relation(fields: [username], references: [username])
+  username      String
   genre         Genres      @relation(fields: [genreid], references: [genreid])
   genreid       Int
 }
