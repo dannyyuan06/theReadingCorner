@@ -71,7 +71,7 @@ export default class User {
         this.lookedAtBulletin = data.lookedAtBulletin  
     }
 
-    static async uidMake(username: string): Promise<[userType|null, string]> {
+    static async usernameMake(username: string): Promise<[userType|null, string]> {
         try {
             const user = await prisma.users.findUnique({
                 where: {username}
@@ -158,20 +158,22 @@ export default class User {
     }
 
 
-    static async validatePassword(username: string, password: string):Promise<[boolean, string]> {
+    static async validatePassword(username: string, passwordStr: string):Promise<[boolean, userType|null]> {
         try {
             const user = await prisma.users.findUnique({
-                select: {
-                    password: true
-                },
                 where: {
                     username
                 }
             })
-            await bcrypt.compare(password, user!.password)
-            return [true, "Correct Password"]
+            const t:boolean = await bcrypt.compare(passwordStr, user!.password)
+            if (t) {
+                const { password , ...usefulInfo} = user!
+                return [true, usefulInfo]
+            }
+            return [false, null]
         } catch (error) {
-            return [false, `${error}`]
+            console.log(error)
+            return [false, null]
         }
     }
 }

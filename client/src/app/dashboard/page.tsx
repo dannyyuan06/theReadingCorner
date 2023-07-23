@@ -15,8 +15,8 @@ export default function Home() {
           <MessagesTile/>
         </div>
         <div className={styles.right}>
-          <BookSuggestionTile/>
-          <StatisticsTile/>
+          {/* <BookSuggestionTile/>
+          <StatisticsTile/> */}
         </div>
       </div>
     </div>
