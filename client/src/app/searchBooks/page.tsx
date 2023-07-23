@@ -10,7 +10,7 @@ export default function members() {
 
     return(
         <div>
-            <PageHeader>MEMBERS</PageHeader>
+            <PageHeader>SEARCH BOOKS</PageHeader>
             <div className={styles.searchBar}>
                 <Image alt="Search Button" src="/images/search_icon.svg" width={30} height={30}/>
                 <input className={styles.searchInput} type="search" results={2} placeholder="Search by username"/>

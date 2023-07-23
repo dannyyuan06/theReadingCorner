@@ -1,9 +1,8 @@
 'use client'
-
 import { signIn } from "next-auth/react"
 
-export function SignInButton() {
+export function SignInButton({className}: {className: string}) {
     return (
-        <button onClick={() => signIn()}>Sign In</button>
+        <button className={className} onClick={() => signIn()}>Sign In</button>
     )
 }

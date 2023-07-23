@@ -41,4 +41,20 @@ export default class Book {
             return [null, error]
         }
     }
+
+    static async queryBooks(bookname: string) {
+        try {
+            const response = await fetch(
+              `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(
+                bookname
+              )}&maxResults=10&key=${process.env.GOOGLE_BOOKS_API_KEY}`
+            );
+      
+            const data = await response.json();
+            const booksData = data.items || [];
+            return booksData
+          } catch (error) {
+            console.error('Error searching books:', error);
+          }
+    }
 }
