@@ -1,4 +1,48 @@
-export { default } from 'next-auth/middleware'
+import { withAuth } from "next-auth/middleware"
+import { NextResponse } from "next/server"
+
+
+const scopes = [
+    {
+        pathname: "/dashboard/admin",
+        accessLevel: (accessLevel: number) => accessLevel < 3,
+        redirect: "/dashboard"
+    },
+    {
+        pathname: "/dashboard",
+        accessLevel: (accessLevel: number) => accessLevel == 3,
+        redirect: "/dashboard/admin"
+    },
+    {
+        pathname: "/clubStatistics",
+        accessLevel: (accessLevel: number) => accessLevel < 3,
+        redirect: "/unauthorised"
+    },
+    {
+        pathname: "/members",
+        accessLevel: (accessLevel: number) => accessLevel < 3,
+        redirect: "/unauthorised"
+    },
+]
+
+export default withAuth(
+  // `withAuth` augments your `Request` with the user's token.
+  function middleware(req) {
+    console.log(parseInt(req.nextauth.token?.accessLevel!.toString()));
+    for (let i=0;i<scopes.length;i++) {
+        const {pathname, accessLevel, redirect} = scopes[i]
+        if (req.nextUrl.pathname.match(pathname) && accessLevel(parseInt(req.nextauth.token?.accessLevel!.toString()))) {
+            return NextResponse.rewrite(new URL(redirect, req.url))
+        }
+    }
+  },
+  {
+    callbacks: {
+      authorized: ({ token }) => !!token,
+    },
+  }
+)
+
 export const config = {
     matcher: [
         "/aboutOutClub/:path*",

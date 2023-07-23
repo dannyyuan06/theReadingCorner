@@ -8,25 +8,48 @@ import User from "@/models/User";
 
 const callbacks:{[id: string]: any} = {}
 
-
-
-callbacks.signIn = async (
-        user: UserType | null | undefined, 
-        account: Account | null | undefined, 
-        metadata: Profile | null | undefined
-    ) => {
-    if (user) {
-        const email = user!.email
-        const [databaseUser, error] = await User.emailMake(email!)
-
-        if (databaseUser) {
-            return Promise.resolve('/register')
-        }
-        else console.log(error)
-    }
-    return null
+type propsType = {
+    user: UserType | null | undefined, 
+    account: Account | null | undefined, 
+    metadata: Profile | null | undefined
 }
 
+callbacks.signIn = async ({
+        user, 
+        account, 
+        metadata
+    }: propsType) => {
+    if (user) {
+        if (account!.type === "credentials") return true
+        else if (account!.type === "oauth") {
+            const email = user.email
+            const res = email ? User.emailMake(email) : null
+            if (res) return true
+            else {
+                const {id, ...usefulInfo} = user!
+                const queryParameters = new URLSearchParams()
+                queryParameters.append("name", usefulInfo.name!)
+                queryParameters.append("email", email!)
+                queryParameters.append("picture", usefulInfo.image!)
+                return '/register/oauth?' + queryParameters.toString()
+            }
+        }
+    }
+    return false
+}
+
+callbacks.redirect = async () => '/dashboard'
+
+callbacks.jwt = async ({ token, user, account, profile }: {token: any, user:any, account:any, profile:any}) => {
+    if (token.accessLevel) return token
+    const [use, err] = await User.emailMake(token.email)
+    return {...token, ...use}
+}
+
+callbacks.session = async ({session, token, user}: any) => {
+    const sessionRe = {...session, ... user, ...token}
+    return sessionRe
+}
 
 const handler = NextAuth({
     providers: [
@@ -48,7 +71,7 @@ const handler = NextAuth({
                     // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
                     // You can also use the `req` object to obtain additional parameters
                     // (i.e., the request IP address)
-                    const res = await fetch(process.env.NEXT_PUBLIC_PASSWORD_API!, {
+                    const res = await fetch(process.env.NEXT_PUBLIC_HOST! + "api/users/login", {
                         method: 'POST',
                         body: JSON.stringify(credentials),
                         headers: { "Content-Type": "application/json" }
@@ -66,17 +89,25 @@ const handler = NextAuth({
         }),
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID!,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET!
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
         }),
         FacebookProvider({
             clientId: process.env.FACEBOOK_CLIENT_ID!,
-            clientSecret: process.env.FACEBOOK_CLIENT_SECRET!
+            clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
         }),
         TwitterProvider({
             clientId: process.env.TWITTER_CLIENT_ID!,
             clientSecret: process.env.TWITTER_CLIENT_SECRET!,
+            version: "2.0",
         })
     ],
+    pages: {
+        signIn: '/signIn',
+        // signOut: '/auth/signout',
+        // error: '/auth/error', // Error code passed in query string as ?error=
+        // verifyRequest: '/auth/verify-request', // (used for check email message)
+        newUser: '/auth/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)
+    },
     session: {
         strategy: "jwt"
     },

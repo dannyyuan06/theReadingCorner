@@ -69,7 +69,6 @@ export function BookRatings({pageCount}: {pageCount: number}) {
 
     const pageHandler = (e: FormEvent<HTMLInputElement>) => {
         const number = parseInt(e.currentTarget.value)
-        console.log(number)
         if (number <= pageCount) {
             setPage(number)
         }

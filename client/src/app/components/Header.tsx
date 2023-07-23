@@ -3,15 +3,13 @@ import { signOut, useSession } from 'next-auth/react'
 import styles from './Header.module.css'
 
 export function Header() {
-    const {data: session, status} = useSession()
-
-    console.log(session, status)
+    const {status} = useSession()
      
     const signouthandler = () => {
-        signOut()
+        signOut({ redirect: true, callbackUrl: process.env.NEXT_PUBLIC_HOST! })
     }
 
-    return (
+    return status === "authenticated" && (
         <div className={styles.container}>
             <button onClick={signouthandler}>
                 Logout
