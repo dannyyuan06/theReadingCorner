@@ -6,7 +6,7 @@ import { useState } from "react";
 
 let timeout:ReturnType<typeof setTimeout>
 
-export function ProfileMini() {
+export function ProfileMini({name, lastOnline, picture}: {name: string, lastOnline: string, picture: string}) {
 
     const [showProfile, setShowProfile] = useState(false)
 
@@ -22,10 +22,10 @@ export function ProfileMini() {
 
     return (
         <div className={styles.container}>
-            <Image onMouseEnter={mouseEnterHandler} onMouseLeave={mouseLeaveHandler} alt='profile picture placeholder' src="/images/profile_picture_placeholder.png" width={40} height={40}/>
+            <Image onMouseEnter={mouseEnterHandler} onMouseLeave={mouseLeaveHandler} alt='profile picture placeholder' src={picture} width={40} height={40}/>
             <div className={styles.userMeta}>
-                <div className={styles.userName}>Danny Yuan</div>
-                <div className={styles.userTimestamp}>Today at 18:31</div>
+                <div className={styles.userName}>{name}</div>
+                <div className={styles.userTimestamp}>{lastOnline}</div>
             </div>
             {showProfile && <ProfileDropDown setShowProfile={setShowProfile}/>}
         </div>

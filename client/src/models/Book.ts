@@ -1,4 +1,6 @@
+import { BookType } from "@/app/bookexample"
 import { prisma } from "@/prisma/db"
+import { Book as BookPrismaType } from "@prisma/client"
 
 export const booksInit = {
     bookid: -1,
@@ -31,7 +33,7 @@ export default class Book {
         this.description = description
     }
 
-    static async bookidMake(bookid: number) {
+    static async bookidMake(bookid: string) {
         try {
             const book = await prisma.book.findUnique({
                 where: {bookid}
@@ -55,6 +57,37 @@ export default class Book {
             return booksData
           } catch (error) {
             console.error('Error searching books:', error);
+            return null
           }
+    }
+
+    static checkBookName(bookName: string) {
+        return bookName.length > 0 && bookName.length <= 100
+    }
+
+    static async getBookWithId(volumeId: string):Promise<BookType|null> {
+        try {
+            const response = await fetch(
+              `https://www.googleapis.com/books/v1/volumes/${volumeId}?key=${process.env.GOOGLE_BOOKS_API_KEY}`
+            );
+            const data = await response.json();
+            return data
+          } catch (error) {
+            console.error('Error getting book by ID:', error);
+          }
+        return null
+    }
+
+
+    static async addBookInDatabase(book:BookPrismaType) {
+      try {
+        const res = await prisma.book.create({
+          data: book
+        })
+        return res
+      } catch (error) {
+        console.error('Error getting book by ID:', error);
+      }
+      return null
     }
 }

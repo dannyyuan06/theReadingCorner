@@ -1,6 +1,7 @@
 import { prisma } from "@/prisma/db";
 import { booksType } from "./Book";
 import * as bcrypt from 'bcrypt'
+import { userBookWithBook } from "./UserBook";
 
 // Initiallisation
 
@@ -32,10 +33,30 @@ export const clientUser = {
     accessLevel: -1,
     description: "",
     password: "",
-    profilePicture: "/images/profile_picture_placeholer.png"
+    profilePicture: "/images/profile_picture_placeholder.png"
 }
 
 export type clientUserType = typeof clientUser
+
+type getProfileInfoReturnType = {
+    username: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    lastOnline: Date;
+    joinDate: Date;
+    numBulletinPosts: number;
+    numReview: number;
+    numBooksRead: number;
+    profilePicture: string;
+    accessLevel: number,
+    description: string,
+    meanScore: number,
+    daysRead: number,
+    lookedAtBulletin: boolean,
+    booksRead: userBookWithBook[],
+    friends: userType[]
+}
 
 export default class User {
     username:          string;
@@ -88,6 +109,11 @@ export default class User {
             const user = await prisma.users.findFirst({
                 where: {email: email}
             })
+            console.log("email Make")
+            await prisma.users.update({
+                where: {username: user?.username},
+                data: {lastOnline: new Date()}
+            })
             const {password, ...otherUser} = user!
             return [new User(otherUser), ""]
         } catch (error) {
@@ -123,10 +149,12 @@ export default class User {
         }
     }
 
-    async getProfileInfo(): Promise<[{booksRead: booksType[], friends: userType[]}|null, string]> {
+    
+
+    static async getProfileInfo(username: string): Promise<[getProfileInfoReturnType|null, string]> {
         try {  
             const user = await prisma.users.findUnique({
-                where: {username: this.username},
+                where: {username},
                 include: {
                     booksRead: {
                         include: {
@@ -146,9 +174,11 @@ export default class User {
                 }
             })
             const friends = [...user!.friend1.map(friend => friend.friend2), ...user!.friend2.map(friend => friend.friend1)].sort()
+            const {friend1, friend2, ...usefulUserInfo} = user!
             const usefulInfo = {
-                booksRead: user!.booksRead.map(book => book.book),
-                friends: friends
+                ...usefulUserInfo,
+                booksRead: user!.booksRead.map(book => ({...book, ...book.book})),
+                friends: friends,
             }
             return [usefulInfo, ""]
             

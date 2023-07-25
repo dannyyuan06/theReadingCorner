@@ -15,7 +15,7 @@ const userModel = {
     accessLevel: 1,
     description: "",
     password: "",
-    profilePicture: "/images/profile_picture_placeholer.png"
+    profilePicture: "/images/profile_picture_placeholder.png"
 }
 
 export type userModelType = typeof userModel

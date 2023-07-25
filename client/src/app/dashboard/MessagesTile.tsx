@@ -7,8 +7,8 @@ export function MessagesTile() {
         <div>
             <Link href='/bulletinBoard' className={tStyles.title}><h2>RECENT MESSAGES</h2></Link>
             <div className={tStyles.container}>
-                <WithoutBookMessage/>
-                <WithoutBookMessage/>
+                {/* <WithoutBookMessage/>
+                <WithoutBookMessage/> */}
             </div>
         </div>
     )
