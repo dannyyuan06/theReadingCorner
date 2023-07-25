@@ -37,16 +37,16 @@ model Users {
 }
 
 model Book {
-  bookid        Int     @id
+  bookid        String     @id
   bookPicture   String
   title         String
   author        String
   description   String
   usersRead     UserBook[]
-  messages      BulletinBoardMessages[]
   meetings      Meetings[]
   currentlyR    CurrentlyReading[]
   suggestions   BookSuggestions[]
+  bulletinBoardBooks BulletinBoardBooks[]
 }
 
 model UserBook {
@@ -59,7 +59,7 @@ model UserBook {
   user          Users      @relation(fields: [username], references: [username])
   username      String
   book          Book      @relation(fields: [bookid], references: [bookid])
-  bookid        Int
+  bookid        String
 }
 
 model Friends {
@@ -73,14 +73,20 @@ model Friends {
 }
 
 model BulletinBoardMessages {
-  messageid     Int       @id @default(autoincrement())
-  title         String
-  body          String
-  dateCreated   DateTime  @default(now())
-  user          Users      @relation(fields: [username], references: [username])
-  username      String
-  book          Book      @relation(fields: [bookid], references: [bookid])
-  bookid        Int
+  messageid               Int       @id @default(autoincrement())
+  body                    String
+  dateCreated             DateTime  @default(now())
+  user                    Users      @relation(fields: [username], references: [username])
+  username                String
+  books                   BulletinBoardBooks[]
+}
+
+model BulletinBoardBooks {
+  bulletinboardbookid   Int   @id @default(autoincrement())
+  book                  Book  @relation(fields: [bookid], references: [bookid])
+  bookid                String 
+  bulletinBoardMessage  BulletinBoardMessages @relation(fields: [messageid], references: [messageid])
+  messageid             Int
 }
 
 model Meetings {
@@ -92,13 +98,13 @@ model Meetings {
   host          Users      @relation(fields: [hostid], references: [username])
   hostid        String
   book          Book      @relation(fields: [bookid], references: [bookid])
-  bookid        Int
+  bookid        String
 }
 
 model CurrentlyReading {
   readid        Int       @id @default(autoincrement())
   book          Book      @relation(fields: [bookid], references: [bookid])
-  bookid        Int
+  bookid        String
   averageRating Float
   dateStarted   DateTime  @default(now())
   pageNumber    Int
@@ -119,7 +125,7 @@ model BookSuggestions {
   user          Users       @relation(fields: [username], references: [username])
   username      String
   book          Book        @relation(fields: [bookid], references: [bookid])
-  bookid        Int
+  bookid        String
 }
 
 model GenreSuggestion {
