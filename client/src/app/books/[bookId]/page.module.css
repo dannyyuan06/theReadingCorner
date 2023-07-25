@@ -1,3 +1,6 @@
+.container {
+    padding-bottom: 8vw;
+}
 
 .bodyContainer {
     display: flex;

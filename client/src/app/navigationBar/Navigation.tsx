@@ -38,7 +38,7 @@ export function Navigation() {
                 </Link>
                 <ul className={styles.ul}>
                     <NavigationButton currentPage={page} pageTitle='dashboard'/>
-                    <ProfileButton currentPage={page} pageTitle='profile'/>
+                    <ProfileButton currentPage={page} pageTitle='profile' username={data?.username}/>
                     {data?.accessLevel === 3 && (
                         <>
                             <NavigationButton currentPage={page} pageTitle='members'/>
