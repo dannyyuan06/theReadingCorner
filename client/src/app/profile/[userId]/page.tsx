@@ -55,9 +55,9 @@ export default async function Profile({ params }: {params: {userId: string}}) {
                             <span className={styles.splitRight}>Mean Score: {user.meanScore}</span>
                         </div>
                         <div>
-                            {user.booksRead.map((book) => (
-                                <div key={book.bookid}>
-                                    <SmallBook key={book.bookid} book={book}/>
+                            {user.booksRead.map((userbook) => (
+                                <div key={userbook.bookid}>
+                                    <SmallBook userbook={userbook}/>
                                 </div>
                             ))}
                         </div>
