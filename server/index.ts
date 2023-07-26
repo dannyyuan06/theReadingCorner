@@ -51,16 +51,3 @@ io.on('connection', (socket) => {
 server.listen(3001, () => {
     console.log('Server listening on port 3001')
 })
-
-
-
-function verifyJwt(token: string) {
-    try {
-      const secretKey = process.env.JWT_SECRET;
-      const decoded = jwt.verify(token, secretKey!);
-      return decoded as JwtPayload;
-    } catch (error) {
-      console.log(error);
-      return null;
-    }
-  }

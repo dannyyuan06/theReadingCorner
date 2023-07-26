@@ -38,7 +38,7 @@ export default async function Books({ params }: {params: {bookId: string}}) {
                     <Image priority={true} alt='books image' src={imageLink} width={200} height={320} style={{objectFit: 'contain', boxShadow: "var(--shadow-button-color)"}}/>
                 </div>
                 <div className={styles.rightBody}>
-                    <BookRatings pageCount={book.volumeInfo.pageCount}/>
+                    <BookRatings book={book}/>
                 </div>
             </div>
             <div className={styles.bottomBody}>
@@ -67,6 +67,7 @@ export default async function Books({ params }: {params: {bookId: string}}) {
 }
 
 export async function getBook(bookid: string) {
-    const user = await Book.getBookWithId(bookid)
-    return user
+    const book = await Book.getBookWithId(bookid)
+    
+    return book
   }

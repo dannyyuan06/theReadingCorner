@@ -1,7 +1,9 @@
 'use client'
-import { FormEvent, useEffect, useState } from 'react'
+import { FormEvent, useEffect, useRef, useState } from 'react'
 import styles from './BookRatings.module.css'
 import { DropDownButton } from '@/app/components/DropDownButton'
+import { BookType } from '@/app/bookexample'
+import { useSession } from 'next-auth/react'
 
 type pageType = ""|number
 
@@ -18,64 +20,122 @@ const scoreArray = [
     "1 - Appalling"
 ]
 
-const statusArray = [
-    "Haven't Read",
-    "Reading",
-    "Finished",
-    "On Hold",
-    "Dropped"
-]
+const statusObj:{[id: string]: number} = {
+    "Haven't Read" : 0,
+    "Reading": 1,
+    "Finished": 2,
+    "On Hold": 3,
+    "Dropped": 4
+}
+const statusArray = Object.keys(statusObj)
 
 let pageTimeout: NodeJS.Timeout
 
-export function BookRatings({pageCount}: {pageCount: number}) {
+export function BookRatings({book}: {book: BookType}) {
+
+    const pageCount = book.volumeInfo.pageCount
 
     const [myScore, setMyScore] = useState<string|number>("-")
     const [myScoreWithWords, setMyScoreWithWords] = useState<string>("")
     const [status, setStatus] = useState<string>(statusArray[0])
     const [page, setPage] = useState<pageType>("")
-    const [changed, setChanged] = useState(false)
+    const userbookid = useRef("")
+    const changed = useRef(false)
 
-    useEffect(() => {
-        if (myScore === "-") {
-            setStatus(statusArray[0])
-        }
-        else {
-            setStatus(statusArray[1])
-        }
-    }, [myScore])
+    const { data }:any = useSession()
 
-    useEffect(() => {
-        const number = parseInt(myScoreWithWords)
-        setMyScore(Number.isNaN(number) ? "-" : number)
-    }, [myScoreWithWords])
+    const parseScore = (score: string) => {
+        const number = parseInt(score)
+        const numberScore = Number.isNaN(number) ? "-" : number
+        return numberScore
+    }
 
-    useEffect(() => {
-        if (status === statusArray[0]) {setPage("");setMyScore("-")}
-        else if (status === statusArray[1]) setPage(p => p === "" ? 1 : p)
-        else if (status === statusArray[2]) setPage(pageCount)
-    }, [status, pageCount])
+    const setStates = (scoreWithWords: string, status: number, page:pageType) => {
+        setMyScore(parseScore(scoreWithWords))
+        setMyScoreWithWords(scoreWithWords)
+        setStatus(statusArray[status])
+        setPage(page)
+        changed.current = true
+    }
 
-    useEffect(() => {
-        clearTimeout(pageTimeout)
-        pageTimeout = setTimeout(() => {
-            if (page === pageCount) setStatus("Finished")
-            else if (page === "") setStatus(statusArray[0])
-            else if (page <= pageCount) setStatus("Reading")
-        }, 1000);
-        setChanged(true)
-    }, [page, pageCount])
+    const updateStatus = (status: string) => {
+        if (statusArray[0] === status) setStates("", 0, "")
+        else if (statusArray[1] === status) setStates(myScoreWithWords, 1, page !== "" ? page : 1)
+        else if (statusArray[2] === status) setStates(myScoreWithWords, 2, pageCount)
+        else if (statusArray[3] === status) setStatus(status)
+        else if (statusArray[4] === status) setStatus(status)
+        else setStates("", 0, "")
+    }
 
+    const updatePageCount = (page: pageType) => {
+        if (page === pageCount) setStates(myScoreWithWords, 2, pageCount)//setStatus("Finished")
+        else if (page === "") setStates("-", 0, "")//setStatus(statusArray[0])
+        else if (page <= pageCount) setStates(myScoreWithWords, 1, page)//setStatus("Reading")
+    }
+
+    const updateScore = (scoreWithWords: string) => {
+        if (status === statusArray[0]) setStates(scoreWithWords, 1, 1)
+        else setStates(scoreWithWords, statusObj[status], page)
+    }
 
     const pageHandler = (e: FormEvent<HTMLInputElement>) => {
         const number = parseInt(e.currentTarget.value)
-        if (number <= pageCount) {
-            setPage(number)
+        if (number <= pageCount) updatePageCount(number)
+        else if (Number.isNaN(number)) updatePageCount("")
+    }
+
+    const submitHandler = async () => {
+        const request = {
+            book: book,
+            userbook: {
+                score: myScore,
+                status: statusObj[status],
+                page: page,
+                username: data.username,
+                bookid: book.id,
+                dateFinished: new Date(0)
+            }
         }
-        else if (Number.isNaN(number)) {
-            setPage("")
+        if (userbookid.current) {
+            const res = await fetch(process.env.NEXT_PUBLIC_HOST! + "api/userbook/updateUserbook", {
+                method: 'POST',
+                body: JSON.stringify({...request.userbook, userbookid: userbookid.current}),
+                headers: { "Content-Type": "application/json" }
+            })
+            const body = await res.json()
+            console.log(body)
+        }
+        else {
+            const res = await fetch(process.env.NEXT_PUBLIC_HOST! + "api/userbook/addUserbook", {
+                method: 'POST',
+                body: JSON.stringify(request),
+                headers: { "Content-Type": "application/json" }
+            })
+            const body = await res.json()
+            console.log(body)
         }
     }
+
+    useEffect(() => {
+        if (!data) return
+        const request = {
+            username: data.username,
+            bookid: book.id
+        }
+        fetch(process.env.NEXT_PUBLIC_HOST! + "api/userbook/getUserbook", {
+            method: 'POST',
+            body: JSON.stringify(request),
+            headers: { "Content-Type": "application/json" }
+        })
+        .then(req => req.json())
+        .then(body => {
+            if (body !== null) {
+                const {score, status, page} = body
+                setStates(scoreArray[11-score], status, page)
+                userbookid.current = body.userbookid
+            }
+        })
+    }, [data])
 
     return (
         <div className={styles.container}>
@@ -87,12 +147,12 @@ export function BookRatings({pageCount}: {pageCount: number}) {
                 <hr/>
                 <div className={styles.score}>
                     <h2 className={styles.scoreTitle}>MY SCORE</h2>
-                    <DropDownButton buttons={scoreArray} state={myScore.toString()} setState={setMyScoreWithWords}/>
+                    <DropDownButton buttons={scoreArray} state={myScore.toString()} setState={updateScore}/>
                 </div>
                 <hr/>
                 <div className={styles.score}>
                     <h2 className={styles.scoreTitle}>STATUS</h2>
-                    <DropDownButton buttons={statusArray} state={status} setState={setStatus}/>
+                    <DropDownButton buttons={statusArray} state={status} setState={updateStatus}/>
                 </div>
                 <hr/>
                 <div className={styles.score}>
@@ -103,7 +163,7 @@ export function BookRatings({pageCount}: {pageCount: number}) {
                 </div>
             </div>
             <div className={styles.submitButtonWrapper}>
-                <button className={styles.submitButton}>
+                <button className={styles.submitButton} style={changed.current ? {backgroundColor: "var(--theme-blue)"}: {}} onClick={submitHandler}>
                     SUMBIT
                 </button>
             </div>

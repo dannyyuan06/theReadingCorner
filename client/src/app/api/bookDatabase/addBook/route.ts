@@ -9,6 +9,7 @@ export async function POST(req: NextRequest) {
     const book:BookPrismaType = {
         bookid: body.id,
         title: body.volumeInfo.title,
+        pageCount: body.volumeInfo.pageCount,
         author: body.volumeInfo.authors.join(", "),
         description: body.volumeInfo.description,
         bookPicture: Object.values(body.volumeInfo.imageLinks)[0]

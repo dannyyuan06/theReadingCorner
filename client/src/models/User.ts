@@ -2,6 +2,7 @@ import { prisma } from "@/prisma/db";
 import { booksType } from "./Book";
 import * as bcrypt from 'bcrypt'
 import { userBookWithBook } from "./UserBook";
+import { Book, UserBook, Users as UserPrismaType } from "@prisma/client";
 
 // Initiallisation
 
@@ -38,22 +39,7 @@ export const clientUser = {
 
 export type clientUserType = typeof clientUser
 
-type getProfileInfoReturnType = {
-    username: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    lastOnline: Date;
-    joinDate: Date;
-    numBulletinPosts: number;
-    numReview: number;
-    numBooksRead: number;
-    profilePicture: string;
-    accessLevel: number,
-    description: string,
-    meanScore: number,
-    daysRead: number,
-    lookedAtBulletin: boolean,
+interface getProfileInfoReturnType extends UserPrismaType {
     booksRead: userBookWithBook[],
     friends: userType[]
 }
@@ -158,7 +144,7 @@ export default class User {
                 include: {
                     booksRead: {
                         include: {
-                            book: true
+                            book: true,
                         }
                     },
                     friend1: {
@@ -177,7 +163,6 @@ export default class User {
             const {friend1, friend2, ...usefulUserInfo} = user!
             const usefulInfo = {
                 ...usefulUserInfo,
-                booksRead: user!.booksRead.map(book => ({...book, ...book.book})),
                 friends: friends,
             }
             return [usefulInfo, ""]
@@ -204,6 +189,48 @@ export default class User {
         } catch (error) {
             console.log(error)
             return [false, null]
+        }
+    }
+
+    static async addReadBook(userbook: UserBook) {
+        try {
+            const userBook = await prisma.userBook.create({
+                data: userbook
+            })
+            return [userBook, ""]
+        } catch (err) {
+            return [null, err]
+        }
+    }
+
+    static async hasReadBook(username: string, bookid: string) {
+        try {
+            const userbook = await prisma.userBook.findFirst({
+                where: {
+                    username: username,
+                    bookid: bookid
+                }
+            })
+            return [userbook, ""]
+        } catch(err) {
+            return [null, err]
+        }
+    }
+
+    static async updateReadBook(userbook: UserBook) {
+        try {
+            const userBook = await prisma.userBook.update({
+                where: {userbookid: userbook.userbookid},
+                data: {
+                    score: userbook.score,
+                    status: userbook.status,
+                    page: userbook.page,
+                    dateFinished: userbook.status === 2 ? new Date() : new Date(0)
+                }
+            })
+            return [userBook, ""]
+        } catch (err) {
+            return [null, err]
         }
     }
 }
