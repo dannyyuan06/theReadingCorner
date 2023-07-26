@@ -42,6 +42,7 @@ model Book {
   title         String
   author        String
   description   String
+  pageCount     Int
   usersRead     UserBook[]
   meetings      Meetings[]
   currentlyR    CurrentlyReading[]
@@ -132,12 +133,5 @@ model GenreSuggestion {
   genresuggestionid     Int     @id @default(autoincrement())
   user          Users       @relation(fields: [username], references: [username])
   username      String
-  genre         Genres      @relation(fields: [genreid], references: [genreid])
-  genreid       Int
-}
-
-model Genres {
-  genreid       Int   @id @default(autoincrement())
-  genreName     String
-  suggestions   GenreSuggestion[]
+  genre         String
 }

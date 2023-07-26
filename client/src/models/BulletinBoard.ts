@@ -15,9 +15,9 @@ export interface messagesWithBook extends BulletinBoardMessages {
 }
 
 export class BulletinBoard {
-    static async getMessages() {
+    static async getMessages(num: number) {
         const rest:getMessagesType[] = await prisma.bulletinBoardMessages.findMany({
-            take: 10,
+            take: num,
             orderBy: {
                 messageid: 'desc'
             },

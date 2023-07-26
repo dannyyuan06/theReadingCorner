@@ -21,7 +21,7 @@ export default async function bulletinBoard() {
 }
 
 async function getMessages() {
-    const messages = await BulletinBoard.getMessages()
+    const messages = await BulletinBoard.getMessages(10)
     return messages
 }
 
