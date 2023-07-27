@@ -2,7 +2,7 @@ import { prisma } from "@/prisma/db";
 import { booksType } from "./Book";
 import * as bcrypt from 'bcrypt'
 import { userBookWithBook } from "./UserBook";
-import { Book, UserBook, Users as UserPrismaType } from "@prisma/client";
+import { Book, UserBook, Users as UserPrismaType, Users } from "@prisma/client";
 
 // Initiallisation
 
@@ -135,6 +135,27 @@ export default class User {
         }
     }
 
+    static async getUsers(name?: string): Promise<[Users[]|null, string]> {
+        try {
+            if (name) {
+                const users = await prisma.users.findMany({
+                    take: 15,
+                    where: {
+                        username: {
+                            contains: name
+                        }
+                    }
+                })
+                return [users, ""]
+            }
+            const users = await prisma.users.findMany({
+                take: 15
+            })
+            return [users, ""]
+        } catch (error) {
+            return [null, `${error}`]
+        }
+    }
     
 
     static async getProfileInfo(username: string): Promise<[getProfileInfoReturnType|null, string]> {

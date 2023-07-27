@@ -33,14 +33,14 @@ export default class Book {
         this.description = description
     }
 
-    static async bookidMake(bookid: string) {
+    static async bookidMake(bookid: string): Promise<[BookPrismaType|null, string]> {
         try {
             const book = await prisma.book.findUnique({
                 where: {bookid}
             })
             return [book, ""]
         } catch (error) {
-            return [null, error]
+            return [null, `${error}`]
         }
     }
 

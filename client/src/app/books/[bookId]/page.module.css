@@ -2,6 +2,12 @@
     padding-bottom: 8vw;
 }
 
+.headerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
 .bodyContainer {
     display: flex;
     width: 100%;

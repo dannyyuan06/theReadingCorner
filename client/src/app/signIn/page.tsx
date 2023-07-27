@@ -9,7 +9,7 @@ import { passwordValidation } from '@/lib/validation/Password'
 import Link from 'next/link'
 
 
-export default function signInPage() {
+export default function SignInPage() {
     const [credentials, setCredentials] = useState({
         username: "",
         password: ""

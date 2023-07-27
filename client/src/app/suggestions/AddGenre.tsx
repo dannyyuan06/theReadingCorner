@@ -34,7 +34,7 @@ export function AddGenre({setDidAddGenre, setGenres}: {setDidAddGenre: Dispatch<
     
     useEffect(() => {
         if (bookInputText === "") setGenresDisplayed(genres)
-        else setGenresDisplayed(genresDisplayed.filter((genre) => genre.toLowerCase().includes(bookInputText.toLowerCase())))
+        else setGenresDisplayed(prev => prev.filter((genre) => genre.toLowerCase().includes(bookInputText.toLowerCase())))
     }, [bookInputText])
 
     return(

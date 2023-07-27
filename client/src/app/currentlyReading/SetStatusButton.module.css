@@ -1,0 +1,16 @@
+#container {
+    background-color: var(--theme-green);
+    padding: 8px 10px;
+    background-color: var(--theme-purple);
+    font-size: 1.3em;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.textContainer {
+    margin-top: 3px;
+    margin-right: 4px;
+}
+

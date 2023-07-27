@@ -10,7 +10,7 @@ export async function MessagesTile() {
             <Link href='/bulletinBoard' className={tStyles.title}><h2>RECENT MESSAGES</h2></Link>
             <div className={tStyles.container}>
                 {messages.map((message) => (
-                    <WithoutBookMessage message={message}/>
+                    <WithoutBookMessage key={message.messageid} message={message}/>
                 ))}
             </div>
         </div>

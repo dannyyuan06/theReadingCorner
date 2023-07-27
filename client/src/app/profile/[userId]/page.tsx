@@ -69,7 +69,7 @@ export default async function Profile({ params }: {params: {userId: string}}) {
 }
 
 
-export async function getUser(username: string) {
+async function getUser(username: string) {
     const user = await User.getProfileInfo(username)
     return user
   }

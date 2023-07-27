@@ -5,6 +5,7 @@ import { QuickInfo } from './QuickInfo'
 import { camelToTitle } from '@/app/navigationBar/camelAndTitle'
 import Image from 'next/image'
 import Book from '@/models/Book'
+import { AddToCurrentlyReading } from './AddToCurrentlyReading'
 
 const usefulKeys = [
     "title",
@@ -32,7 +33,10 @@ export default async function Books({ params }: {params: {bookId: string}}) {
 
     return (
         <div className={styles.container}>
-            <PageHeader>{book.volumeInfo.title}</PageHeader>
+            <div className={styles.headerContainer}>
+                <PageHeader>{book.volumeInfo.title}</PageHeader>
+                <AddToCurrentlyReading book={book}/>
+            </div>
             <div className={styles.bodyContainer}>
                 <div className={styles.leftBody}>
                     <Image priority={true} alt='books image' src={imageLink} width={200} height={320} style={{objectFit: 'contain', boxShadow: "var(--shadow-button-color)"}}/>
@@ -66,8 +70,7 @@ export default async function Books({ params }: {params: {bookId: string}}) {
     )
 }
 
-export async function getBook(bookid: string) {
+async function getBook(bookid: string) {
     const book = await Book.getBookWithId(bookid)
-    
     return book
   }

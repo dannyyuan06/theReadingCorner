@@ -4,7 +4,7 @@ import { PageHeader } from "../../components/PageHeader";
 import { Form } from "./Form";
 import styles from './page.module.css'
 
-export default function register() {
+export default function Register() {
 
     const searchParams = useSearchParams()
 

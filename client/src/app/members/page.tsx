@@ -3,8 +3,11 @@ import { PageHeader } from "../components/PageHeader";
 import { ProfileStandard } from "./ProfileStandard";
 import styles from './page.module.css'
 import { membersUsers, user } from "./users";
+import User from "@/models/User";
+import { Users } from "@prisma/client";
 
-export default function members() {
+export default async function members() {
+    const users = await getMembers()
     return(
         <div>
             <PageHeader>MEMBERS</PageHeader>
@@ -23,10 +26,15 @@ export default function members() {
                     <h3 style={{flex: 1, textAlign: 'right'}}>BOOKS READ</h3>
                     <span style={{width: 35}}></span>
                 </div>
-                {membersUsers.map((values: user) => (
+                {users.map((values: Users) => (
                     <ProfileStandard key={values.username} {... values}/>
                 ))}
             </div>
         </div>
     )
+}
+
+async function getMembers() {
+    const [users, err] = await User.getUsers()
+    return users ?? []
 }
