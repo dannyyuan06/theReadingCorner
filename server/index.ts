@@ -1,10 +1,6 @@
 import express from 'express'
 import http from 'http'
 import { Server } from 'socket.io'
-import jwt, { JwtPayload } from "jsonwebtoken";
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient()
 
 const app = express()
 const server = http.createServer(app)
@@ -27,8 +23,11 @@ io.on('connection', (socket) => {
     //     }
     // })
     // .then((res) => socket.emit("connected", res))
+    console.log("connection")
     socket.on('message', (message) => {
         io.emit("message", message)
+        console.log("message sent")
+
         // console.log(message, typeof message)
         // try {
         //     const prisma = new PrismaClient()
@@ -48,6 +47,6 @@ io.on('connection', (socket) => {
     })
 })
 
-server.listen(3001, () => {
-    console.log('Server listening on port 3001')
+server.listen(process.env.PORT || 8080, () => {
+    console.log(`Server listening on port ${process.env.PORT || 8080}`)
 })

@@ -12,10 +12,10 @@ export default function Home() {
         <div className={styles.textContainer}>
           <PageHeader>WECOME TO THE READING CORNER</PageHeader>
           <p>
-            Our Book Club brings together intersectional readers from all walks of life to celebrate unique stories from underrepresented authors, highlighting cultures, identities and experiences from diverse backgrounds. When you join our community, you'll connect with people who share your enthusiasm for lifelong learning. Engage in meaningful discussions, exchange book recommendations, and discover new perspectives that broaden your horizons.
+            Our Book Club brings together intersectional readers from all walks of life to celebrate unique stories from underrepresented authors, highlighting cultures, identities and experiences from diverse backgrounds. When you join our community, you&apos;ll connect with people who share your enthusiasm for lifelong learning. Engage in meaningful discussions, exchange book recommendations, and discover new perspectives that broaden your horizons.
           </p>
           <p>
-            By becoming a member, you'll have access to exclusive events, workshops, and discussions led by experts in various fields. Immerse yourself in a supportive environment where curiosity is celebrated and knowledge is shared.
+            By becoming a member, you&apos;ll have access to exclusive events, workshops, and discussions led by experts in various fields. Immerse yourself in a supportive environment where curiosity is celebrated and knowledge is shared.
           </p>
           <div className={styles.buttonContainer}>
             <SignInButton className={styles.authButton}/>

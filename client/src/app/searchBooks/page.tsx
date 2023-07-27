@@ -8,14 +8,14 @@ import { FormEvent, useState } from "react";
 
 const bookValuesExample = Object.values(bookexample)
 
-export default function members() {
-    const [bookValues, setBookValues] = useState<BookType[]>(bookValuesExample)
+export default function Members() {
+    const [bookValues, setBookValues] = useState<BookType[]>([])
 
     const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const formData = new FormData(e.currentTarget)
         const bookQuery = formData.get("search")!
-        if (bookQuery.length < 1 && bookQuery.length > 100) return
+        if (bookQuery.length < 4 || bookQuery.length > 100) return
         const res = await fetch(process.env.NEXT_PUBLIC_HOST! + "/api/books/findBooks",{
             method: 'POST',
             body: JSON.stringify({bookName: bookQuery}),
@@ -45,11 +45,12 @@ export default function members() {
                 </div>
                 {bookValues.map((value) => (
                     <BookStandard key={value.id} 
+                                    bookId={value.id}
                                     bookTitle={value.volumeInfo.title} 
                                     authors={value.volumeInfo.authors ? value.volumeInfo.authors.join(", ") : ""} 
                                     datePublished={value.volumeInfo.publishedDate}
                                     genre={value.volumeInfo.categories ? value.volumeInfo.categories.join(", "): ""}
-                                    image={Object.values(value.volumeInfo.imageLinks)[0]}/>
+                                    image={ value.volumeInfo.imageLinks ? Object.values(value.volumeInfo.imageLinks)[0] : '/images/book-placeholder.png'}/>
                 ))}
                 {/* {membersUsers.map((values: user) => (
                     <ProfileStandard key={values.username} {... values}/>

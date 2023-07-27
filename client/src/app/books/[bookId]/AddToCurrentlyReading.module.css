@@ -1,0 +1,49 @@
+.container {
+    background-color: var(--theme-purple);
+    display: block;
+    padding: 10px 15px;
+}
+
+.confirmation {
+    position: fixed;
+    background-color: var(--theme-see-through-grey);
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.confirmationWrapper {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 400px;
+    height: 260px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.buttonscontainer {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.buttonscontainer button {
+    padding: 5px 10px;
+    font-size: 1.4em;
+}
+
+
+.cancel {
+    background-color: var(--theme-orange);
+}
+
+.confirm {
+    background-color: var(--theme-green);
+}

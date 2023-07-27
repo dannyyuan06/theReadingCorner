@@ -27,7 +27,7 @@ export function BookAttackment({book, index, setBooks}: {book: Book, index: numb
                     </Link>
                     <div className={styles.booksInfoAutho}>{book.author}</div>
                 </div>
-                <div className={styles.booksInfoBlurb}>{book.description}</div>
+                <div className={styles.booksInfoBlurb} dangerouslySetInnerHTML={{__html: book.description}}/>
                 <div></div>
                 {
                     setBooks && 

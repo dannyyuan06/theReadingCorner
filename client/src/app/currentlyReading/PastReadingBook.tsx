@@ -3,29 +3,27 @@ import styles from './PastReadingBook.module.css'
 import { bookexample } from '../bookexample'
 import Link from 'next/link'
 import { allBooks } from '../bulletinBoard/books'
+import { getCurrentlyReadingBooksType } from '@/models/CurrentlyReading'
 
-export function PastReadingBook({book}: {book: string}) {
+export function PastReadingBook({currentlyReading}: {currentlyReading: getCurrentlyReadingBooksType}) {
+    const book = currentlyReading.book
     return (
         <div className={styles.container}>
-            <Link href={`/books/${allBooks[book].id}`}>
-                <Image alt="book placeholder" src={bookexample[book].volumeInfo.imageLinks.medium} width={100} height={155} className={styles.image}/>
+            <Link href={`/books/${book.bookid}`}>
+                <Image alt="book placeholder" src={book.bookPicture} width={100} height={155} className={styles.image}/>
             </Link>
             <div className={styles.textContainer}>
             <div className={styles.headerBodySeparator}>
                     <div className={styles.titles}>
-                        <Link href={`/books/${allBooks[book].id}`}><h2 className={styles.bookTitle}>{bookexample[book].volumeInfo.title}</h2></Link>
-                        <h3>AUTHOR{bookexample[book].volumeInfo.authors.length !== 1 && "S"}: {bookexample[book].volumeInfo.authors.join(", ")}</h3>
-                        <h3>START DATE: <span>04/05/2020</span></h3>
-                        <h3>GENRE: {bookexample[book].volumeInfo.mainCategory}</h3>
+                        <Link href={`/books/${book.bookid}`}><h2 className={styles.bookTitle}>{book.title}</h2></Link>
+                        <h3>AUTHOR{book.author.includes(',') && "S"}: {book.author}</h3>
+                        <h3>START DATE: <span>{(new Date(currentlyReading.dateStarted).toLocaleDateString("en-GB"))}</span></h3>
+                        <h3>STATUS: {currentlyReading.status}</h3>
                     </div>
                     <div className={styles.scoreContainer}>
                         <div className={styles.scoreWrapper}>
-                            <h3>SCORE</h3>
-                            <div className={styles.displayScore}>{bookexample[book].volumeInfo.averageRating * 2}</div>
-                        </div>
-                        <div className={styles.scoreWrapper}>
-                            <h3>MY SCORE</h3>
-                            <div className={styles.displayScore}>10</div>
+                            <h3>AVERAGE SCORE</h3>
+                            <div className={styles.displayScore}>{currentlyReading.averageRating * 2}</div>
                         </div>
                     </div>
                 </div>
