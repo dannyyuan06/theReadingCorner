@@ -1,0 +1,87 @@
+.fullContainer {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    background-color: var(--theme-see-through-grey);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.container {
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.scores {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex: 3;
+    margin-top: 5px;
+}
+
+.score {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+
+.myScore {
+    text-align: right;
+    width: 80px;
+    outline-width: 0;
+    border: 0;
+}
+
+.scoreRating {
+    font-size: 2em;
+    font-family: var(--font-header);
+    margin-left: auto;
+    font-weight: 700;
+    position: relative;
+    min-width: 100px;
+    text-align: right;
+}
+
+.pageNumber {
+    font-size: 1em;
+    font-family: var(--font-header);
+    font-weight: 700;
+    outline-width: 0;
+    border: 0;
+}
+
+.inputType {
+    background-color: var(--theme-input-light-grey);
+}
+
+.totalPages {
+    color: var(--theme-light-grey)
+}
+
+.submitButtonWrapper {
+    flex: 1;
+    display: flex;
+    margin-left: auto;
+    gap: 10px;
+}
+
+.submitButton, .cancelButton {
+    padding: 10px 20px;
+    background-color: var(--theme-light-light-grey);
+    margin-top: 20px;
+}
+
+.cancelButton {
+    background-color: var(--theme-orange);
+}

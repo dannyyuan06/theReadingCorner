@@ -1,46 +1,48 @@
+'use client'
 import Image from "next/image";
 import styles from "./CurrentlyReadingBook.module.css"
 import { bookexample } from "../bookexample";
 import { DispatchLink } from "../components/DispatchLink";
 import Link from "next/link";
 import { allBooks } from "../bulletinBoard/books";
+import { Book, CurrentlyReading } from "@prisma/client";
+import { getCurrentlyReadingBooksType } from "@/models/CurrentlyReading";
+import { SetStatusButton } from "./SetStatusButton";
+import { useState } from "react";
 
-export function CurrentlyReadingBook({book}: {book: string}) {
+export function CurrentlyReadingBook({currentlyReading}: {currentlyReading: getCurrentlyReadingBooksType}) {
+    const {book, ...currentBook} = currentlyReading
+
+    const [current, setCurrent] = useState(currentBook)
     return (
         <div className={styles.container}>
-            <Link href={`/books/${allBooks[book].id}`}>
-                <Image loading="eager" className={styles.image} alt="book placeholder" src={bookexample[book].volumeInfo.imageLinks.large} width={200} height={330}/>
+            <Link href={`/books/${book.bookid}`}>
+                <Image loading="eager" className={styles.image} alt="book placeholder" src={book.bookPicture} width={200} height={330}/>
             </Link>
             <div className={styles.textContainer}>
                 <div className={styles.headerBodySeparator}>
                     <div className={styles.titles}>
-                        <Link href={`/books/${allBooks[book].id}`}><h2 className={styles.bookTitle}>{bookexample[book].volumeInfo.title}</h2></Link>
-                        <h3>AUTHOR{bookexample[book].volumeInfo.authors.length !== 1 && "S"}: {bookexample[book].volumeInfo.authors.join(", ")}</h3>
-                        <h3>START DATE: <span>04/05/2020</span></h3>
-                        <h3>GENRE: {bookexample[book].volumeInfo.mainCategory}</h3>
+                        <Link href={`/books/${book.bookid}`}><h2 className={styles.bookTitle}>{book.title}</h2></Link>
+                        <h3>AUTHOR{book.author.includes(",") && "S"}: {book.author}</h3>
+                        <h3>START DATE: <span>{(new Date(current.dateStarted)).toLocaleDateString("en-GB")}</span></h3>
+                        <h3>PAGE: <span>{current.pageNumber}/{book.pageCount}</span></h3>
+                        <h3>STATUS: <span>{current.status}</span></h3>
                     </div>
                     <div className={styles.scoreContainer}>
                         <div className={styles.scoreWrapper}>
-                            <h3>SCORE</h3>
-                            <div className={styles.displayScore}>{bookexample[book].volumeInfo.averageRating * 2}</div>
-                        </div>
-                        <div className={styles.scoreWrapper}>
-                            <h3>MY SCORE</h3>
-                            <div className={styles.displayScore}>10</div>
+                            <h3>AVERAGE SCORE</h3>
+                            <div className={styles.displayScore}>{currentlyReading.averageRating * 2}</div>
                         </div>
                     </div>
                 </div>
-                <div className={styles.bodyWrapper}>
-                {bookexample[book].volumeInfo.description}
-                </div>
+                <div className={styles.bodyWrapper} dangerouslySetInnerHTML={{__html: book.description}}/>
                 <div className={styles.moreInfoWrapper}>
-                    <Link href={`/books/${allBooks[book].id}`}>
-                        <div className={styles.moreInfoButton}>
+                    <SetStatusButton currentlyReading={current} book={book} setCurrent={setCurrent}/>
+                    <Link href={`/books/${book.bookid}`}>
                             <span className={styles.moreInfoText}>MORE INFO</span>
                             <Image alt='Small Share Logo' src='/images/Share_Logo_Small.png' width={30} height={30}
                                 style={{ marginBottom: 5}}
                             />
-                        </div>
                     </Link>
                 </div>
             </div>

@@ -60,7 +60,7 @@ export function Form({name, email, picture}: propsType) {
 
             setIsCorrect(prev => ({...prev, ...objBool}))
         }
-    }, [])
+    }, [email, name, picture])
 
     const submitHandler = async (e:FormEvent<HTMLFormElement>) => {
         e.preventDefault();

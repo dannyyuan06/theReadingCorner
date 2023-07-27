@@ -1,5 +1,5 @@
 'use client'
-import { FormEvent, useEffect, useRef, useState } from 'react'
+import { FormEvent, useCallback, useEffect, useRef, useState } from 'react'
 import styles from './BookRatings.module.css'
 import { DropDownButton } from '@/app/components/DropDownButton'
 import { BookType } from '@/app/bookexample'
@@ -20,14 +20,14 @@ const scoreArray = [
     "1 - Appalling"
 ]
 
-const statusObj:{[id: string]: number} = {
+export const statusObj:{[id: string]: number} = {
     "Haven't Read" : 0,
     "Reading": 1,
     "Finished": 2,
     "On Hold": 3,
     "Dropped": 4
 }
-const statusArray = Object.keys(statusObj)
+export const statusArray = Object.keys(statusObj)
 
 let pageTimeout: NodeJS.Timeout
 
@@ -50,13 +50,13 @@ export function BookRatings({book}: {book: BookType}) {
         return numberScore
     }
 
-    const setStates = (scoreWithWords: string, status: number, page:pageType) => {
+    const setStates = useCallback((scoreWithWords: string, status: number, page:pageType) => {
         setMyScore(parseScore(scoreWithWords))
         setMyScoreWithWords(scoreWithWords)
         setStatus(statusArray[status])
         setPage(page)
         changed.current = true
-    }
+    }, [])
 
     const updateStatus = (status: string) => {
         if (statusArray[0] === status) setStates("", 0, "")
@@ -135,7 +135,7 @@ export function BookRatings({book}: {book: BookType}) {
                 userbookid.current = body.userbookid
             }
         })
-    }, [data])
+    }, [data, book.id, setStates])
 
     return (
         <div className={styles.container}>
@@ -158,7 +158,7 @@ export function BookRatings({book}: {book: BookType}) {
                 <div className={styles.score}>
                     <h2 className={styles.scoreTitle}>PAGE</h2>
                     <h1 className={styles.scoreRating}>
-                        <input type='number' onInput={pageHandler} value={page} className={styles.pageNumber + " " + styles.inputType} max={217} min={0} step={1}/>
+                        <input type='number' onInput={pageHandler} value={page} className={styles.pageNumber + " " + styles.inputType} max={pageCount} min={0} step={1}/>
                         <span className={styles.totalPages}>/{pageCount}</span></h1>
                 </div>
             </div>
