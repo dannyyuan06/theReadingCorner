@@ -5,6 +5,8 @@ import { MessagesTile } from '../dashboard/MessagesTile'
 import { StatisticsTile } from '../dashboard/StatisticsTile'
 import styles from './page.module.css'
 
+export const fetchCache = 'force-no-store';
+
 export default function Home() {
   return (
     <div className={styles.container}>

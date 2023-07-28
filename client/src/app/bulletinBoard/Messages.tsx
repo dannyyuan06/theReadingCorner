@@ -1,12 +1,7 @@
 'use client'
 import { useEffect, useState } from "react";
 import { WithoutBookMessage } from "./WithoutBookMessage"
-import { io, type Socket } from "socket.io-client";
-import type {
-    ServerToClientEvents,
-    ClientToServerEvents,
-  } from './socketTypes'
-import { Book, BulletinBoardBooks, BulletinBoardMessages, BulletinBoardMessagesPayload, Users } from "@prisma/client";
+import { Book, BulletinBoardBooks, BulletinBoardMessages } from "@prisma/client";
 import { getMessagesType } from "@/models/BulletinBoard";
 import Pusher from 'pusher-js';
 
@@ -20,7 +15,7 @@ export interface messagePropType extends BulletinBoardMessages {
     books: booksType[]
 }
 
-var pusher = new Pusher('31fa0b3eb21d6f9b7849', {
+const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_CLIENT_ID!, {
     cluster: 'eu'
   });
 export function Messages({messagesProp}: {messagesProp: getMessagesType[]}) {

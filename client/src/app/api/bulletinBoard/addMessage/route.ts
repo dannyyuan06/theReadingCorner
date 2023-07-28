@@ -10,8 +10,8 @@ export async function POST(req: NextRequest) {
 
     const pusher = new Pusher({
         appId: "1642447",
-        key: "31fa0b3eb21d6f9b7849",
-        secret: "b18a656e3fce9845c4dc",
+        key: process.env.NEXT_PUBLIC_PUSHER_CLIENT_ID!,
+        secret: process.env.PUSHER_CLIENT_SECRET!,
         cluster: "eu",
         useTLS: true,
     })
