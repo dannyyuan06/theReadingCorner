@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
     const body:BookType = await req.json()
 
-    const book:BookPrismaType = {
+    const book:any = {
         bookid: body.id,
         title: body.volumeInfo.title,
         pageCount: body.volumeInfo.pageCount,
