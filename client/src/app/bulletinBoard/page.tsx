@@ -6,6 +6,7 @@ import { Messages } from "./Messages";
 import { BulletinBoard } from "@/models/BulletinBoard";
 
 export const fetchCache = 'force-no-store';
+export const dynamic = 'force-dynamic'
 
 export default async function bulletinBoard() {
     const messages = await getMessages()

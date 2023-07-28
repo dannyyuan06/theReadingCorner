@@ -10,6 +10,7 @@ const books = ["1", "2", "3"]
 const genres = ["Romance", "Science Fiction", "Short Story", "Spirituality",]
 
 export const fetchCache = 'force-no-store';
+export const dynamic = 'force-dynamic'
 
 export default async function clubStatistics() {
     const {books, genres} = await getBooks()

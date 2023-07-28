@@ -4,6 +4,7 @@ import { CurrentlyReadingBook } from "./CurrentlyReadingBook";
 import styles from './page.module.css'
 import { CurrentlyReading } from "@/models/CurrentlyReading";
 
+export const dynamic = 'force-dynamic'
 export const fetchCache = 'force-no-store';
 
 export default async function currentlyReading() {
