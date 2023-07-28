@@ -1,3 +1,5 @@
+import User from "@/models/User"
+
 export const usernameFastValidation = async (text: string):Promise<[boolean, string]> => {
     // No spaces \S => non whitespace char, $ => End of expression
     const noSpacesRegex = /^\w*$/
@@ -16,15 +18,9 @@ export const usernameFastValidation = async (text: string):Promise<[boolean, str
     if (!(finalRegex.test(text))) return [false, "Username is invalid"]
 
     // Database Check
-    const res = await fetch("/api/users/findUser",{
-        method: 'POST',
-        body: JSON.stringify({username: text}),
-        headers: { "Content-Type": "application/json" }
-    })
+    const res = await User.usernameMake(text)
 
-    const js = await res.json()
-
-    if (js.res[0]) return [false, "Username taken!"]
+    if (res[0]) return [false, "Username taken!"]
 
     return [true, "Valid"]
 }
