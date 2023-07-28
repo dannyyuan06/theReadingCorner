@@ -59,7 +59,7 @@ export function SetStatus({currentlyReading, book, setClicked, setCurrent}: {cur
             status: statusObj[status],
         }
         if (changed.current) {
-            const res = await fetch(process.env.NEXT_PUBLIC_HOST! + "api/currentlyReading/updateBook", {
+            const res = await fetch("/api/currentlyReading/updateBook", {
                 method: 'POST',
                 body: JSON.stringify(request),
                 headers: { "Content-Type": "application/json" }

@@ -29,7 +29,7 @@ export function Form() {
     const submitHandler = async (e:FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!reduceCorrect) return
-        const res = await fetch(process.env.NEXT_PUBLIC_HOST! + "/api/users/addUser",{
+        const res = await fetch("/api/users/addUser",{
             method: 'POST',
             body: JSON.stringify({...formData, type: "credentials"}),
             headers: { "Content-Type": "application/json" }

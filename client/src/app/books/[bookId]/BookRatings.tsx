@@ -97,7 +97,7 @@ export function BookRatings({book}: {book: BookType}) {
             }
         }
         if (userbookid.current) {
-            const res = await fetch(process.env.NEXT_PUBLIC_HOST! + "api/userbook/updateUserbook", {
+            const res = await fetch("/api/userbook/updateUserbook", {
                 method: 'POST',
                 body: JSON.stringify({...request.userbook, userbookid: userbookid.current}),
                 headers: { "Content-Type": "application/json" }
@@ -106,7 +106,7 @@ export function BookRatings({book}: {book: BookType}) {
             console.log(body)
         }
         else {
-            const res = await fetch(process.env.NEXT_PUBLIC_HOST! + "api/userbook/addUserbook", {
+            const res = await fetch("/api/userbook/addUserbook", {
                 method: 'POST',
                 body: JSON.stringify(request),
                 headers: { "Content-Type": "application/json" }
@@ -122,7 +122,7 @@ export function BookRatings({book}: {book: BookType}) {
             username: data.username,
             bookid: book.id
         }
-        fetch(process.env.NEXT_PUBLIC_HOST! + "api/userbook/getUserbook", {
+        fetch("/api/userbook/getUserbook", {
             method: 'POST',
             body: JSON.stringify(request),
             headers: { "Content-Type": "application/json" }

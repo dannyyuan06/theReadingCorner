@@ -41,7 +41,7 @@ export function GenreSuggestions() {
     const { data }:any = useSession()
 
     const onSubmit = async () => {
-        const res = await fetch(process.env.NEXT_PUBLIC_HOST! + "api/genreSuggestions", {
+        const res = await fetch("/api/genreSuggestions", {
             method: 'POST',
             body: JSON.stringify(genres.map((genre) => ({genre: genre, username:data?.username}))),
             headers: { "Content-Type": "application/json" }

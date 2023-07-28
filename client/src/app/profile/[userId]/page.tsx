@@ -7,6 +7,7 @@ import { friends } from "./friends";
 import { SmallBook } from "./SmallBook";
 import User from "@/models/User";
 import { getLastOnlineStatus } from "./calculateDate";
+import { ProfilePic } from "./ProfilePic";
 
 export default async function Profile({ params }: {params: {userId: string}}) {
 
@@ -23,9 +24,7 @@ export default async function Profile({ params }: {params: {userId: string}}) {
             <PageHeader>{user.username}&apos;S PROFILE</PageHeader>
             <div className={styles.bodyContainer}>
                 <div className={styles.bodyLeft}>
-                    <div className={styles.profilePic}>
-                        <Image src="/images/profile_picture_placeholder.png" width={100} height={100} alt="profile picture placeholder"/>
-                    </div>
+                    <ProfilePic username={params.userId} profilePic={user.profilePicture}/>
                     <section>
                         <h3 className={styles.smallHeader}>QUICK INFO</h3>
                         <Split title="LAST ONLINE" value={getLastOnlineStatus(user.lastOnline)}/>

@@ -254,4 +254,16 @@ export default class User {
             return [null, err]
         }
     }
+
+    static async uploadAvatar(username: string, profilePicture: string) {
+        try {
+            const user = await prisma.users.update({
+                where: {username},
+                data: {profilePicture}
+            })
+            return [user, ""]
+        } catch (error) {
+            return [null, `${error}`]
+        }
+    }
 }
