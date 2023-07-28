@@ -12,7 +12,7 @@ type userType = {
 }
 
 export const users: userType = {
-    "1230": {
+    "testing1": {
         name: "Random Person",
         email: "randomperson1@nevergonnagive.you.up",
         address: "why is this here?",

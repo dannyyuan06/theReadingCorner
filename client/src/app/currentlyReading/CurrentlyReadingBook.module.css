@@ -47,14 +47,19 @@
 
 .bodyWrapper {
     margin-top: 20px;
+    height: 100px;
+    overflow: scroll;
+    padding-right: 10px;
 }
 
 .moreInfoWrapper {
+    display: flex;
     margin-top: auto;
+    margin-left: auto;
+    gap: 10px;
 }
 
-.moreInfoButton {
-    float: right;
+.moreInfoWrapper a {
     padding: 8px 10px;
     background-color: var(--theme-purple);
     font-size: 1.3em;
