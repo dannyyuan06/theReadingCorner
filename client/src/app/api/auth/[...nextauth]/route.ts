@@ -74,7 +74,8 @@ const handler = NextAuth({
                     const res = await fetch(process.env.NEXT_PUBLIC_HOST + "api/users/login", {
                         method: 'POST',
                         body: JSON.stringify(credentials),
-                        headers: { "Content-Type": "application/json" }
+                        headers: { "Content-Type": "application/json" },
+                        cache: 'no-cache'
                     })
                     const user = await res.json()
                 
