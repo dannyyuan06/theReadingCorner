@@ -8,10 +8,11 @@ type ReqBody = {
 
 export async function POST(request: NextRequest) {
     const body: ReqBody = await request.json()
+    console.log(body)
     const [isCorrect, user] = await User.validatePassword(body.username, body.password)
     
     if (isCorrect) {
         return NextResponse.json({...user})
     }
-    return NextResponse.json({status: 404})
+    return NextResponse.json({error: 'Incorrect Password'}, {status: 404})
 }
