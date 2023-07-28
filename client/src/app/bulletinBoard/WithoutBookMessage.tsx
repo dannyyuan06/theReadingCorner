@@ -13,8 +13,7 @@ export function WithoutBookMessage({message}: {message: getMessagesType}) {
         <div className={styles.container}>
             <hr/>
             <div className={styles.userContainer}>
-                <ProfileMini name='Danny' lastOnline={getLastOnlineStatus(new Date(message.dateCreated))} picture={message.user.profilePicture}/>
-                
+                <ProfileMini name={message.username} lastOnline={getLastOnlineStatus(new Date(message.dateCreated))} picture={message.user.profilePicture}/>
                 <MoreButton buttons={["Reply", "Save", "Share", "Report"]}/>
             </div>
             <p className={styles.paragraphs}>
