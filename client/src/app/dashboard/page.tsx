@@ -6,6 +6,7 @@ import { StatisticsTile } from '../dashboard/StatisticsTile'
 import styles from './page.module.css'
 
 export const fetchCache = 'force-no-store';
+export const dynamic = 'force-dynamic'
 
 export default function Home() {
   return (

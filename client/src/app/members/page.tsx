@@ -2,11 +2,11 @@ import Image from "next/image";
 import { PageHeader } from "../components/PageHeader";
 import { ProfileStandard } from "./ProfileStandard";
 import styles from './page.module.css'
-import { membersUsers, user } from "./users";
 import User from "@/models/User";
 import { Users } from "@prisma/client";
 
 export const fetchCache = 'force-no-store';
+export const dynamic = 'force-dynamic'
 
 export default async function members() {
     const users = await getMembers()
