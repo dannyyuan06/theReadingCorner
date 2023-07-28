@@ -5,17 +5,7 @@ import Image from 'next/image'
 import { AddBook } from '../components/AddBook'
 import { BookAttackment } from '../components/BookAttachment'
 import { useSession } from 'next-auth/react'
-import { io, type Socket } from "socket.io-client";
-import type {
-    ServerToClientEvents,
-    ClientToServerEvents,
-  } from './socketTypes'
-import { Book, BulletinBoardBooks, BulletinBoardMessages } from '@prisma/client'
-import { messagePropType } from './Messages'
-import { BookType } from '../bookexample'
-import { messagesWithBook } from '@/models/BulletinBoard'
-
-// let socket: Socket<ServerToClientEvents, ClientToServerEvents> | null = null;
+import { Book } from '@prisma/client'
 
 const textCap = 5000
 
@@ -47,7 +37,6 @@ export function InputText() {
     }
 
     const clickHandler = async () => {
-        // socket = io(process.env.NEXT_PUBLIC_BULLETINBOARD_HOST!)
         const message = {
             body: textContent,
             username: data?.username,
@@ -63,14 +52,6 @@ export function InputText() {
             }),
             headers: { "Content-Type": "application/json" }
         })
-        const body = await res.json()
-        // socket.emit("message", {
-        //     ...message, 
-        //     user: data!, 
-        //     messageid: body.messageid, 
-        //     books: books.map(book => ({book})),
-        //     dateCreated: new Date()
-        // })
         setTextContent("")
         setDidAddBook(false)
         setBooks([])

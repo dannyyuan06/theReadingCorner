@@ -3,6 +3,7 @@ import { FutureMeeting } from "./FutureMeetings";
 import { Meeting } from "./Meeting";
 import styles from './page.module.css'
 
+export const fetchCache = 'force-no-store';
 
 export default function meetings() {
     return (
