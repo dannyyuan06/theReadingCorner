@@ -13,7 +13,7 @@ export function BookSuggestions() {
     const { data }:any = useSession()
 
     const onSubmit = async () => {
-        const res = await fetch(process.env.NEXT_PUBLIC_HOST! + "api/bookSuggestions", {
+        const res = await fetch("/api/bookSuggestions", {
             method: 'POST',
             body: JSON.stringify(books.map((book) => ({bookid: book.bookid, username:data?.username}))),
             headers: { "Content-Type": "application/json" }

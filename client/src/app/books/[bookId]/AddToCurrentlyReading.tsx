@@ -9,7 +9,7 @@ export function AddToCurrentlyReading({book}: {book: BookType}) {
     const { data }:any = useSession()
 
     const submitHandler = async () => {
-        const res = await fetch(process.env.NEXT_PUBLIC_HOST! + "api/currentlyReading/addBook", {
+        const res = await fetch("/api/currentlyReading/addBook", {
             method: 'POST',
             body: JSON.stringify(book),
             headers: { "Content-Type": "application/json" }

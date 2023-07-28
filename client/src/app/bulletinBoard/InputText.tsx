@@ -15,7 +15,7 @@ import { messagePropType } from './Messages'
 import { BookType } from '../bookexample'
 import { messagesWithBook } from '@/models/BulletinBoard'
 
-let socket: Socket<ServerToClientEvents, ClientToServerEvents> | null = null;
+// let socket: Socket<ServerToClientEvents, ClientToServerEvents> | null = null;
 
 const textCap = 5000
 
@@ -47,25 +47,30 @@ export function InputText() {
     }
 
     const clickHandler = async () => {
-        socket = io(process.env.NEXT_PUBLIC_BULLETINBOARD_HOST!)
+        // socket = io(process.env.NEXT_PUBLIC_BULLETINBOARD_HOST!)
         const message = {
             body: textContent,
             username: data?.username,
             books: books,
         }
-        const res = await fetch(process.env.NEXT_PUBLIC_HOST + "api/bulletinBoard/addMessage", {
+        const res = await fetch("/api/bulletinBoard/addMessage", {
             method: 'POST',
-            body: JSON.stringify({message: message}),
+            body: JSON.stringify({
+                message: message, 
+                user: data!,
+                books: books.map(book => ({book})),
+                dateCreated: new Date()
+            }),
             headers: { "Content-Type": "application/json" }
         })
         const body = await res.json()
-        socket.emit("message", {
-            ...message, 
-            user: data!, 
-            messageid: body.messageid, 
-            books: books.map(book => ({book})),
-            dateCreated: new Date()
-        })
+        // socket.emit("message", {
+        //     ...message, 
+        //     user: data!, 
+        //     messageid: body.messageid, 
+        //     books: books.map(book => ({book})),
+        //     dateCreated: new Date()
+        // })
         setTextContent("")
         setDidAddBook(false)
         setBooks([])
@@ -75,7 +80,7 @@ export function InputText() {
     return (
         <div className={styles.container}>
             <div className={styles.textWithProfile}>
-                <Image alt="profile picture placeholder" src="/images/profile_picture_placeholder.png" width={50} height={50}/>
+                <Image alt="profile picture placeholder" src={data?.profilePicture} width={50} height={50}/>
                 <div className={styles.textInputContainer}>
                     <div  contentEditable
                             className={styles.newMessageInput}

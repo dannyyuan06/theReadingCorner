@@ -21,7 +21,7 @@ export function AddBook({setDidAddBook, setBooks}: {setDidAddBook: Dispatch<SetS
         e.preventDefault()
         selectedBook === null ? setNoBookSelected(0) : setNoBookSelected(1)
         if (selectedBook !== null) {
-            fetch(process.env.NEXT_PUBLIC_HOST + "api/bookDatabase/addBook", {
+            fetch("/api/bookDatabase/addBook", {
                 method: 'POST',
                 body: JSON.stringify(selectedBook),
                 headers: { "Content-Type": "application/json" }
@@ -42,7 +42,7 @@ export function AddBook({setDidAddBook, setBooks}: {setDidAddBook: Dispatch<SetS
     const inputHander = (e: ChangeEvent<HTMLInputElement>) => {
         clearTimeout(timer ?? "")
         timer = setTimeout(() => {
-            fetch(process.env.NEXT_PUBLIC_HOST + "api/books/findBooks",{
+            fetch("/api/books/findBooks",{
                 method: 'POST',
                 body: JSON.stringify({bookName: e.target.value}),
                 headers: { "Content-Type": "application/json" }
