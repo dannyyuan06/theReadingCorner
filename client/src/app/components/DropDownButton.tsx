@@ -3,7 +3,7 @@ import { Dispatch, LegacyRef, MutableRefObject, RefObject, SetStateAction, Synth
 import styles from './DropDownButton.module.css'
 import { DropDownMenu } from './DropDownMenu';
 
-export function DropDownButton({buttons, state, setState} : {buttons: string[], state: string, setState: Dispatch<SetStateAction<string>>}) {
+export function DropDownButton({buttons, state, setState} : {buttons: string[], state: string, setState: Dispatch<SetStateAction<any>>|((score: string) => void)}) {
     const [clicked, setClicked] = useState(false)
     const wrapperRef = useRef<any|HTMLElement>(null)
 

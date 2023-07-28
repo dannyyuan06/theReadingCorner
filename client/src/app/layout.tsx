@@ -3,6 +3,9 @@ import { Inter } from 'next/font/google'
 import { Navigation } from './navigationBar/Navigation'
 import styles from './layout.module.css'
 import { ReduxProvider } from '@/redux/Provider'
+import { SessionProvider } from 'next-auth/react'
+import { SessionProviders } from './components/SessionProviders'
+import { Header } from './components/Header'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,12 +25,15 @@ export default function RootLayout({
         <link rel="stylesheet" href="https://use.typekit.net/gzh2kwv.css"/>
       </head>
       <body className={inter.className}>
-        <ReduxProvider>
-          <Navigation/>
-          <div className={styles.bodyContainer}>
-            {children}
-          </div>
-        </ReduxProvider>
+        <SessionProviders>
+          <ReduxProvider>
+            <Navigation/>
+            <div className={styles.bodyContainer}>
+              <Header/>
+              {children}
+            </div>
+          </ReduxProvider>
+        </SessionProviders>
       </body>
     </html>
   )

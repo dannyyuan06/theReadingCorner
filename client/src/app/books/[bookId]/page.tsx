@@ -3,9 +3,9 @@ import styles from './page.module.css'
 import { BookRatings } from './BookRatings'
 import { QuickInfo } from './QuickInfo'
 import { camelToTitle } from '@/app/navigationBar/camelAndTitle'
-import { allBooks } from '@/app/bulletinBoard/books'
-import { bookexample } from '@/app/bookexample'
 import Image from 'next/image'
+import Book from '@/models/Book'
+import { AddToCurrentlyReading } from './AddToCurrentlyReading'
 
 const usefulKeys = [
     "title",
@@ -16,22 +16,33 @@ const usefulKeys = [
     "printType",
     "ratingsCount",
     "categories",
-    "mainCategory"
 ]
 
-export default function Books({ params }: {params: {bookId: string}}) {
+export default async function Books({ params }: {params: {bookId: string}}) {
 
-    const desc = allBooks[params.bookId].volumeInfo.description
+    const book = await getBook(params.bookId)
+    // @ts-ignore
+    if (!book || book.error) return (
+        <div>
+            <PageHeader>Invalid BookID</PageHeader>
+        </div>
+    )
+
+    const desc = book.volumeInfo.description
+    const imageLink = `https://books.google.com/books/publisher/content/images/frontcover/${book.id}?fife=w400-h600&source=gbs_api&`
 
     return (
         <div className={styles.container}>
-            <PageHeader>{bookexample[params.bookId].volumeInfo.title}</PageHeader>
+            <div className={styles.headerContainer}>
+                <PageHeader>{book.volumeInfo.title}</PageHeader>
+                <AddToCurrentlyReading book={book}/>
+            </div>
             <div className={styles.bodyContainer}>
                 <div className={styles.leftBody}>
-                    <Image priority={true} alt='books image' src={bookexample[params.bookId].volumeInfo.imageLinks.medium} width={200} height={320} style={{objectFit: 'contain', boxShadow: "var(--shadow-button-color)"}}/>
+                    <Image priority={true} alt='books image' src={imageLink} width={200} height={320} style={{objectFit: 'contain', boxShadow: "var(--shadow-button-color)"}}/>
                 </div>
                 <div className={styles.rightBody}>
-                    <BookRatings pageCount={bookexample[params.bookId].volumeInfo.pageCount}/>
+                    <BookRatings book={book}/>
                 </div>
             </div>
             <div className={styles.bottomBody}>
@@ -41,7 +52,7 @@ export default function Books({ params }: {params: {bookId: string}}) {
                         
                         {usefulKeys.map((key) => (
                             // @ts-ignore
-                            <QuickInfo key={key} title={camelToTitle(key)} value={bookexample[params.bookId].volumeInfo[key]}/>
+                            <QuickInfo key={key} title={camelToTitle(key)} value={book.volumeInfo[key]}/>
                         ))}
                     </div>
                 </div>
@@ -49,8 +60,8 @@ export default function Books({ params }: {params: {bookId: string}}) {
                     <div className={styles.blurb}>
                         <h3>DESCRIPTION</h3>
                         <hr/>
-                        <div className={styles.blurbContainer}>
-                            {desc.split("\n").map((str: string) => <p key={str} className={styles.blurbParagraph}>{str}</p>)}
+                        <div className={styles.blurbContainer} dangerouslySetInnerHTML={{__html: desc}}>
+                            
                         </div>
                     </div>
                 </div>
@@ -58,3 +69,8 @@ export default function Books({ params }: {params: {bookId: string}}) {
         </div>
     )
 }
+
+async function getBook(bookid: string) {
+    const book = await Book.getBookWithId(bookid)
+    return book
+  }

@@ -1,22 +1,26 @@
+import Link from 'next/link'
 import { PageHeader } from './components/PageHeader'
-import { BookSuggestionTile } from './dashboard/BookSuggestionTile'
-import { CurrentlyReadingTile } from './dashboard/CurrentlyReadingTile'
-import { MessagesTile } from './dashboard/MessagesTile'
-import { StatisticsTile } from './dashboard/StatisticsTile'
+import { SignInButton } from './components/SignInButton'
 import styles from './page.module.css'
+import Image from 'next/image'
 
 export default function Home() {
   return (
     <div className={styles.container}>
-      <PageHeader>DASHBOARD</PageHeader>
-      <div className={styles.body}>
-        <div className={styles.left}>
-          <CurrentlyReadingTile/>
-          <MessagesTile/>
-        </div>
-        <div className={styles.right}>
-          <BookSuggestionTile/>
-          <StatisticsTile/>
+      <div className={styles.wrapper}>
+        <Image src='/images/TRC_Logo_Primary_RGB_Lge.svg' width={510} height={515} alt='Logo'/>
+        <div className={styles.textContainer}>
+          <PageHeader>WECOME TO THE READING CORNER</PageHeader>
+          <p>
+            Our Book Club brings together intersectional readers from all walks of life to celebrate unique stories from underrepresented authors, highlighting cultures, identities and experiences from diverse backgrounds. When you join our community, you&apos;ll connect with people who share your enthusiasm for lifelong learning. Engage in meaningful discussions, exchange book recommendations, and discover new perspectives that broaden your horizons.
+          </p>
+          <p>
+            By becoming a member, you&apos;ll have access to exclusive events, workshops, and discussions led by experts in various fields. Immerse yourself in a supportive environment where curiosity is celebrated and knowledge is shared.
+          </p>
+          <div className={styles.buttonContainer}>
+            <SignInButton className={styles.authButton}/>
+            <Link href="/register/credentials" className={styles.authButton}>Register</Link>
+          </div>
         </div>
       </div>
     </div>

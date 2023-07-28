@@ -1,19 +1,39 @@
+'use client'
 import Image from "next/image";
 import { PageHeader } from "../components/PageHeader";
 import styles from './page.module.css'
-import { bookexample } from "../bookexample";
+import { BookType, bookexample } from "../bookexample";
 import { BookStandard } from "./BookStandard";
+import { FormEvent, useState } from "react";
 
-const bookValues = Object.values(bookexample)
+const bookValuesExample = Object.values(bookexample)
 
-export default function members() {
+export default function SearchBooks() {
+    const [bookValues, setBookValues] = useState<BookType[]>([])
+
+    const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        const formData = new FormData(e.currentTarget)
+        const bookQuery = formData.get("search")!
+        if (bookQuery.length < 4 || bookQuery.length > 100) return
+        const res = await fetch("/api/books/findBooks",{
+            method: 'POST',
+            body: JSON.stringify({bookName: bookQuery}),
+            headers: { "Content-Type": "application/json" }
+        })
+        const body:BookType[] = await res.json()
+        console.log(body)
+        setBookValues(body)
+    }
 
     return(
         <div>
-            <PageHeader>MEMBERS</PageHeader>
+            <PageHeader>SEARCH BOOKS</PageHeader>
             <div className={styles.searchBar}>
                 <Image alt="Search Button" src="/images/search_icon.svg" width={30} height={30}/>
-                <input className={styles.searchInput} type="search" results={2} placeholder="Search by username"/>
+                <form onSubmit={submitHandler} className={styles.searchForm}>
+                    <input className={styles.searchInput} type="search" name="search" results={2} placeholder="Search by book title"/>
+                </form>
             </div>
             <div className={styles.profilesContainer}>
                 <div className={styles.titles}>
@@ -25,11 +45,12 @@ export default function members() {
                 </div>
                 {bookValues.map((value) => (
                     <BookStandard key={value.id} 
+                                    bookId={value.id}
                                     bookTitle={value.volumeInfo.title} 
-                                    authors={value.volumeInfo.authors.join(", ")} 
+                                    authors={value.volumeInfo.authors ? value.volumeInfo.authors.join(", ") : ""} 
                                     datePublished={value.volumeInfo.publishedDate}
-                                    genre={value.volumeInfo.mainCategory}
-                                    image={value.volumeInfo.imageLinks.small}/>
+                                    genre={value.volumeInfo.categories ? value.volumeInfo.categories.join(", "): ""}
+                                    image={ value.volumeInfo.imageLinks ? Object.values(value.volumeInfo.imageLinks)[0] : '/images/book-placeholder.png'}/>
                 ))}
                 {/* {membersUsers.map((values: user) => (
                     <ProfileStandard key={values.username} {... values}/>

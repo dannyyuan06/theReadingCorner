@@ -1,7 +1,9 @@
 import Image from "next/image";
 import styles from './BookStandard.module.css'
+import Link from "next/link";
 
 type props = {
+    bookId: string,
     bookTitle: string,
     authors: string,
     datePublished: string,
@@ -9,18 +11,18 @@ type props = {
     image: string
 }
 
-export function BookStandard({bookTitle, authors, datePublished, genre, image}: props) {
+export function BookStandard({bookId, bookTitle, authors, datePublished, genre, image}: props) {
 
     return (
         <>
             <hr/>
-            <div className={styles.container}>
-                <Image alt='book image' src={image} width={70} height={100}/>
-                <h3 style={{flex: 2}}>{bookTitle}</h3>
+            <Link className={styles.container} href={`books/${bookId}`}>
+                <Image alt='book image' src={image} width={50} height={70} style={{boxShadow: 'var(--shadow-button-color)'}}/>
+                <h3 style={{flex: 2}} className={styles.title}>{bookTitle}</h3>
                 <h3 style={{flex: 2}}>{authors}</h3>
                 <h3 style={{flex: 1}}>{datePublished}</h3>
                 <h3 style={{flex: 2}}>{genre}</h3>
-            </div>
+            </Link>
         </>
         
     )

@@ -12,12 +12,41 @@ const io = new Server(server, {
 })
 
 io.on('connection', (socket) => {
-    socket.on('message', (message:string) => {
-        console.log(message),
-        io.emit('message', message)
+    // prisma.bulletinBoardMessages.findMany({
+    //     take: 10,
+    //     orderBy: {
+    //         messageid: 'desc'
+    //     },
+    //     include: {
+    //         Book: true,
+    //         Users: true
+    //     }
+    // })
+    // .then((res) => socket.emit("connected", res))
+    console.log("connection")
+    socket.on('message', (message) => {
+        io.emit("message", message)
+        console.log("message sent")
+
+        // console.log(message, typeof message)
+        // try {
+        //     const prisma = new PrismaClient()
+        //     prisma.bulletinBoardMessages.create({
+        //         data: {
+        //             title: message.title,
+        //             body: message.body,
+        //             bookid: message.bookid,
+        //             username: message.username,
+        //         }
+        //     })
+        //     .then((res) => console.log(res))
+        // }
+        // catch (err) {
+        //     console.log(err)
+        // }
     })
 })
 
-server.listen(3001, () => {
-    console.log('Server listening on port 3001')
+server.listen(process.env.PORT || 8080, () => {
+    console.log(`Server listening on port ${process.env.PORT || 8080}`)
 })

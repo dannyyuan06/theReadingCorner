@@ -1,5 +1,5 @@
 
-export type Book = {
+export type BookType = {
     kind:       string;
     id:         string;
     etag:       string;
@@ -84,10 +84,10 @@ export type IndustryIdentifier = {
     identifier: string;
 }
 
-export const bookexample: {[id: string]: Book} = {
+export const bookexample: {[id: string]: BookType} = {
     1: {
       kind: "books#volume",
-      id: "zyTCAlFPjgYC",
+      id: "zyTCAlFPjgYC?1",
       etag: "f0zKg75Mx/I",
       selfLink: "https://www.googleapis.com/books/v1/volumes/zyTCAlFPjgYC",
       volumeInfo: {
@@ -167,7 +167,7 @@ export const bookexample: {[id: string]: Book} = {
     },
     2: {
       kind: "books#volume",
-      id: "zyTCAlFPjgYC",
+      id: "zyTCAlFPjgYC?7",
       etag: "f0zKg75Mx/I",
       selfLink: "https://www.googleapis.com/books/v1/volumes/zyTCAlFPjgYC",
       volumeInfo: {
@@ -247,7 +247,7 @@ export const bookexample: {[id: string]: Book} = {
     },
     3: {
       kind: "books#volume",
-      id: "zyTCAlFPjgYC",
+      id: "zyTCAlFPjgYC?2",
       etag: "f0zKg75Mx/I",
       selfLink: "https://www.googleapis.com/books/v1/volumes/zyTCAlFPjgYC",
       volumeInfo: {
@@ -327,7 +327,7 @@ export const bookexample: {[id: string]: Book} = {
     },
     4: {
       kind: "books#volume",
-      id: "zyTCAlFPjgYC",
+      id: "zyTCAlFPjgYC?3",
       etag: "f0zKg75Mx/I",
       selfLink: "https://www.googleapis.com/books/v1/volumes/zyTCAlFPjgYC",
       volumeInfo: {
@@ -407,7 +407,7 @@ export const bookexample: {[id: string]: Book} = {
     },
     5: {
       kind: "books#volume",
-      id: "zyTCAlFPjgYC",
+      id: "zyTCAlFPjgYC?4",
       etag: "f0zKg75Mx/I",
       selfLink: "https://www.googleapis.com/books/v1/volumes/zyTCAlFPjgYC",
       volumeInfo: {
@@ -487,7 +487,7 @@ export const bookexample: {[id: string]: Book} = {
     },
     6: {
       kind: "books#volume",
-      id: "zyTCAlFPjgYC",
+      id: "zyTCAlFPjgYC?5",
       etag: "f0zKg75Mx/I",
       selfLink: "https://www.googleapis.com/books/v1/volumes/zyTCAlFPjgYC",
       volumeInfo: {
@@ -567,7 +567,7 @@ export const bookexample: {[id: string]: Book} = {
     },
     7: {
       kind: "books#volume",
-      id: "zyTCAlFPjgYC",
+      id: "zyTCAlFPjgYC?6",
       etag: "f0zKg75Mx/I",
       selfLink: "https://www.googleapis.com/books/v1/volumes/zyTCAlFPjgYC",
       volumeInfo: {

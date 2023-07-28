@@ -1,12 +1,17 @@
 'use client'
-import { Dispatch, SetStateAction, SyntheticEvent, useEffect, useState } from "react"
+import { ChangeEvent, ChangeEventHandler, Dispatch, FormEvent, FormEventHandler, SetStateAction, SyntheticEvent, useEffect, useState } from "react"
 import { PageHeader } from "../components/PageHeader"
 import styles from "./AddBook.module.css"
 import { booksWithTitles } from "../bulletinBoard/books"
+import { BookType } from "../bookexample"
+import { Book } from "@prisma/client"
 
-export function AddBook({setDidAddBook, setBooks}: {setDidAddBook: Dispatch<SetStateAction<boolean>>, setBooks: Dispatch<SetStateAction<string[]>>}) {
-    const [selectedBook, setSelectedBook] = useState<string|null>(null)
+let timer:ReturnType<typeof setTimeout> | null
+
+export function AddBook({setDidAddBook, setBooks}: {setDidAddBook: Dispatch<SetStateAction<boolean>>, setBooks: Dispatch<SetStateAction<Book[]>>}) {
+    const [selectedBook, setSelectedBook] = useState<BookType|null>(null)
     const [noBookSelected, setNoBookSelected] = useState(-1)
+    const [booksQueried, setBooksQueried] = useState<BookType[]>([])
 
     useEffect(() => {
         selectedBook === null ? setNoBookSelected(p => p !== -1 ? 0 : -1) : setNoBookSelected(p => p !== -1 ? 1 : -1)
@@ -16,8 +21,16 @@ export function AddBook({setDidAddBook, setBooks}: {setDidAddBook: Dispatch<SetS
         e.preventDefault()
         selectedBook === null ? setNoBookSelected(0) : setNoBookSelected(1)
         if (selectedBook !== null) {
-            setBooks(prev => [...prev, selectedBook!])
-            setDidAddBook(false)
+            fetch("/api/bookDatabase/addBook", {
+                method: 'POST',
+                body: JSON.stringify(selectedBook),
+                headers: { "Content-Type": "application/json" }
+            })
+            .then((res) => res.json())
+            .then(body => {
+                setBooks(prev => [...prev, body!])
+                setDidAddBook(false)
+            })
         }
     }
 
@@ -26,17 +39,33 @@ export function AddBook({setDidAddBook, setBooks}: {setDidAddBook: Dispatch<SetS
         setDidAddBook(false)
     }
 
+    const inputHander = (e: ChangeEvent<HTMLInputElement>) => {
+        clearTimeout(timer ?? "")
+        timer = setTimeout(() => {
+            fetch("/api/books/findBooks",{
+                method: 'POST',
+                body: JSON.stringify({bookName: e.target.value}),
+                headers: { "Content-Type": "application/json" }
+            })
+            .then(res => res.json())
+            .then(body => {
+                console.log(body)
+                setBooksQueried(body)
+            })
+        }, 2000)
+    }
+
     return(
         <div className={styles.container}>
             <div className={styles.wrapper}>
                 <PageHeader>ADD BOOK</PageHeader>
                 <form className={styles.form} onSubmit={submitHandler}>
                     <label htmlFor="bname">Book Name</label>
-                    <input type="text" name="bname"/>
+                    <input onChange={inputHander} type="text" name="bname"/>
                     <label htmlFor="lname">Author</label>
                     <input type="text" name="lname"/>
                     <div className={styles.booksDropDown}>
-                        <DropDownMenu buttons={booksWithTitles} setSelectedBook={setSelectedBook} selectedBook={selectedBook}/>
+                        <DropDownMenu books={booksQueried} setSelectedBook={setSelectedBook} selectedBook={selectedBook}/>
                     </div>
                     <div className={styles.finishButtons}>
                         <div className={styles.notSelectedBook}>{noBookSelected === 0 && "Please select a book"}</div>
@@ -49,25 +78,27 @@ export function AddBook({setDidAddBook, setBooks}: {setDidAddBook: Dispatch<SetS
     )
 }
 
-function DropDownMenu({selectedBook, buttons, setSelectedBook}: {selectedBook: string|null, buttons: {[id: string]: string}, setSelectedBook: Dispatch<SetStateAction<string|null>>}) {
-
+function DropDownMenu({selectedBook, books, setSelectedBook}: {selectedBook: BookType|null, books: BookType[], setSelectedBook: Dispatch<SetStateAction<BookType|null>>}) {
+    console.log(books)
     return (
         <div className={styles.dropContainer} >
-            {Object.keys(buttons).map((button: string) => <DropDownMenuButton key={button} name={buttons[button]} bookId={button} setSelectedBook={setSelectedBook} selectedBook={selectedBook}/>)}
+            {books.map((book: BookType) => <DropDownMenuButton key={book.id}  setSelectedBook={setSelectedBook} book={book} selectedBook={selectedBook}/>)}
         </div>
     )
 }
 
-function DropDownMenuButton({ name, setSelectedBook, bookId, selectedBook}: {name: string, setSelectedBook: Dispatch<SetStateAction<string|null>>, bookId: string, selectedBook: string|null}) {
+function DropDownMenuButton({ setSelectedBook, book, selectedBook}: {setSelectedBook: Dispatch<SetStateAction<BookType|null>>, book: BookType, selectedBook: BookType|null}) {
 
     const clickHandler = (e: SyntheticEvent) => {
         e.preventDefault()
-        setSelectedBook(bookId)
+        setSelectedBook(book)
     }
 
+    const isSameBook = (selectedBook ? selectedBook.id : "")  === book.id
+
     return (
-        <button style={selectedBook === bookId ? {backgroundColor: 'var(--theme-blue)', color: 'white'}: {}} className={styles.button} onClick={clickHandler}>
-            <span>{name}</span>
+        <button key={book.id} style={isSameBook ? {backgroundColor: 'var(--theme-blue)', color: 'white'}: {}} className={styles.button} onClick={clickHandler}>
+            <span>{book.volumeInfo.title}</span>
         </button>
     )
 }

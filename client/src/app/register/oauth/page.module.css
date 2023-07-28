@@ -1,0 +1,15 @@
+.container {
+    padding: 8vw;
+}
+
+
+.wrapper {
+    display: flex;
+    gap: 40px
+}
+
+.wrapper img {
+    width: 100%;
+    object-fit: contain;
+    flex: 1
+}
