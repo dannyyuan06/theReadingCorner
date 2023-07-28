@@ -9,7 +9,7 @@ import { ProfileButton } from './ProfileButton'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import { useDispatch } from 'react-redux'
 import { changePage } from '@/redux/features/pageSlice'
-import { DashboardButton } from './DashboardButton'
+import { useSession } from 'next-auth/react'
 
 
 const imageStyle:CSSProperties = {
@@ -21,22 +21,30 @@ const imageStyle:CSSProperties = {
 export function Navigation() {
     const pathname = usePathname()
     const page = useAppSelector((state) => state.pageReducer)
+    const { status, data }: any = useSession()
 
     const dispatch = useDispatch<AppDispatch>()
     useEffect(() => {
         dispatch(changePage(pathname.slice(1)))
     }, [pathname, dispatch])
-    return (
-        <nav className={styles.container}>
+
+    const doNotShow = pathname === "/" || pathname.slice(1) === "register" || status !== "authenticated"
+
+    return !doNotShow && (
+        <nav className={styles.container} >
             <div className={styles.wrapper}>
-                <Link className={styles.logoButton} href={'/' }>
+                <Link className={styles.logoButton} href={'/dashboard' }>
                 <Image src='/images/TRC_Logo_Primary_RGB_Lge.png' width={160} height={160} alt='TRC Logo' style={imageStyle}/>
                 </Link>
                 <ul className={styles.ul}>
-                    <DashboardButton currentPage={page} pageTitle='dashboard'/>
-                    <ProfileButton currentPage={page} pageTitle='profile'/>
-                    <NavigationButton currentPage={page} pageTitle='members'/>
-                    <NavigationButton currentPage={page} pageTitle='clubStatistics'/>
+                    <NavigationButton currentPage={page} pageTitle='dashboard'/>
+                    <ProfileButton currentPage={page} pageTitle='profile' username={data?.username}/>
+                    {data?.accessLevel === 3 && (
+                        <>
+                            <NavigationButton currentPage={page} pageTitle='members'/>
+                            <NavigationButton currentPage={page} pageTitle='clubStatistics'/>
+                        </>
+                    )}
                     <hr color='black'/>
                     <NavigationButton currentPage={page} pageTitle='aboutOurClub'/>
                     <NavigationButton currentPage={page} pageTitle='bulletinBoard'/>

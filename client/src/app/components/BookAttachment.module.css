@@ -4,6 +4,8 @@
     gap: 10px;
     padding: 5px;
     align-content: flex-start;
+    height: 90px;
+    overflow: hidden;
 }
 
 .booksInfoTitle {
@@ -24,7 +26,9 @@
 .booksInfoBlurb {
     font-size: 0.8em;
     margin-top: 5px;
-    flex: 8
+    flex: 8;
+    height: 90%;
+    overflow: scroll;
 }
 
 .cancelCross {

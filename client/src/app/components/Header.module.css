@@ -1,0 +1,6 @@
+.container {
+    height: 8vw;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}

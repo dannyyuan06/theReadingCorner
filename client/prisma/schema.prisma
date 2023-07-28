@@ -1,0 +1,137 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  username          String    @id
+  email             String 
+  firstName         String
+  lastName          String
+  password          String
+  lastOnline        DateTime  
+  joinDate          DateTime  @default(now())
+  numBulletinPosts  Int
+  numReview         Int
+  numBooksRead      Int
+  profilePicture    String
+  accessLevel       Int
+  description       String
+  meanScore         Float
+  daysRead          Float
+  lookedAtBulletin  Boolean
+  booksRead         UserBook[]
+  friend1           Friends[] @relation(name: "friend1")
+  friend2           Friends[] @relation(name: "friend2")
+  messages          BulletinBoardMessages[]
+  meetings          Meetings[]
+  bookSuggestions   BookSuggestions[]
+  genreSuggestions  GenreSuggestion[]
+}
+
+model Book {
+  bookid        String     @id
+  bookPicture   String
+  title         String
+  author        String
+  description   String
+  pageCount     Int
+  usersRead     UserBook[]
+  meetings      Meetings[]
+  currentlyR    CurrentlyReading[]
+  suggestions   BookSuggestions[]
+  bulletinBoardBooks BulletinBoardBooks[]
+}
+
+model UserBook {
+  userbookid    Int       @id @default(autoincrement())
+  dateStarted   DateTime  @default(now())
+  dateFinished  DateTime
+  score         Int
+  status        Int
+  page          Int
+  user          Users      @relation(fields: [username], references: [username])
+  username      String
+  book          Book      @relation(fields: [bookid], references: [bookid])
+  bookid        String
+}
+
+model Friends {
+  friendid      Int       @id @default(autoincrement())
+  friend1       Users      @relation(fields: [friend1id], references: [username], name: "friend1")
+  friend1id     String
+  friend2       Users      @relation(fields: [friend2id], references: [username], name: "friend2")
+  friend2id     String
+  status        Int
+  dateStarted   DateTime  @default(now())
+}
+
+model BulletinBoardMessages {
+  messageid               Int       @id @default(autoincrement())
+  body                    String
+  dateCreated             DateTime  @default(now())
+  user                    Users      @relation(fields: [username], references: [username])
+  username                String
+  books                   BulletinBoardBooks[]
+}
+
+model BulletinBoardBooks {
+  bulletinboardbookid   Int   @id @default(autoincrement())
+  book                  Book  @relation(fields: [bookid], references: [bookid])
+  bookid                String 
+  bulletinBoardMessage  BulletinBoardMessages @relation(fields: [messageid], references: [messageid])
+  messageid             Int
+}
+
+model Meetings {
+  meetingid     Int     @id @default(autoincrement())
+  title         String 
+  description   String
+  dateOfMeeting DateTime
+  link          String
+  host          Users      @relation(fields: [hostid], references: [username])
+  hostid        String
+  book          Book      @relation(fields: [bookid], references: [bookid])
+  bookid        String
+}
+
+model CurrentlyReading {
+  readid        Int       @id @default(autoincrement())
+  book          Book      @relation(fields: [bookid], references: [bookid])
+  bookid        String
+  averageRating Float
+  dateStarted   DateTime  @default(now())
+  pageNumber    Int
+  status        Int
+}
+
+model Statistics {
+  statid                Int     @id @default(autoincrement())
+  currentlyReadingBook  String
+  averageRating         Float
+  numOfMembers          Int
+  numOfBooksRead        Int
+  bulletinEngagement    Float
+}
+
+model BookSuggestions {
+  booksuggestionid      Int     @id @default(autoincrement())
+  user          Users       @relation(fields: [username], references: [username])
+  username      String
+  book          Book        @relation(fields: [bookid], references: [bookid])
+  bookid        String
+}
+
+model GenreSuggestion {
+  genresuggestionid     Int     @id @default(autoincrement())
+  user          Users       @relation(fields: [username], references: [username])
+  username      String
+  genre         String
+}

@@ -4,17 +4,15 @@ import { Dispatch, SetStateAction } from 'react'
 import { BookLink } from '../bulletinBoard/BookLink'
 import { allBooks } from '../bulletinBoard/books'
 import Link from 'next/link'
+import { Book } from '@prisma/client'
+import { messagePropType } from '../bulletinBoard/Messages'
+import { BookType } from '../bookexample'
 
-export function BookAttackment({book, index, setBooks}: {book: string, index: number, setBooks?: Dispatch<SetStateAction<string[]>>}) {
+export function BookAttackment({book, index, setBooks}: {book: Book, index: number, setBooks?: Dispatch<SetStateAction<Book[]>>}) {
     const crosshandler = () => {
-        setBooks!((prev: string[]) => {
-            let prevCopy:string[] = JSON.parse(JSON.stringify(prev))
-            for (let i=0;i<prevCopy.length;i++) {
-                if (prevCopy[i] === book) {
-                    prevCopy.splice(i,1)
-                }
-            }
-            return prevCopy
+        setBooks!((prev: Book[]) => {
+            const result = prev.filter((prev: Book) => prev.bookid !== book.bookid)
+            return result
         })
     }
 
@@ -22,14 +20,14 @@ export function BookAttackment({book, index, setBooks}: {book: string, index: nu
         <>
             {index !== 0 && <hr/>}
             <div className={styles.bookContainer}>
-                <BookLink link={`/books/${book}`} book={book}/>
+                <BookLink link={`/books/${book.bookid}`} image={book.bookPicture}/>
                 <div className={styles.booksInfoTitleAuthor}>
-                    <Link href={`/books/${book}`}>
-                        <div className={styles.booksInfoTitle}>{allBooks[book].volumeInfo.title}</div>
+                    <Link href={`/books/${book.bookid}`}>
+                        <div className={styles.booksInfoTitle}>{book.title}</div>
                     </Link>
-                    <div className={styles.booksInfoAutho}>{allBooks[book].volumeInfo.authors.join(", \n")}</div>
+                    <div className={styles.booksInfoAutho}>{book.author}</div>
                 </div>
-                <div className={styles.booksInfoBlurb}>{allBooks[book].volumeInfo.description}</div>
+                <div className={styles.booksInfoBlurb} dangerouslySetInnerHTML={{__html: book.description}}/>
                 <div></div>
                 {
                     setBooks && 
