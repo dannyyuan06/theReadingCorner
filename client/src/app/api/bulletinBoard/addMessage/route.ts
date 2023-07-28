@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     })
     const res = await BulletinBoard.addMessage(message)
 
-    pusher.trigger("messages", "message", {
+    await pusher.trigger("messages", "message", {
         ...message,
         user: body.user,
         books: body.books,
