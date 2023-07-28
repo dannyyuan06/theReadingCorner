@@ -1,0 +1,49 @@
+.container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--theme-see-through-grey);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10
+}
+
+.wrapper {
+    width: 600px;
+    height: 400px;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    padding: 10px
+}
+
+.dragDrop input[type="file"] {
+    display: none;
+}
+
+.dragDrop {
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: var(--theme-light-blue);
+    outline: var(--theme-blue) dashed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dragDropLabel {
+    text-align: center;
+}
+
+.dragImage {
+    margin-bottom: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+    line-height: 0;
+}

@@ -16,7 +16,7 @@ export const usernameFastValidation = async (text: string):Promise<[boolean, str
     if (!(finalRegex.test(text))) return [false, "Username is invalid"]
 
     // Database Check
-    const res = await fetch(process.env.NEXT_PUBLIC_HOST! + "/api/users/findUser",{
+    const res = await fetch("/api/users/findUser",{
         method: 'POST',
         body: JSON.stringify({username: text}),
         headers: { "Content-Type": "application/json" }

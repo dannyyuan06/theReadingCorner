@@ -27,7 +27,7 @@ export const usernameValidation = async (text: string):Promise<[boolean, string]
     await timeout()
 
     // Database Check
-    const res = await fetch(process.env.NEXT_PUBLIC_HOST! + "/api/users/findUser",{
+    const res = await fetch("/api/users/findUser",{
         method: 'POST',
         body: JSON.stringify({username: text}),
         headers: { "Content-Type": "application/json" }

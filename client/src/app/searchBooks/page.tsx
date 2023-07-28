@@ -8,7 +8,7 @@ import { FormEvent, useState } from "react";
 
 const bookValuesExample = Object.values(bookexample)
 
-export default function Members() {
+export default function SearchBooks() {
     const [bookValues, setBookValues] = useState<BookType[]>([])
 
     const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
@@ -16,7 +16,7 @@ export default function Members() {
         const formData = new FormData(e.currentTarget)
         const bookQuery = formData.get("search")!
         if (bookQuery.length < 4 || bookQuery.length > 100) return
-        const res = await fetch(process.env.NEXT_PUBLIC_HOST! + "/api/books/findBooks",{
+        const res = await fetch("/api/books/findBooks",{
             method: 'POST',
             body: JSON.stringify({bookName: bookQuery}),
             headers: { "Content-Type": "application/json" }
