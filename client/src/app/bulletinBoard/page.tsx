@@ -5,6 +5,8 @@ import { InputText } from "./InputText";
 import { Messages } from "./Messages";
 import { BulletinBoard } from "@/models/BulletinBoard";
 
+export const fetchCache = 'force-no-store';
+
 export default async function bulletinBoard() {
     const messages = await getMessages()
     return (

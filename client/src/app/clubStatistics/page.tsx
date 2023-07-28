@@ -9,6 +9,8 @@ import GenreSuggestion from "@/models/GenreSuggestion";
 const books = ["1", "2", "3"]
 const genres = ["Romance", "Science Fiction", "Short Story", "Spirituality",]
 
+export const fetchCache = 'force-no-store';
+
 export default async function clubStatistics() {
     const {books, genres} = await getBooks()
 

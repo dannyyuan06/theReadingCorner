@@ -4,7 +4,7 @@ import { CurrentlyReadingBook } from "./CurrentlyReadingBook";
 import styles from './page.module.css'
 import { CurrentlyReading } from "@/models/CurrentlyReading";
 
-
+export const fetchCache = 'force-no-store';
 
 export default async function currentlyReading() {
     const books = await getCurrentlyReadingBooks()
