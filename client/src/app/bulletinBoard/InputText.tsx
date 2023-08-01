@@ -6,6 +6,8 @@ import { AddBook } from '../components/AddBook'
 import { BookAttackment } from '../components/BookAttachment'
 import { useSession } from 'next-auth/react'
 import { Book } from '@prisma/client'
+import { AddMessageType } from '@/lib/types/fetchTypes/addMessage'
+import { GetSessionDataType } from '@/lib/types/fetchTypes/getSessionData'
 
 const textCap = 5000
 
@@ -16,6 +18,7 @@ export function InputText() {
     const [books, setBooks] = useState<Book[]>([])
     const inputRef = useRef<HTMLInputElement>(null)
     const {data}: any = useSession()
+    const user:GetSessionDataType = data
 
     const pasteHandler = (e:ClipboardEvent<HTMLDivElement>) => {
         e.preventDefault()
@@ -40,16 +43,16 @@ export function InputText() {
         const message = {
             body: textContent,
             username: data?.username,
-            books: books,
+            books: books.map(book => ({book})),
         }
-        const res = await fetch("/api/bulletinBoard/addMessage", {
+        const req: AddMessageType = {
+            message: message, 
+            user: data!,
+            dateCreated: new Date()
+        }
+        await fetch("/api/bulletinBoard/addMessage", {
             method: 'POST',
-            body: JSON.stringify({
-                message: message, 
-                user: data!,
-                books: books.map(book => ({book})),
-                dateCreated: new Date()
-            }),
+            body: JSON.stringify(req),
             headers: { "Content-Type": "application/json" }
         })
         setTextContent("")
@@ -61,7 +64,7 @@ export function InputText() {
     return (
         <div className={styles.container}>
             <div className={styles.textWithProfile}>
-                <Image alt="profile picture placeholder" src={data?.profilePicture} width={50} height={50}/>
+                <Image alt="profile picture placeholder" src={user?.profilePicture} width={50} height={50}/>
                 <div className={styles.textInputContainer}>
                     <div  contentEditable
                             className={styles.newMessageInput}

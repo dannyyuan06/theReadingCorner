@@ -3,6 +3,7 @@ import Image from 'next/image';
 import styles from './ProfilePicChanger.module.css'
 import { ChangeEvent, Dispatch, FormEvent, SetStateAction, useRef, useState } from 'react';
 import imageCompression from 'browser-image-compression';
+import { UploadImageType } from '@/lib/types/fetchTypes/uploadImage';
 
 const fileTypes = ["JPG", "PNG", "WEBP"];
 
@@ -15,14 +16,14 @@ export function ProfilePicChanger({username, setClicked}: {username: string, set
         reader.readAsDataURL(file);
         reader.onload = async () => {
             setSelectedImage(reader.result?.toString())
+
+            const req:UploadImageType = {
+                image: reader.result ? reader.result.toString() : "" ,
+                username: username
+            }
             const res = await fetch('/api/uploadImage', {
                 method: 'POST',
-                body: JSON.stringify(
-                    {
-                        image: reader.result ? reader.result.toString() : "" ,
-                        username: username
-                    }
-                ),
+                body: JSON.stringify(req),
                 headers: { "Content-Type": "application/json" }
             })
             const body = await res.json()

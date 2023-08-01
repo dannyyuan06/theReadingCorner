@@ -3,6 +3,8 @@ import { booksType } from "./Book";
 import * as bcrypt from 'bcrypt'
 import { userBookWithBook } from "./UserBook";
 import { Book, UserBook, Users as UserPrismaType, Users } from "@prisma/client";
+import { AddUserbookBookType, AddUserbookType } from "@/lib/types/fetchTypes/addUserbook";
+import { UpdateUserbookType } from "@/lib/types/fetchTypes/updateUserbook";
 
 // Initiallisation
 
@@ -213,7 +215,7 @@ export default class User {
         }
     }
 
-    static async addReadBook(userbook: UserBook) {
+    static async addReadBook(userbook: AddUserbookBookType) {
         try {
             const userBook = await prisma.userBook.create({
                 data: userbook
@@ -238,7 +240,7 @@ export default class User {
         }
     }
 
-    static async updateReadBook(userbook: UserBook) {
+    static async updateReadBook(userbook: UpdateUserbookType) {
         try {
             const userBook = await prisma.userBook.update({
                 where: {userbookid: userbook.userbookid},
