@@ -4,6 +4,8 @@ import styles from './BookRatings.module.css'
 import { DropDownButton } from '@/app/components/DropDownButton'
 import { BookType } from '@/app/bookexample'
 import { useSession } from 'next-auth/react'
+import { AddUserbookType } from '@/lib/types/fetchTypes/addUserbook'
+import { GetUserbookType } from '@/lib/types/fetchTypes/getUserbook'
 
 type pageType = ""|number
 
@@ -85,12 +87,12 @@ export function BookRatings({book}: {book: BookType}) {
     }
 
     const submitHandler = async () => {
-        const request = {
+        const request: AddUserbookType = {
             book: book,
             userbook: {
-                score: myScore,
+                score: parseInt(`${myScore}`),
                 status: statusObj[status],
-                page: page,
+                page: page === "" ? -1 : page,
                 username: data.username,
                 bookid: book.id,
                 dateFinished: new Date(0)
@@ -118,7 +120,7 @@ export function BookRatings({book}: {book: BookType}) {
 
     useEffect(() => {
         if (!data) return
-        const request = {
+        const request: GetUserbookType = {
             username: data.username,
             bookid: book.id
         }

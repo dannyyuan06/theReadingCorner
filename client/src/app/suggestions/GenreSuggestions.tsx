@@ -4,6 +4,7 @@ import styles from './Suggestions.module.css'
 import { AddGenre } from './AddGenre'
 import { GenreAttachment } from './GenreAttachment'
 import { useSession } from 'next-auth/react'
+import { GenreSuggestionType } from '@/lib/types/fetchTypes/genreSuggestion'
 
 export const genres = [
      "Autobiography",
@@ -41,9 +42,10 @@ export function GenreSuggestions() {
     const { data }:any = useSession()
 
     const onSubmit = async () => {
+        const req:GenreSuggestionType[] = genres.map((genre) => ({genre: genre, username:data?.username}))
         const res = await fetch("/api/genreSuggestions", {
             method: 'POST',
-            body: JSON.stringify(genres.map((genre) => ({genre: genre, username:data?.username}))),
+            body: JSON.stringify(req),
             headers: { "Content-Type": "application/json" }
         })
         const body = await res.json()

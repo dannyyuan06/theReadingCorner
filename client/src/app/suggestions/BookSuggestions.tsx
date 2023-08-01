@@ -5,6 +5,7 @@ import { AddBook } from '../components/AddBook'
 import { BookAttackment } from '../components/BookAttachment'
 import { Book } from '@prisma/client'
 import { useSession } from 'next-auth/react'
+import { BookSuggestionType } from '@/lib/types/fetchTypes/bookSuggestion'
 
 export function BookSuggestions() {
 
@@ -13,13 +14,13 @@ export function BookSuggestions() {
     const { data }:any = useSession()
 
     const onSubmit = async () => {
+        const req:BookSuggestionType[] = books.map((book) => ({bookid: book.bookid, username:data?.username}))
         const res = await fetch("/api/bookSuggestions", {
             method: 'POST',
-            body: JSON.stringify(books.map((book) => ({bookid: book.bookid, username:data?.username}))),
+            body: JSON.stringify(req),
             headers: { "Content-Type": "application/json" }
         })
         const body = await res.json()
-        console.log(body)
         setBooks([])
     }
 

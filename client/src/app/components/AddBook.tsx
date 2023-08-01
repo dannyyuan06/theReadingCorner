@@ -2,7 +2,6 @@
 import { ChangeEvent, ChangeEventHandler, Dispatch, FormEvent, FormEventHandler, SetStateAction, SyntheticEvent, useEffect, useState } from "react"
 import { PageHeader } from "../components/PageHeader"
 import styles from "./AddBook.module.css"
-import { booksWithTitles } from "../bulletinBoard/books"
 import { BookType } from "../bookexample"
 import { Book } from "@prisma/client"
 
@@ -60,10 +59,8 @@ export function AddBook({setDidAddBook, setBooks}: {setDidAddBook: Dispatch<SetS
             <div className={styles.wrapper}>
                 <PageHeader>ADD BOOK</PageHeader>
                 <form className={styles.form} onSubmit={submitHandler}>
-                    <label htmlFor="bname">Book Name</label>
+                    <label htmlFor="bname">Search</label>
                     <input onChange={inputHander} type="text" name="bname"/>
-                    <label htmlFor="lname">Author</label>
-                    <input type="text" name="lname"/>
                     <div className={styles.booksDropDown}>
                         <DropDownMenu books={booksQueried} setSelectedBook={setSelectedBook} selectedBook={selectedBook}/>
                     </div>

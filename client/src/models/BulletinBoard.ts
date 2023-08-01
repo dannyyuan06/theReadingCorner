@@ -1,3 +1,4 @@
+import { AddMessageMessageType } from "@/lib/types/fetchTypes/addMessage";
 import { prisma } from "@/prisma/db";
 import { Book, BulletinBoardBooks, BulletinBoardMessages, Users } from "@prisma/client";
 
@@ -33,7 +34,7 @@ export class BulletinBoard {
         return rest
     }
  
-    static async addMessage(message: messagesWithBook) {
+    static async addMessage(message: AddMessageMessageType) {
         const res = await prisma.bulletinBoardMessages.create({
             data: {
                 body: message.body,
@@ -41,7 +42,7 @@ export class BulletinBoard {
             }
         })
         const bookObject = message.books.map((book) => ({
-            bookid: book.bookid,
+            bookid: book.book.bookid,
             messageid: res.messageid
         }))
         await prisma.bulletinBoardBooks.createMany({
