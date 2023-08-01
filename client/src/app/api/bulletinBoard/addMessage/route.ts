@@ -1,11 +1,15 @@
-import Book from "@/models/Book";
 import { BulletinBoard } from "@/models/BulletinBoard";
 import { NextRequest, NextResponse } from "next/server";
 import Pusher from 'pusher'
+import { apiMiddleware } from "../../middleware";
+import { AddMessageType } from "@/lib/types/fetchTypes/addMessage";
 
 export async function POST(req: NextRequest) {
-    const body = await req.json()
+    const body:AddMessageType = await req.json()
 
+    const [access, errRes] = await apiMiddleware(req, 0)
+    if (!access) return errRes
+    
     const message = body.message
 
     const pusher = new Pusher({
@@ -20,7 +24,7 @@ export async function POST(req: NextRequest) {
     await pusher.trigger("messages", "message", {
         ...message,
         user: body.user,
-        books: body.books,
+        books: body.message.books,
         dateCreated: body.dateCreated,
         messageid: res.messageid,
     })
