@@ -9,8 +9,8 @@ export function PastReadingBook({currentlyReading}: {currentlyReading: getCurren
     const book = currentlyReading.book
     return (
         <div className={styles.container}>
-            <Link href={`/books/${book.bookid}`}>
-                <Image alt="book placeholder" src={book.bookPicture} width={100} height={155} className={styles.image}/>
+            <Link href={`/books/${book.bookid}`} style={{backgroundColor: 'transparent'}}>
+                <Image alt="book placeholder" src={book.bookPicture} width={100} height={155} className={styles.image} style={{objectFit: 'cover'}}/>
             </Link>
             <div className={styles.textContainer}>
             <div className={styles.headerBodySeparator}>

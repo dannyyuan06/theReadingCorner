@@ -10,6 +10,22 @@ export interface getCurrentlyReadingBooksType extends CurrentlyReadingPrismaType
 }
 
 export class CurrentlyReading {
+    static async getCurrentlyReadingBook(): Promise<[getCurrentlyReadingBooksType|null, string]> {
+        try {
+            const res = await prisma.currentlyReading.findFirst({
+                orderBy: {
+                    readid: 'desc'
+                },
+                include: {
+                    book: true
+                }
+            })
+            prisma.$disconnect()
+            return [res, ""]
+        } catch (err) {
+            return [null, `${err}`]
+        }
+    }
     static async getCurrentlyReadingBooks(): Promise<[getCurrentlyReadingBooksType[]|null, string]> {
         try {
             const res = await prisma.currentlyReading.findMany({
@@ -21,6 +37,7 @@ export class CurrentlyReading {
                     book: true
                 }
             })
+            prisma.$disconnect()
             return [res, ""]
         } catch (err) {
             return [null, `${err}`]
@@ -44,6 +61,7 @@ export class CurrentlyReading {
                 },
                 data: updateData
             })
+            prisma.$disconnect()
             return [res, ""]
         } catch (error) {
             return [null, `${error}`]

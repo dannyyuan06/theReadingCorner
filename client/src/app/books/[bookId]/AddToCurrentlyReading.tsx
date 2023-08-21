@@ -15,7 +15,6 @@ export function AddToCurrentlyReading({book}: {book: BookType}) {
             headers: { "Content-Type": "application/json" }
         })
         setPressed(false)
-        console.log(res)
     }
     
     return ( data  && data.accessLevel === 3 && 

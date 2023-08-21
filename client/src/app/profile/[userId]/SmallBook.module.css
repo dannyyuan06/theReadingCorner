@@ -67,7 +67,7 @@
 }
 
 .progressOutline {
-    background-color: var(--theme-light-light-grey);
+    background-color: var(--theme-input-light-grey);
     flex: 2;
 }
 

@@ -34,3 +34,52 @@
     list-style-type: none;
     flex: 1
 }
+
+.logoutButton {
+    margin-top: auto;
+    margin-bottom: 20px;
+    font-family: var(--font-header);
+    display: inline;
+    width: fit-content;
+}
+
+.loadingContainer {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--theme-see-through-grey);
+    z-index: 9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation:show 0.8s linear 1;
+}
+
+.loading {
+    background-color: white;
+    padding: 10px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    animation:spin 1.5s linear infinite;
+}
+
+@keyframes show {
+    0% {
+        opacity: 0;
+    }
+    40% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+  }
