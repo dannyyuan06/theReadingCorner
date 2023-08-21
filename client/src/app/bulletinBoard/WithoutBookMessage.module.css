@@ -1,6 +1,7 @@
 .container {
     width: 100%;
     border-radius: 18px;
+    position: relative;
 }
 
 .paragraphs {
@@ -24,4 +25,13 @@
     background-color: var(--theme-light-blue);
     margin: 5px 0;
     border-radius: 5px;
+}
+
+.copied {
+    position: absolute;
+    right: 40px;
+    top: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: var(--theme-green);
 }

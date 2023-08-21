@@ -18,7 +18,7 @@ export const statusObj:{[id: string]: number} = {
 export const statusArray = Object.keys(statusObj)
 
 export function SetStatus({currentlyReading, book, setClicked, setCurrent}: {currentlyReading: CurrentlyReading,book: Book, setClicked: Dispatch<SetStateAction<boolean>>, setCurrent: Dispatch<SetStateAction<currentBookType>>}) {
-    console.log(currentlyReading)
+
     const pageCount = book.pageCount
 
     const [status, setStatus] = useState<string>(statusArray[currentlyReading.status])

@@ -1,0 +1,39 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--theme-see-through-grey);
+    width: 100vw;
+    height: 100vh;
+    z-index: 10;
+}
+
+.wrapper {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.buttonContainer {
+    display: flex;
+    gap: 10px;
+}
+
+.cancel, .confirm {
+    padding: 10px 20px;
+    margin-top: 10px;
+}
+
+.cancel {
+    background-color: var(--theme-orange);
+    margin-left: auto;
+}
+
+.confirm {
+    background-color: var(--theme-green);
+}

@@ -49,7 +49,6 @@ export function GenreSuggestions() {
             headers: { "Content-Type": "application/json" }
         })
         const body = await res.json()
-        console.log(body)
         setGenres([])
     }
 

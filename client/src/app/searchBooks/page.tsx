@@ -22,7 +22,6 @@ export default function SearchBooks() {
             headers: { "Content-Type": "application/json" }
         })
         const body:BookType[] = await res.json()
-        console.log(body)
         setBookValues(body)
     }
 

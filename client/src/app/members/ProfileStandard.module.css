@@ -38,3 +38,13 @@
 .moreButton:hover {
     background-color: var(--theme-purple);
 }
+
+.resetPassword {
+    display: block;
+    width: 100%;
+    margin-top: 5px;
+    font-size: 1.4em;
+    background-color: var(--theme-input-light-grey);
+    border: none;
+    padding: 5px;
+}

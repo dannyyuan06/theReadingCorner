@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <Image src='/images/TRC_Logo_Primary_RGB_Lge.svg' width={510} height={515} alt='Logo'/>
+        <Image src='/images/TRC_Master_Logos_RGB_TRC_Logo_Primary_RGB.svg' width={510} height={515} style={{transform: 'scale(1.17)'}} alt='Logo'/>
         <div className={styles.textContainer}>
           <PageHeader>WECOME TO THE READING CORNER</PageHeader>
           <p>

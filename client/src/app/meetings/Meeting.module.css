@@ -5,9 +5,19 @@
     width: 100%;
 }
 
+.title {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
 .textContainer {
     display: flex;
     flex-direction: column;
+    width: 100%;
+}
+
+.titles {
     width: 100%;
 }
 
@@ -17,4 +27,8 @@
 
 .bodyWrapper {
     margin-top: 20px;
+}
+
+.moreButton {
+    font-size: 0.5em;
 }

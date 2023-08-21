@@ -14,7 +14,7 @@
 .wrapper {
   display: flex;
   background-color: white;
-  box-shadow: var(--shadow-button-color);
+  box-shadow: var(--theme-card-box-shadow);
   padding: 30px;
   width: 80%;
 }

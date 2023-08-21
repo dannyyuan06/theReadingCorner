@@ -1,0 +1,81 @@
+.button {
+    background-color: var(--theme-purple);
+    padding: 10px 15px;
+}
+
+.popupContainer {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: var(--theme-see-through-grey);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.popupWrapper {
+    width: 800px;
+}
+
+.field {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+}
+
+.field input {
+    background-color: var(--theme-input-light-grey);
+    width: 400px;
+    padding: 5px;
+    font-size: 1.4em;
+    border: 0;
+}
+
+.bigContainer {
+    display: flex;
+}
+
+.big {
+    flex: 1
+}
+
+.description {
+    background-color: var(--theme-input-light-grey);
+    border: 0;
+    resize: none;
+    font-family: var(--font-mono);
+    padding: 5px;
+    font-size: 1.4em;
+    width: 100%;
+    height: 83%;
+    margin-top: 10px;
+}
+
+.imageUpload {
+    width: 100%;
+    height: 300px;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    padding: 10px
+}
+
+.submitButtonWrapper {
+    flex: 1;
+    display: flex;
+    margin-left: auto;
+    gap: 10px;
+}
+
+.submitButton, .cancelButton {
+    padding: 10px 20px;
+    background-color: var(--theme-light-light-grey);
+    margin-top: 20px;
+}
+
+.cancelButton {
+    background-color: var(--theme-orange);
+}

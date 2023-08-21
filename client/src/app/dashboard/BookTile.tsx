@@ -1,29 +1,32 @@
 import Image from 'next/image'
 import styles from './BookTile.module.css'
 import tStyles from './tiles.module.css'
-import { bookexample } from '../bookexample'
 import Link from 'next/link'
-import { allBooks } from '../bulletinBoard/books'
+import { Book, CurrentlyReading } from '@prisma/client'
 
-export function BookTile({book}: {book: string}) {
+interface CurrentlyReadingIncludingBook extends CurrentlyReading {
+    book: Book
+}
+
+export function BookTile({book}: {book: CurrentlyReadingIncludingBook}) {
     return (
         <div className={tStyles.container}>
             <div className={styles.container}>
-                <Link href={`/books/${allBooks[book].id}`}>
-                    <Image alt="book placeholder" src={bookexample[book].volumeInfo.imageLinks.medium} width={100} height={155} className={styles.image}/>
+                <Link href={`/books/${book.book.bookid}`} style={{backgroundColor: 'transparent'}}>
+                    <Image alt="book placeholder" style={{objectFit: 'cover'}} src={book.book.bookPicture} width={100} height={155} className={styles.image}/>
                 </Link>
                 <div className={styles.textContainer}>
                 <div className={styles.headerBodySeparator}>
                         <div className={styles.titles}>
-                            <Link href={`/books/${allBooks[book].id}`}><h2 className={styles.bookTitle}>{bookexample[book].volumeInfo.title}</h2></Link>
-                            <h3>AUTHOR{bookexample[book].volumeInfo.authors.length !== 1 && "S"}: {bookexample[book].volumeInfo.authors.join(", ")}</h3>
-                            <h3>START DATE: <span>04/05/2020</span></h3>
-                            <h3>GENRE: {bookexample[book].volumeInfo.mainCategory}</h3>
+                            <Link href={`/books/${book.book.bookid}`}><h2 className={styles.bookTitle}>{book.book.title}</h2></Link>
+                            <h3>AUTHOR: {book.book.author}</h3>
+                            <h3>START DATE: <span>{book.dateStarted.toLocaleDateString("en-GB")}</span></h3>
+                            <h3>PAGE: {book.pageNumber}/{book.book.pageCount}</h3>
                         </div>
                         <div className={styles.scoreContainer}>
                             <div className={styles.scoreWrapper}>
                                 <h3>SCORE</h3>
-                                <div className={styles.displayScore}>{bookexample[book].volumeInfo.averageRating * 2}</div>
+                                <div className={styles.displayScore}>{book.averageRating}</div>
                             </div>
                         </div>
                     </div>

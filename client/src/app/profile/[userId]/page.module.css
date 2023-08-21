@@ -5,6 +5,10 @@
     gap: 40px
 }
 
+.header {
+    display: flex;
+}
+
 .profilePic {
     display: flex;
     flex: 1;

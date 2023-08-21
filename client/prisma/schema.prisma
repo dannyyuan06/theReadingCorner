@@ -10,12 +10,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model UserPasswords {
+  username          String @id
+  password          String @default("")
+}
+
 model Users {
   username          String    @id
   email             String 
   firstName         String
   lastName          String
-  password          String
   lastOnline        DateTime  
   joinDate          DateTime  @default(now())
   numBulletinPosts  Int
@@ -31,7 +35,6 @@ model Users {
   friend1           Friends[] @relation(name: "friend1")
   friend2           Friends[] @relation(name: "friend2")
   messages          BulletinBoardMessages[]
-  meetings          Meetings[]
   bookSuggestions   BookSuggestions[]
   genreSuggestions  GenreSuggestion[]
 }
@@ -44,7 +47,6 @@ model Book {
   description   String
   pageCount     Int
   usersRead     UserBook[]
-  meetings      Meetings[]
   currentlyR    CurrentlyReading[]
   suggestions   BookSuggestions[]
   bulletinBoardBooks BulletinBoardBooks[]
@@ -63,19 +65,26 @@ model UserBook {
   bookid        String
 }
 
+// status
+// 1: friend1 requested friend2
+// 2: friend2 requested friend1
+// 3: both are friends
+
 model Friends {
-  friendid      Int       @id @default(autoincrement())
+  // friendid      Int       @id @default(autoincrement())
   friend1       Users      @relation(fields: [friend1id], references: [username], name: "friend1")
   friend1id     String
   friend2       Users      @relation(fields: [friend2id], references: [username], name: "friend2")
   friend2id     String
   status        Int
   dateStarted   DateTime  @default(now())
+  @@id([friend1id, friend2id])
 }
 
 model BulletinBoardMessages {
   messageid               Int       @id @default(autoincrement())
   body                    String
+  reported                Boolean    @default(false)
   dateCreated             DateTime  @default(now())
   user                    Users      @relation(fields: [username], references: [username])
   username                String
@@ -96,10 +105,8 @@ model Meetings {
   description   String
   dateOfMeeting DateTime
   link          String
-  host          Users      @relation(fields: [hostid], references: [username])
-  hostid        String
-  book          Book      @relation(fields: [bookid], references: [bookid])
-  bookid        String
+  imageLink     String
+  host          String
 }
 
 model CurrentlyReading {

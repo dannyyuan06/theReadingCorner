@@ -31,6 +31,7 @@ export class BulletinBoard {
                 user: true
             }
         })
+        prisma.$disconnect()
         return rest
     }
  
@@ -49,6 +50,67 @@ export class BulletinBoard {
             data: bookObject,
             skipDuplicates: true
         })
+        prisma.$disconnect()
         return res
+    }
+
+    static async reportMessage(messageid: number) {
+        try {
+            const message = await prisma.bulletinBoardMessages.update({
+                where: {messageid},
+                data: {reported: true}
+            })
+            prisma.$disconnect()
+            return [message, ""]
+        } catch(err) {
+            return [null, err]
+        }
+    }
+
+    static async unreportMessage(messageid: number) {
+        try {
+            const message = await prisma.bulletinBoardMessages.update({
+                where: {messageid},
+                data: {reported: false}
+            })
+            prisma.$disconnect()
+            return [message, ""]
+        } catch(err) {
+            return [null, err]
+        }
+    }
+
+    static async deleteMessage(messageid: number) {
+        try {
+            const message = await prisma.bulletinBoardMessages.delete({
+                where: {messageid}
+            })
+            prisma.$disconnect()
+            return [message, ""]
+        } catch(err) {
+            return [null, `${err}`]
+        }
+    }
+
+    static async getReportedMessages(): Promise<[getMessagesType[]| null, string]> {
+        try {
+            const messages:getMessagesType[] = await prisma.bulletinBoardMessages.findMany({
+                where: {
+                    reported: true,
+                },
+                include: {
+                    books: {
+                        include: {
+                            book: true
+                        }
+                    },
+                    user: true
+                }
+            })
+            prisma.$disconnect()
+            return [messages, ""]
+        } catch (err) {
+            return [null, `${err}`]
+        }
     }
 }

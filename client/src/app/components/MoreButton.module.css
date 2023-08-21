@@ -1,13 +1,19 @@
-.dotsButton {
+.container {
     margin-left: auto;
-    width: 30px;
-    height: 30px;
-    padding: 5px;
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.dotsButton {
     border-radius: 50%;
-    position: relative;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
 }
 
 .dotsButton:hover {
