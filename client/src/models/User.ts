@@ -226,6 +226,24 @@ export default class User {
         }
     }
 
+    static async updateProfile(username:string, firstName:string, lastName:string, email:string, description:string) {
+        try {
+            const res = await prisma.users.update({
+                where: {username},
+                data: {
+                    firstName,
+                    lastName,
+                    email,
+                    description
+                }
+            })
+            return [res, ""]
+        } catch (err) {
+            return [null, err]
+        }
+
+    }
+
 
     static async validatePassword(username: string, passwordStr: string):Promise<[boolean, userType|null]> {
         try {

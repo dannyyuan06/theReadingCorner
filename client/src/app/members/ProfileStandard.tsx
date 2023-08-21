@@ -16,23 +16,29 @@ export function ProfileStandard(user: Users) {
     const inputPasswordRef = useRef<HTMLInputElement>(null)
 
     const deleteAccount = () => {
-        const res = fetch(`/api/users/deleteUser/${user.username}`,{
+        fetch(`/api/users/deleteUser/${user.username}`,{
             method: 'DELETE',
             headers: { "Content-Type": "application/json" }
+        }).then(() => {
+            setDeleteConfirm(false)
         })
     }
 
     const disableAccount = () => {
-        const res = fetch(`/api/users/disableUser/${user.username}`, {
+        fetch(`/api/users/disableUser/${user.username}`, {
             method: 'PATCH',
             headers: { "Content-Type": "application/json" }
+        }).then(() => {
+            setDisableConfirm(false)
         })
     }
 
     const enableAccount = () => {
-        const res = fetch(`/api/users/enableUser/${user.username}`, {
+        fetch(`/api/users/enableUser/${user.username}`, {
             method: 'PATCH',
             headers: { "Content-Type": "application/json" }
+        }).then(() => {
+            setEnableConfirm(false)
         })
     }
 
@@ -42,6 +48,8 @@ export function ProfileStandard(user: Users) {
             body: JSON.stringify({password: newPassword}),
             method: 'PATCH',
             headers: { "Content-Type": "application/json" }
+        }).then(() => {
+            setResetPassword(false)
         })
     }
 
