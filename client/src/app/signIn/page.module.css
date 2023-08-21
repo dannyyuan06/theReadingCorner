@@ -14,8 +14,9 @@
 .insideContainer {
     display: flex;
     background-color: white;
-    box-shadow: var(--shadow-button-color);
-    padding: 30px
+    box-shadow: var(--theme-card-box-shadow);
+    padding: 30px;
+    z-index: 1;
 }
 
 .image {
@@ -31,7 +32,9 @@
 .wrapper {
     margin-bottom: 0vh;
     padding: 20px 30px;
-    height: 100%;
+    /* height: 100%; */
+    flex: 1;
+    width: 360px;
 }
 
 .buttonContainer {
@@ -85,3 +88,25 @@
     display: inline-block;
     padding: 5px 10px;
 }
+
+.error {
+    overflow:hidden;
+}
+
+.loading {
+    /* flex: 1; */
+    height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading img {
+    animation:spin 1.5s linear infinite;
+} 
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+  }

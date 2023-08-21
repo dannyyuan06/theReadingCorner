@@ -24,6 +24,5 @@ export async function POST(req: NextRequest) {
     if (!alreadyPresentBook) alreadyPresentBook = await Book.addBookInDatabase(sendBook)
     
     const [userbookReturn, error] = await User.addReadBook(body.userbook)
-    console.log(error)
     return NextResponse.json(userbookReturn)
 }

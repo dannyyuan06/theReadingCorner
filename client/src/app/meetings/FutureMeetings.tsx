@@ -1,20 +1,65 @@
+'use client'
 import Image from 'next/image'
 import styles from './FutureMeetings.module.css'
+import { Meetings } from '@prisma/client'
+import { MoreButton } from '../components/MoreButton'
+import { useState } from 'react'
+import { EditMeeting } from './EditMeeting'
+import { Popup } from '../components/Popup'
+import { useSession } from 'next-auth/react'
 
-export function FutureMeeting() {
+export function FutureMeeting(props: Meetings) {
+    const {title, dateOfMeeting, description, host, link, imageLink, meetingid} = props
+
+    const [editMeeting, setEditMeeting] = useState(false)
+    const [deleteMeeting, setDeleteMeeting] = useState(false)
+    const { data }:any = useSession()
+
+    const moreButtons = {
+        "Edit": () => {setEditMeeting(true)},
+        "Delete": () => {setDeleteMeeting(true)}
+    }
+
+    const deleteMeetingHandler = () => {
+        fetch(`/api/meetings/deleteMeeting/${meetingid}`, {
+            method: 'DELETE',
+            headers: { "Content-Type": "application/json" }
+        }).then(() => {
+            setDeleteMeeting(false)
+        })
+    }
     return (
-        <div className={styles.container}>
-            <Image alt="book placeholder" src={"/images/meetings_placeholder.png"} width={200} height={155} style={{objectFit: 'contain', flex: 2}}/>
-            <div className={styles.titles}>
-                    <h2 className={styles.title}>BOOK PLACEHOLDER</h2>
-                    <h3>HOST: <span>Random person</span></h3>
-                    <h3>DATE: <span>04/05/2020</span></h3>
-                    <h3>TIME: <span>14:20</span></h3>
-                    <h3>LINK: <span><a href='https://zoom.us/j/5551112222'>https://zoom.us/j/5551112222</a></span></h3>
+        <>
+            <div className={styles.container}>
+                <div style={{width: 300, height: 205}}>
+                    <Image alt="book placeholder" src={imageLink} width={300} height={205} style={{objectFit: 'cover', flex: 2.5}}/>
                 </div>
-                <div className={styles.description}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
-                </div>
-        </div>
+                <div className={styles.titles}>
+                        <h2 className={styles.title}>{title}</h2>
+                        <h3>HOST: <span>{host}</span></h3>
+                        <h3>DATE: <span>{dateOfMeeting.toLocaleDateString("en-GB")}</span></h3>
+                        <h3>TIME: <span>{dateOfMeeting.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })}</span></h3>
+                        <h3>LINK: <span><a href={link} target="_blank">{link}</a></span></h3>
+                    </div>
+                    <div className={styles.description}>
+                        {description}
+                    </div>
+                    {data?.accessLevel === 3
+                    && <div>
+                        <MoreButton buttons={moreButtons}/>
+                    </div>
+                    }
+                    
+            </div>
+                {editMeeting
+                && <EditMeeting meetingDetails={props} setClicked={setEditMeeting}/>
+                }
+                {deleteMeeting
+                && <Popup title="Confirmation" setClicked={setDeleteMeeting} confirm={deleteMeetingHandler}>
+                    Are you sure you want to delete the <q>{title}</q> meeting?<br/>
+                    This action is <b style={{color: 'red'}}>IRREVERSIBLE</b>.
+                </Popup>
+            }
+        </>
     )
 }

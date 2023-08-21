@@ -105,7 +105,6 @@ export function BookRatings({book}: {book: BookType}) {
                 headers: { "Content-Type": "application/json" }
             })
             const body = await res.json()
-            console.log(body)
         }
         else {
             const res = await fetch("/api/userbook/addUserbook", {
@@ -114,7 +113,6 @@ export function BookRatings({book}: {book: BookType}) {
                 headers: { "Content-Type": "application/json" }
             })
             const body = await res.json()
-            console.log(body)
         }
     }
 

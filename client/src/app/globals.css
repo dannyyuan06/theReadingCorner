@@ -16,6 +16,8 @@
   --theme-purple: #a97dfe;
   --theme-orange: #ff6409;
 
+  --theme-off-white: #f8fafc;
+
   --theme-light-purple: #D1EDEE;
   --theme-light-blue:  #D1EDEE;
 
@@ -24,6 +26,7 @@
   --theme-input-light-grey: #ebebeb;
   --theme-see-through-grey: #4d4d4d78;
   --hover-color: #00d0ec;
+  --theme-card-box-shadow: rgba(100, 100, 111, 0.2) 0px 0px 15px 2px;
 }
 
 html,
@@ -67,7 +70,6 @@ a {
 
 button:hover, a:hover, input[type=submit]:hover {
   background-color: var(--theme-blue);
-  color: white;
   
 }
 

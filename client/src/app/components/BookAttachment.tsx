@@ -2,11 +2,8 @@ import Image from 'next/image'
 import styles from './BookAttachment.module.css'
 import { Dispatch, SetStateAction } from 'react'
 import { BookLink } from '../bulletinBoard/BookLink'
-import { allBooks } from '../bulletinBoard/books'
 import Link from 'next/link'
 import { Book } from '@prisma/client'
-import { messagePropType } from '../bulletinBoard/Messages'
-import { BookType } from '../bookexample'
 
 export function BookAttackment({book, index, setBooks}: {book: Book, index: number, setBooks?: Dispatch<SetStateAction<Book[]>>}) {
     const crosshandler = () => {

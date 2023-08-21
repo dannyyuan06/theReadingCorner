@@ -21,12 +21,10 @@ const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_CLIENT_ID!, {
 export function Messages({messagesProp}: {messagesProp: getMessagesType[]}) {
 
     const [messages, setMessages] = useState(messagesProp)
-    console.log(messages)
     useEffect(() => {
         const channel = pusher.subscribe("messages");
 
         channel.bind("message", (message: getMessagesType) => {
-            console.log(message)
             setMessages(prev => [message, ...prev])
         });
 
