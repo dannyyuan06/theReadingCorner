@@ -26,7 +26,7 @@ io.on('connection', (socket) => {
     console.log("connection")
     socket.on('message', (message) => {
         io.emit("message", message)
-        console.log("message sent")
+        // console.log("message sent")
 
         // console.log(message, typeof message)
         // try {

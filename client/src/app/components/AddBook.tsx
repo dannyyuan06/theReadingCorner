@@ -1,5 +1,5 @@
 'use client'
-import { ChangeEvent, ChangeEventHandler, Dispatch, FormEvent, FormEventHandler, SetStateAction, SyntheticEvent, useEffect, useState } from "react"
+import { ChangeEvent, Dispatch, SetStateAction, SyntheticEvent, useEffect, useState } from "react"
 import { PageHeader } from "../components/PageHeader"
 import styles from "./AddBook.module.css"
 import { BookType } from "../bookexample"
@@ -48,7 +48,6 @@ export function AddBook({setDidAddBook, setBooks}: {setDidAddBook: Dispatch<SetS
             })
             .then(res => res.json())
             .then(body => {
-                console.log(body)
                 setBooksQueried(body)
             })
         }, 2000)
@@ -76,7 +75,7 @@ export function AddBook({setDidAddBook, setBooks}: {setDidAddBook: Dispatch<SetS
 }
 
 function DropDownMenu({selectedBook, books, setSelectedBook}: {selectedBook: BookType|null, books: BookType[], setSelectedBook: Dispatch<SetStateAction<BookType|null>>}) {
-    console.log(books)
+
     return (
         <div className={styles.dropContainer} >
             {books.map((book: BookType) => <DropDownMenuButton key={book.id}  setSelectedBook={setSelectedBook} book={book} selectedBook={selectedBook}/>)}

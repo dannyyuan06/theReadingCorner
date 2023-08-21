@@ -29,7 +29,7 @@ export default function RootLayout({
           <ReduxProvider>
             <Navigation/>
             <div className={styles.bodyContainer}>
-              <Header/>
+              {/* <Header/> */}
               {children}
             </div>
           </ReduxProvider>

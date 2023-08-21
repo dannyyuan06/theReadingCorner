@@ -1,5 +1,4 @@
 import { PageHeader } from "../components/PageHeader";
-import { WithoutBookMessage } from "./WithoutBookMessage";
 import styles from './page.module.css'
 import { InputText } from "./InputText";
 import { Messages } from "./Messages";

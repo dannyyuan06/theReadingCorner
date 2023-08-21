@@ -11,7 +11,7 @@ export function SmallBook({userbook}: {userbook: userBookWithBook}) {
 
     return (
         <div className={styles.container}>
-            <Link href={`/books/${book.bookid}`}>
+            <Link href={`/books/${book.bookid}`} style={{backgroundColor: 'transparent'}}>
                 <Image alt="book placeholder" src={book.bookPicture} width={60} height={85} style={{objectFit: 'contain'}}/>
             </Link>
             <div className={styles.textContainer}>
@@ -20,7 +20,7 @@ export function SmallBook({userbook}: {userbook: userBookWithBook}) {
                         <Link href={`/books/${book.bookid}`}><h3 className={styles.title}>{cut(book.title, 20)}</h3></Link>
                         <h3>AUTHOR: {cut(book.author, 25)}</h3>
                         <h3>START DATE: <span>{userbook.dateStarted.toLocaleDateString("en-GB")}</span></h3>
-                        <h3>GENRE: {cut("did not thingk of this", 25)}</h3>
+                        <h3>FINISH DATE: {cut(userbook.dateFinished.valueOf() === 0 ? "Currently Reading" : userbook.dateFinished.toLocaleDateString("en-GB"), 25)}</h3>
                     </div>
                     <div className={styles.progress}>
                         <h3 style={{flex: 1}}>PROGRESS</h3>

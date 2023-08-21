@@ -2,3 +2,9 @@
     margin-top: 40px;
     font-size: 2.3em;
 }
+
+.pageContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

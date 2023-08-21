@@ -1,25 +1,67 @@
+'use client'
 import Image from "next/image";
 import styles from "./Meeting.module.css"
+import { Meetings } from "@prisma/client";
+import { MoreButton } from "../components/MoreButton";
+import { useState } from "react";
+import { EditMeeting } from "./EditMeeting";
+import { Popup } from "../components/Popup";
+import { useSession } from "next-auth/react";
 
 
-export function Meeting() {
+export function Meeting(props: Meetings) {
+    const {title, dateOfMeeting, description, host, link, imageLink, meetingid} = props
+
+    const [editMeeting, setEditMeeting] = useState(false)
+    const [deleteMeeting, setDeleteMeeting] = useState(false)
+    const { data }:any = useSession()
+
+    const moreButtons = {
+        "Edit": () => {setEditMeeting(true)},
+        "Delete": () => {setDeleteMeeting(true)}
+    }
+
+    const deleteMeetingHandler = () => {
+        fetch(`/api/meetings/deleteMeeting/${meetingid}`, {
+            method: 'DELETE',
+            headers: { "Content-Type": "application/json" }
+        })
+    }
     return (
         <div className={styles.container}>
-            <Image alt="book placeholder" src={"/images/meetings_placeholder.png"} width={550} height={330} style={{objectFit: 'contain'}}/>
+            <div style={{width: 450, height: 330}}>
+                <Image loading="eager" alt="book placeholder" src={imageLink} width={450} height={330} style={{objectFit: 'cover'}}/>
+            </div>
             <div className={styles.textContainer}>
                 <div className={styles.headerBodySeparator}>
                     <div className={styles.titles}>
-                        <h2>MEETING TITLE</h2>
-                        <h3>HOST: <span>Random Person</span></h3>
-                        <h3>DATE: <span>04/05/2020</span></h3>
-                        <h3>TIME: <span>15:40</span></h3>
-                        <h3>LINK: <span><a href="https://zoom.us/j/5551112222">https://zoom.us/j/5551112222</a></span></h3>
+                        <h2 className={styles.title}>
+                            <div>{title}</div>
+                            {data?.accessLevel === 3
+                            && <div className={styles.moreButton}>
+                                <MoreButton buttons={moreButtons}/>    
+                            </div>
+                            }
+                        </h2>
+                        <h3>HOST: <span>{host}</span></h3>
+                        <h3>DATE: <span>{dateOfMeeting.toLocaleDateString("en-GB")}</span></h3>
+                        <h3>TIME: <span>{dateOfMeeting.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })}</span></h3>
+                        <h3>LINK: <span><a href={link} target="_blank">{link}</a></span></h3>
                     </div>
                 </div>
                 <div className={styles.bodyWrapper}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+                    {description}
                 </div>
             </div>
+            {editMeeting
+            && <EditMeeting meetingDetails={props} setClicked={setEditMeeting}/>
+            }
+            {deleteMeeting
+            && <Popup title="Confirmation" setClicked={setDeleteMeeting} confirm={deleteMeetingHandler}>
+                Are you sure you want to delete the <q>{title}</q> meeting?<br/>
+                This action is <b style={{color: 'red'}}>IRREVERSIBLE</b>.
+            </Popup>
+            }
         </div>
     )
 }
