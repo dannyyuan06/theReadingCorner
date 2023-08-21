@@ -27,7 +27,7 @@ export function MoreButton({buttons} : {buttons: {[id: string]: () => void}}) {
             setClicked(false)
             setButtonClicked('')
         }
-    }, [buttonClicked])
+    }, [buttonClicked, buttons])
 
     const clickHandler = () => {
         setClicked(true)
