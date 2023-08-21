@@ -75,18 +75,18 @@ export function ProfileStandard(user: Users) {
             </div>
             {deleteConfirm
             && <Popup title="CONFIRMATION" setClicked={setDeleteConfirm} confirm={deleteAccount}>
-                Are you sure you want to delete {user.username}'s account?<br/>
+                Are you sure you want to delete {user.username}&apos;s account?<br/>
                 This action is <b style={{color: 'red'}}>IRREVERSIBLE</b>.
             </Popup>
             }
             {disableConfirm
             && <Popup title="CONFIRMATION" setClicked={setDisableConfirm} confirm={disableAccount}>
-                Are you sure you want to disable {user.username}'s account?
+                Are you sure you want to disable {user.username}&apos;s account?
             </Popup>
             }
             {enableConfirm
             && <Popup title="CONFIRMATION" setClicked={setEnableConfirm} confirm={enableAccount}>
-                Are you sure you want to enable {user.username}'s account?
+                Are you sure you want to enable {user.username}&apos;s account?
             </Popup>
             }
             {resetPassword
