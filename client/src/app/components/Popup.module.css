@@ -37,3 +37,14 @@
 .confirm {
     background-color: var(--theme-green);
 }
+
+.container input[type="text"] {
+    background-color: var(--theme-input-light-grey);
+    border: none;
+    font-size: 1.4em;
+    padding: 5px;
+}
+
+.container textarea {
+    font-family: var(--font-mono);
+}

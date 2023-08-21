@@ -12,7 +12,7 @@ export function Popup({children, title, setClicked, confirm}: {children: ReactNo
 
     const onConfirm = () => {
         confirm()
-        setClicked(false)
+        // setClicked(false)
     }
 
     return (
