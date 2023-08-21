@@ -5,13 +5,21 @@ import { Split } from "./Split";
 import { ProfileMini } from "@/app/components/ProfileMini";
 import { friends } from "./friends";
 import { SmallBook } from "./SmallBook";
-import User from "@/models/User";
+import User, { userWithFriendid } from "@/models/User";
 import { getLastOnlineStatus } from "./calculateDate";
 import { ProfilePic } from "./ProfilePic";
+import { getServerSession } from "next-auth";
+import { FriendContainer } from "./FriendContainer";
+import { FriendRequestButton } from "./FriendRequestButton";
+
+const getEmails = (friends:userWithFriendid[]) => {
+    return friends.map((friend) => friend.email)
+}
 
 export default async function Profile({ params }: {params: {userId: string}}) {
 
     const [user, err] = await getUser(params.userId)
+    const session = await getServerSession()
     
     if (!user) return (
         <div className={styles.container}>
@@ -19,9 +27,16 @@ export default async function Profile({ params }: {params: {userId: string}}) {
         </div>
     )
 
+    const isSelf = session?.user.email === user.email
+    const halfFriends = [...getEmails(user.incomingRequestFriends), ...getEmails(user.requestPendingFriends)]
+
+
     return (
         <div className={styles.container}>
+            <div className={styles.header}>
             <PageHeader>{user.username}&apos;S PROFILE</PageHeader>
+            {!isSelf && <FriendRequestButton friendUsername={user.username} alreadyRequested={halfFriends.includes(session?.user.email ?? "")} alreadyFriends={getEmails(user.friends).includes(session?.user.email ?? "")}/>}
+            </div>
             <div className={styles.bodyContainer}>
                 <div className={styles.bodyLeft}>
                     <ProfilePic username={params.userId} profilePic={user.profilePicture}/>
@@ -33,14 +48,17 @@ export default async function Profile({ params }: {params: {userId: string}}) {
                         <Split title="REVIEWS" value={user.numReview.toString()}/>
                         <Split title="BOOKS READ" value={user.numBooksRead.toString()}/>
                     </section>
-                    <section>
+                    {isSelf
+                    ? <FriendContainer friendContainerClass={styles.friendContainer} headerClass={styles.smallHeader} user={user}/>
+                    : <section>
                         <h3 className={styles.smallHeader}>FRIENDS</h3>
                         {user.friends.map((friend, index) => (
                             <div key={index} className={styles.friendContainer}>
-                                <ProfileMini name={friend.username} lastOnline={getLastOnlineStatus(friend.lastOnline)} picture={friend.profilePicture}/>
+                                <ProfileMini key={friend.username} user={friend} dateSent={getLastOnlineStatus(friend.lastOnline)}/>
                             </div>
                         ))}
                     </section>
+                    }
                 </div>
                 <div className={styles.bodyRight}>
                     <section className={styles.biography}>

@@ -39,7 +39,7 @@ export default async function Books({ params }: {params: {bookId: string}}) {
             </div>
             <div className={styles.bodyContainer}>
                 <div className={styles.leftBody}>
-                    <Image priority={true} alt='books image' src={imageLink} width={200} height={320} style={{objectFit: 'contain', boxShadow: "var(--shadow-button-color)"}}/>
+                    <Image loading='eager' alt='books image' src={imageLink} width={200} height={320} style={{objectFit: 'cover', boxShadow: "var(--shadow-button-color)"}}/>
                 </div>
                 <div className={styles.rightBody}>
                     <BookRatings book={book}/>

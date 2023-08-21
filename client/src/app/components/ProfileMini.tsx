@@ -3,11 +3,14 @@ import Image from "next/image";
 import styles from "./ProfileMini.module.css"
 import { ProfileDropDown } from "./ProfileDropDown";
 import { useState } from "react";
+import { Users } from "@prisma/client";
+import Link from "next/link";
+import { userType } from "@/models/User";
 
 let timeout:ReturnType<typeof setTimeout>
 
-export function ProfileMini({name, lastOnline, picture}: {name: string, lastOnline: string, picture: string}) {
-
+export function ProfileMini(props: {user: userType, dateSent: string}) {
+    const {username, profilePicture} = props.user
     const [showProfile, setShowProfile] = useState(false)
 
     const mouseEnterHandler = () => {
@@ -21,13 +24,13 @@ export function ProfileMini({name, lastOnline, picture}: {name: string, lastOnli
     }
 
     return (
-        <div className={styles.container}>
-            <Image onMouseEnter={mouseEnterHandler} onMouseLeave={mouseLeaveHandler} alt='profile picture placeholder' src={picture} width={40} height={40}/>
+        <Link id={styles.container} href={`/profile/${username}`}>
+            <Image onMouseEnter={mouseEnterHandler} onMouseLeave={mouseLeaveHandler} style={{borderRadius: '50%'}} alt='profile picture placeholder' src={profilePicture} width={40} height={40}/>
             <div className={styles.userMeta}>
-                <div className={styles.userName}>{name}</div>
-                <div className={styles.userTimestamp}>{lastOnline}</div>
+                <div className={styles.userName}>{username}</div>
+                <div className={styles.userTimestamp}>{props.dateSent}</div>
             </div>
-            {showProfile && <ProfileDropDown setShowProfile={setShowProfile}/>}
-        </div>
+            {showProfile && <ProfileDropDown setShowProfile={setShowProfile} user={props.user}/>}
+        </Link>
     )
 }

@@ -3,6 +3,7 @@ import { BookSuggestionTile } from '../../dashboard/BookSuggestionTile'
 import { CurrentlyReadingTile } from '../../dashboard/CurrentlyReadingTile'
 import { MessagesTile } from '../../dashboard/MessagesTile'
 import { StatisticsTile } from '../../dashboard/StatisticsTile'
+import { ReportMessagesTile } from '../ReportedTile'
 import styles from '../page.module.css'
 
 export const fetchCache = 'force-no-store';
@@ -14,6 +15,7 @@ export default function adminDashboard() {
       <PageHeader>DASHBOARD</PageHeader>
       <div className={styles.body}>
         <div className={styles.left}>
+          <ReportMessagesTile/>
           <CurrentlyReadingTile/>
           <MessagesTile/>
         </div>

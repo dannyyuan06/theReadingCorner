@@ -19,7 +19,7 @@ export const userInit = {
     numReview: -1,
     numBooksRead: -1,
     profilePicture: "",
-    accessLevel: -1,
+    accessLevel: -2,
     description: "",
     meanScore: -1,
     daysRead: -1,
@@ -41,10 +41,17 @@ export const clientUser = {
 
 export type clientUserType = typeof clientUser
 
-interface getProfileInfoReturnType extends UserPrismaType {
-    booksRead: userBookWithBook[],
-    friends: userType[]
+export interface userWithFriendid extends userType {
+    friendid: [string, string]
 }
+
+export interface getProfileInfoReturnType extends UserPrismaType {
+    booksRead: userBookWithBook[],
+    friends: userWithFriendid[],
+    requestPendingFriends: userWithFriendid[],
+    incomingRequestFriends: userWithFriendid[],
+}
+
 
 export default class User {
     username:          string;
@@ -85,8 +92,9 @@ export default class User {
             const user = await prisma.users.findUnique({
                 where: {username}
             })
-            const {password, ...otherUser} = user!
-            return [new User(otherUser), ""]
+            if (!user) return [null, `User not found`]
+            prisma.$disconnect()
+            return [new User(user), ""]
         } catch (error) {
             return [null, `${error}`]
         }
@@ -97,13 +105,13 @@ export default class User {
             const user = await prisma.users.findFirst({
                 where: {email: email}
             })
-            console.log("email Make")
             await prisma.users.update({
                 where: {username: user?.username},
                 data: {lastOnline: new Date()}
             })
-            const {password, ...otherUser} = user!
-            return [new User(otherUser), ""]
+            prisma.$disconnect()
+            if (!user) return [null, `User not found`]
+            return [new User(user), ""]
         } catch (error) {
             return [null, `${error}`]
         }
@@ -119,7 +127,6 @@ export default class User {
                     lastName: form.lastName,
                     accessLevel: form.accessLevel,
                     description: form.description,
-                    password: form.password ? await bcrypt.hash(form.password, 10) : "",
                     lastOnline: new Date(),
                     numBulletinPosts: 0,
                     numReview: 0,
@@ -130,6 +137,13 @@ export default class User {
                     lookedAtBulletin: false,
                 }
             })
+            await prisma.userPasswords.create({
+                data: {
+                    username: form.username,
+                    password: form.password ? await bcrypt.hash(form.password, 10) : "",
+                }
+            })
+            prisma.$disconnect()
             return [true, `Created ${form.username} in the database!`, user]
         } catch(err) {
             console.error("Unable to create user in database")
@@ -153,6 +167,7 @@ export default class User {
             const users = await prisma.users.findMany({
                 take: 15
             })
+            prisma.$disconnect()
             return [users, ""]
         } catch (error) {
             return [null, `${error}`]
@@ -182,12 +197,28 @@ export default class User {
                     },
                 }
             })
-            const friends = [...user!.friend1.map(friend => friend.friend2), ...user!.friend2.map(friend => friend.friend1)].sort()
+            if (!user) return [null, "User does not exist"]
+
+            const firstFriends:userWithFriendid[] = user.friend1.reduce((prev:userWithFriendid[], friend) => friend.status === 3 ? [...prev, {...friend.friend2, friendid: [friend.friend1id, friend.friend2id]}]: prev, [])
+            const secondFriends:userWithFriendid[] = user.friend2.reduce((prev:userWithFriendid[], friend) => friend.status === 3 ? [...prev, {...friend.friend1, friendid: [friend.friend1id, friend.friend2id]}]: prev, [])
+            const friends:userWithFriendid[] = [...firstFriends, ...secondFriends].sort()
+
+            const requestPendingFirstFriends:userWithFriendid[] = user.friend1.reduce((prev:userWithFriendid[], friend) => friend.status === 1 ? [...prev, {...friend.friend2, friendid: [friend.friend1id, friend.friend2id]}]: prev, [])
+            const requestPendingSecondFriends:userWithFriendid[] = user.friend2.reduce((prev:userWithFriendid[], friend) => friend.status === 2 ? [...prev, {...friend.friend1, friendid: [friend.friend1id, friend.friend2id]}]: prev, [])
+            const requestPendingFriends:userWithFriendid[] = [...requestPendingFirstFriends, ...requestPendingSecondFriends].sort()
+
+            const incomingFirstFriendRequests:userWithFriendid[] = user.friend1.reduce((prev:userWithFriendid[], friend) => friend.status === 2 ? [...prev, {...friend.friend2, friendid: [friend.friend1id, friend.friend2id]}]: prev, [])
+            const incomingSecondFriendRequests:userWithFriendid[] = user.friend2.reduce((prev:userWithFriendid[], friend) => friend.status === 1 ? [...prev, {...friend.friend1, friendid: [friend.friend1id, friend.friend2id]}]: prev, [])
+            const incomingRequestFriends:userWithFriendid[] = [...incomingFirstFriendRequests, ...incomingSecondFriendRequests].sort()
+            
             const {friend1, friend2, ...usefulUserInfo} = user!
             const usefulInfo = {
                 ...usefulUserInfo,
-                friends: friends,
+                friends,
+                requestPendingFriends,
+                incomingRequestFriends
             }
+            prisma.$disconnect()
             return [usefulInfo, ""]
             
         } catch(err) {
@@ -198,19 +229,19 @@ export default class User {
 
     static async validatePassword(username: string, passwordStr: string):Promise<[boolean, userType|null]> {
         try {
-            const user = await prisma.users.findUnique({
+            const userPass = await prisma.userPasswords.findUnique({
                 where: {
                     username
                 }
             })
-            const t:boolean = await bcrypt.compare(passwordStr, user!.password)
+            const t:boolean = await bcrypt.compare(passwordStr, userPass!.password)
             if (t) {
-                const { password , ...usefulInfo} = user!
-                return [true, usefulInfo]
+                const user = await prisma.users.findUnique({where: {username}})
+                return [true, user]
             }
+            prisma.$disconnect()
             return [false, null]
         } catch (error) {
-            console.log(error)
             return [false, null]
         }
     }
@@ -220,6 +251,7 @@ export default class User {
             const userBook = await prisma.userBook.create({
                 data: userbook
             })
+            prisma.$disconnect()
             return [userBook, ""]
         } catch (err) {
             return [null, err]
@@ -234,6 +266,7 @@ export default class User {
                     bookid: bookid
                 }
             })
+            prisma.$disconnect()
             return [userbook, ""]
         } catch(err) {
             return [null, err]
@@ -251,6 +284,7 @@ export default class User {
                     dateFinished: userbook.status === 2 ? new Date() : new Date(0)
                 }
             })
+            prisma.$disconnect()
             return [userBook, ""]
         } catch (err) {
             return [null, err]
@@ -263,9 +297,147 @@ export default class User {
                 where: {username},
                 data: {profilePicture}
             })
+            prisma.$disconnect()
             return [user, ""]
         } catch (error) {
             return [null, `${error}`]
+        }
+    }
+
+    static async resetPassword(username: string, newPassword: string) {
+        try {
+            const user = await prisma.userPasswords.update({
+                where: {username},
+                data: {password: await bcrypt.hash(newPassword, 10)}
+            })
+            prisma.$disconnect()
+            return [user, ""]
+        } catch (error) {
+            return [null, `${error}`]
+        }
+    }
+
+    static async disableAccount(username: string) {
+        try {
+            const user = await prisma.users.update({
+                where: {username},
+                data: {accessLevel: -1}
+            })
+            prisma.$disconnect()
+            return [user, ""]
+        } catch (error) {
+            return [null, `${error}`]
+        }
+    }
+
+    static async enableAccount(username: string) {
+        try {
+            const user = await prisma.users.update({
+                where: {username},
+                data: {accessLevel: 1}
+            })
+            prisma.$disconnect()
+            return [user, ""]
+        } catch (error) {
+            return [null, `${error}`]
+        }
+    }
+
+    static async deleteAccount(username: string) {
+        try {
+            const user = await prisma.users.delete({
+                where: {username}
+            })
+            prisma.$disconnect()
+            return [user, ""]
+        } catch (error) {
+            return [null, `${error}`]
+        }
+    }
+
+    static async searchUsers(username: string) {
+        try {
+            const users = await prisma.users.findMany({
+                where: {
+                    username: {
+                        contains: username,
+                        mode: 'insensitive'
+                    }
+                }
+            })
+            prisma.$disconnect()
+            return [users, ""]
+        } catch (err) {
+            return [null, `${err}`]
+        }
+    }
+
+    static async friendRequest(username: string, friendUsername: string) {
+        try {
+            const friend1Exists = await prisma.friends.findUnique({
+                where: {
+                    friend1id_friend2id: {
+                        friend1id: username,
+                        friend2id: friendUsername
+                    }
+                }
+            })
+
+            const friend2Exists = await prisma.friends.findUnique({
+                where: {
+                    friend1id_friend2id: {
+                        friend2id: username,
+                        friend1id: friendUsername
+                    }
+                }
+            })
+
+            if (friend1Exists || friend2Exists) return [null, "Already exists in database"]
+            const friendRelationship = await prisma.friends.create({
+                data: {
+                    friend1id: username,
+                    friend2id: friendUsername,
+                    dateStarted: new Date(),
+                    status: 1
+                }
+            })
+            prisma.$disconnect()
+            return [friendRelationship, ""]
+        } catch (err) {
+            return [null, `${err}`]
+        }
+    }
+
+    static async acceptFriendRequest(friendid:[string, string], username: string) {
+        try {
+            const friendRelationship = await prisma.friends.findUnique({
+                where: {
+                    friend1id_friend2id: {
+                        friend1id: friendid[0],
+                        friend2id: friendid[1]
+                    }
+                }})
+            if (!friendRelationship) return [null, "Friendship not found"]
+            if (friendRelationship.status === 1 && friendRelationship.friend2id === username || 
+                friendRelationship.status === 2 && friendRelationship.friend1id === username
+                ) {
+                const returnFriendship = await prisma.friends.update({
+                    where: {
+                        friend1id_friend2id: {
+                            friend1id: friendid[0],
+                            friend2id: friendid[1]
+                        }
+                    },
+                    data: {
+                        status: 3
+                    }
+                })
+                prisma.$disconnect()
+                return [returnFriendship, '']
+            }
+            return [null, 'Not authorised']
+        } catch (err) {
+            return [null, `${err}`]
         }
     }
 }

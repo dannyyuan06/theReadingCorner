@@ -64,7 +64,7 @@ export function InputText() {
     return (
         <div className={styles.container}>
             <div className={styles.textWithProfile}>
-                <Image alt="profile picture placeholder" src={user?.profilePicture} width={50} height={50}/>
+                <Image alt="profile picture placeholder" src={user?.profilePicture} style={{borderRadius: '50%'}} width={50} height={50}/>
                 <div className={styles.textInputContainer}>
                     <div  contentEditable
                             className={styles.newMessageInput}
@@ -90,9 +90,6 @@ export function InputText() {
                         <div className={styles.sendToolbar}>
                             <button className={styles.toolbarButton} onClick={() => setDidAddBook(true)}>
                                 <Image width={30} height={30} alt='book attachment icon' src='/images/book_icon.svg'/>
-                            </button>
-                            <button className={styles.toolbarButton}>
-                                <span style={{marginBottom: 6}}>@</span>
                             </button>
                             <button onClick={clickHandler} className={styles.toolbarSendButton + (textContent === "" || textContent.length > textCap ? " " + styles.toolbarButtonCant : "")} >
                                 SEND

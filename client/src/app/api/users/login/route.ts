@@ -8,7 +8,6 @@ type ReqBody = {
 
 export async function POST(request: NextRequest) {
     const body: ReqBody = await request.json()
-    console.log(body)
     const [isCorrect, user] = await User.validatePassword(body.username, body.password)
     
     if (isCorrect) {

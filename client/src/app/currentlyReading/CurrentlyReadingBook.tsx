@@ -16,8 +16,8 @@ export function CurrentlyReadingBook({currentlyReading}: {currentlyReading: getC
     const [current, setCurrent] = useState(currentBook)
     return (
         <div className={styles.container}>
-            <Link href={`/books/${book.bookid}`}>
-                <Image loading="eager" className={styles.image} alt="book placeholder" src={book.bookPicture} width={200} height={330}/>
+            <Link href={`/books/${book.bookid}`} style={{backgroundColor: 'transparent'}}>
+                <Image loading="eager" className={styles.image} alt="book placeholder" src={book.bookPicture} width={200} height={330} style={{objectFit: 'cover'}}/>
             </Link>
             <div className={styles.textContainer}>
                 <div className={styles.headerBodySeparator}>
