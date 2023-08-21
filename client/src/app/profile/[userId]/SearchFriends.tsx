@@ -39,7 +39,7 @@ export function SearchFriends({username, setRequestPendingFriends, allFriends}: 
         <div className={styles.container}>
             <input className={styles.searchBox} type="search" placeholder='Search usernames' onChange={inputHandler}/>
             <div style={{fontSize: '0.7em', color: 'var(--theme-orange)'}}>{err}</div>
-            {friends.map((friend) => (<SearchProfile friend={friend} username={username} setRequestPendingFriends={setRequestPendingFriends} allFriends={allFriends}/>))}
+            {friends.map((friend) => (<SearchProfile key={friend.username} friend={friend} username={username} setRequestPendingFriends={setRequestPendingFriends} allFriends={allFriends}/>))}
         </div>
     )
 }
