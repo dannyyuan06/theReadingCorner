@@ -71,7 +71,7 @@ export default class Book {
               `https://www.googleapis.com/books/v1/volumes/${volumeId}?key=${process.env.GOOGLE_BOOKS_API_KEY}`
             );
             const data = await response.json();
-            return data
+            return Book.apiBookValidation(data)
         } catch (error) {
             console.error('Error getting book by ID:', error);
         }
@@ -89,5 +89,121 @@ export default class Book {
         console.error('Error getting book by ID:', error);
       }
       return null
+    }
+
+    static async apiBookValidation(book: any) {
+        let base:BookType = {
+            kind: "books#volume",
+            id: "",
+            etag: "",
+            selfLink: "",
+            volumeInfo: {
+              title: "",
+              authors: [""],
+              publisher: "",
+              publishedDate: "",
+              description: "",
+              industryIdentifiers: [
+                {
+                  type: "",
+                  identifier: ""
+                }
+              ],
+              pageCount: 0,
+              dimensions: {
+                height: "",
+                width: "",
+                thickness: ""
+              },
+              printType: "BOOK",
+              mainCategory: "",
+              categories: [""],
+              averageRating: 0,
+              ratingsCount: 0,
+              contentVersion: "",
+              imageLinks: {
+                smallThumbnail: "",
+                thumbnail: "",
+                small: "",
+                medium: "",
+                large: "",
+                extraLarge: "",
+              },
+              language: "en",
+              infoLink: "",
+              canonicalVolumeLink: ""
+            },
+            saleInfo: {
+              country: "",
+              saleability: "",
+              isEbook: false,
+              listPrice: {
+                amount: 0,
+                currencyCode: ""
+              },
+              retailPrice: {
+                amount: 0,
+                currencyCode: ""
+              },
+              buyLink: ""
+            },
+            accessInfo: {
+              country: "",
+              viewability: "",
+              embeddable: false,
+              publicDomain: false,
+              textToSpeechPermission: "",
+              epub: {
+                isAvailable: true,
+                acsTokenLink: ""
+              },
+              pdf: {
+                isAvailable: false
+              },
+              accessViewStatus: ""
+            }
+        }
+        let vol = {
+            title: "",
+            authors: [""],
+            publisher: "",
+            publishedDate: "",
+            description: "",
+            industryIdentifiers: [
+              {
+                type: "",
+                identifier: ""
+              }
+            ],
+            pageCount: 0,
+            dimensions: {
+              height: "",
+              width: "",
+              thickness: ""
+            },
+            printType: "BOOK",
+            mainCategory: "",
+            categories: [""],
+            averageRating: 0,
+            ratingsCount: 0,
+            contentVersion: "",
+            imageLinks: {
+              smallThumbnail: "",
+              thumbnail: "",
+              small: "",
+              medium: "",
+              large: "",
+              extraLarge: "",
+            },
+            language: "en",
+            infoLink: "",
+            canonicalVolumeLink: ""
+        }
+        base.id = book.id;
+        base.kind = book.kind;
+        const volInfo = book.volumeInfo;
+        if (volInfo) vol = {...vol, ...volInfo};
+        base.volumeInfo = vol;
+        return base
     }
 }

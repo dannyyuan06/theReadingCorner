@@ -1,0 +1,30 @@
+.container {
+    float: right;
+}
+
+.buttonContainer {
+    display: flex;
+    border-radius: 5px;
+}
+
+.buttonContainer:hover {
+    background-color: var(--theme-light-blue);
+}
+
+.input input[type='text'] {
+    width: 100%;
+}
+
+.textarea {
+    resize: none;
+    background-color: var(--theme-input-light-grey);
+    border: none;
+    width: 550px;
+    padding: 5px;
+    font-size: 1em;
+}
+
+.err {
+    height: 0.8em;
+    font-size: 0.8em;
+}

@@ -17,7 +17,7 @@ export function BookStandard({bookId, bookTitle, authors, datePublished, genre, 
         <>
             <hr/>
             <Link className={styles.container} href={`books/${bookId}`}>
-                <Image alt='book image' src={image} width={50} height={70} style={{boxShadow: 'var(--shadow-button-color)'}}/>
+                <Image alt='book image' src={image} width={50} height={70} style={{boxShadow: 'var(--shadow-button-color)', objectFit: 'cover'}}/>
                 <h3 style={{flex: 2}} className={styles.title}>{bookTitle}</h3>
                 <h3 style={{flex: 2}}>{authors}</h3>
                 <h3 style={{flex: 1}}>{datePublished}</h3>

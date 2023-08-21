@@ -4,13 +4,18 @@ import { NextResponse } from "next/server"
 
 const scopes = [
     {
+        pathname: "/",
+        accessLevel: (accessLevel: number) => accessLevel === -1,
+        redirect: "/blocked"
+    },
+    {
         pathname: "/dashboard/admin",
         accessLevel: (accessLevel: number) => accessLevel < 3,
         redirect: "/dashboard"
     },
     {
         pathname: "/dashboard",
-        accessLevel: (accessLevel: number) => accessLevel == 3,
+        accessLevel: (accessLevel: number) => accessLevel === 3,
         redirect: "/dashboard/admin"
     },
     {
@@ -28,7 +33,6 @@ const scopes = [
 export default withAuth(
   // `withAuth` augments your `Request` with the user's token.
   function middleware(req) {
-    console.log(parseInt(req.nextauth.token?.accessLevel!.toString()));
     for (let i=0;i<scopes.length;i++) {
         const {pathname, accessLevel, redirect} = scopes[i]
         if (req.nextUrl.pathname.match(pathname) && accessLevel(parseInt(req.nextauth.token?.accessLevel!.toString()))) {

@@ -1,7 +1,13 @@
-.container {
+#container {
     display: flex;
     gap: 8px;
     position: relative;
+    background-color: transparent;
+    font-family: var(--font-mono);
+}
+
+#container:hover .userName {
+    text-decoration: underline;
 }
 
 .userTimestamp {

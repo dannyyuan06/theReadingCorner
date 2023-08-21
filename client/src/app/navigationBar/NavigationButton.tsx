@@ -1,16 +1,15 @@
 import styles from './navigationButton.module.css'
 import { camelToTitle } from './camelAndTitle'
 import Link from 'next/link'
-import { useDispatch } from 'react-redux'
-import { AppDispatch } from '@/redux/store'
-import { changePage } from '@/redux/features/pageSlice'
+import { Dispatch, SetStateAction } from 'react'
 type propsType = {
     currentPage: string,
     pageTitle: string,
-    isClub?: boolean
+    isClub?: boolean,
+    setIsLoading: Dispatch<SetStateAction<boolean>>
 }
 
-export function NavigationButton({currentPage, pageTitle, isClub}: propsType) {
+export function NavigationButton({setIsLoading, currentPage, pageTitle, isClub}: propsType) {
     const isActive = currentPage === pageTitle
 
     return (
@@ -18,7 +17,7 @@ export function NavigationButton({currentPage, pageTitle, isClub}: propsType) {
             {isActive && 
             <div className={styles.marker} style={{backgroundColor: 'var(--theme-blue)'}}>
             </div>}
-            <Link href={`/${pageTitle}`}>{camelToTitle(pageTitle)}</Link>
+            <Link href={`/${pageTitle}`} onClick={() => setIsLoading(!isActive)}>{camelToTitle(pageTitle)}</Link>
             {!isActive && 
             <div className={styles.marker}>
             </div>}

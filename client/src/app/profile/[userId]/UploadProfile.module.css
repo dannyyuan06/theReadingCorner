@@ -1,0 +1,29 @@
+.container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--theme-see-through-grey);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10
+}
+
+.wrapper {
+    width: 600px;
+    height: 400px;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+}
+
+.cancelButton {
+    padding: 10px 20px;
+    background-color: var(--theme-orange);
+    margin-left: auto;
+    margin-top: 10px;
+}

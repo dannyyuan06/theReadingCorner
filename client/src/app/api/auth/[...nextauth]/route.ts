@@ -40,14 +40,14 @@ callbacks.signIn = async ({
 
 callbacks.redirect = async () => '/dashboard'
 
-callbacks.jwt = async ({ token, user, account, profile }: {token: any, user:any, account:any, profile:any}) => {
+callbacks.jwt = async ({ token, user, account, profile }: any) => {
     if (token.accessLevel) return token
     const [use, err] = await User.emailMake(token.email)
     return {...token, ...use}
 }
 
 callbacks.session = async ({session, token, user}: any) => {
-    const sessionRe = {...session, ... user, ...token}
+    const sessionRe = {...session, ...user, ...token}
     return sessionRe
 }
 
