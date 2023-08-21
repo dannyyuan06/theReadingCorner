@@ -24,6 +24,8 @@ export function FutureMeeting(props: Meetings) {
         fetch(`/api/meetings/deleteMeeting/${meetingid}`, {
             method: 'DELETE',
             headers: { "Content-Type": "application/json" }
+        }).then(() => {
+            setDeleteMeeting(false)
         })
     }
     return (

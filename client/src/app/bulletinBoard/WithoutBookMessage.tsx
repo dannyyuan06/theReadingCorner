@@ -32,6 +32,8 @@ export function WithoutBookMessage({message}: {message: getMessagesType}) {
         fetch(`/api/bulletinBoard/reportMessage/${message.messageid}`, {
             method: 'PATCH',
             headers: { "Content-Type": "application/json" }
+        }).then(() => {
+            setReported(false)
         })
     }
 
@@ -39,6 +41,8 @@ export function WithoutBookMessage({message}: {message: getMessagesType}) {
         fetch(`/api/bulletinBoard/unreportMessage/${message.messageid}`, {
             method: 'PATCH',
             headers: { "Content-Type": "application/json" }
+        }).then(() => {
+            setUnreported(false)
         })
     }
 
@@ -46,6 +50,8 @@ export function WithoutBookMessage({message}: {message: getMessagesType}) {
         fetch(`/api/bulletinBoard/deleteMessage/${message.messageid}`, {
             method: 'DELETE',
             headers: { "Content-Type": "application/json" }
+        }).then(() => {
+            setDeleted(false)
         })
     }
 

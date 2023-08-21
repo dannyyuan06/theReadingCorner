@@ -11,6 +11,7 @@ import { ProfilePic } from "./ProfilePic";
 import { getServerSession } from "next-auth";
 import { FriendContainer } from "./FriendContainer";
 import { FriendRequestButton } from "./FriendRequestButton";
+import { EditButton } from "./EditButton";
 
 const getEmails = (friends:userWithFriendid[]) => {
     return friends.map((friend) => friend.email)
@@ -62,7 +63,9 @@ export default async function Profile({ params }: {params: {userId: string}}) {
                 </div>
                 <div className={styles.bodyRight}>
                     <section className={styles.biography}>
-                        <h3 className={styles.smallHeader}>SUMMARY</h3>
+                        <h3 className={styles.smallHeader}>SUMMARY
+                        {isSelf && <EditButton user={user}/>}
+                        </h3>
                         {user.description}
                     </section>
                     <section className={styles.statistics}>
