@@ -1,10 +1,11 @@
 'use client'
-import { Dispatch, FormEvent, SetStateAction, useCallback, useEffect, useRef, useState } from 'react'
+import { Dispatch, FormEvent, SetStateAction, useCallback, useRef, useState } from 'react'
 import styles from './SetStatus.module.css'
 import { DropDownButton } from '@/app/components/DropDownButton'
 import { Book, CurrentlyReading } from '@prisma/client'
-import { PageHeader } from '../components/PageHeader'
 import { currentBookType } from './SetStatusButton'
+import { Popup } from '../components/Popup'
+import { CurrentlyReadingUpdate } from '@/lib/types/fetchTypes/currentlyReading'
 
 type pageType = ""|number
 
@@ -22,7 +23,8 @@ export function SetStatus({currentlyReading, book, setClicked, setCurrent}: {cur
     const pageCount = book.pageCount
 
     const [status, setStatus] = useState<string>(statusArray[currentlyReading.status])
-    const [page, setPage] = useState<pageType>(currentlyReading.pageNumber)
+    const [page, setPage] = useState<pageType>(currentlyReading.pageNumber === -1 ? "" : currentlyReading.pageNumber)
+    const [affiliateLink, setAffiliateLink] = useState(currentlyReading.affiliateLink)
     const changed = useRef(false)
 
     const setStates = useCallback(( status: number, page:pageType) => {
@@ -53,10 +55,11 @@ export function SetStatus({currentlyReading, book, setClicked, setCurrent}: {cur
     }
 
     const submitHandler = async () => {
-        const request:{[id: string]: number|string} = {
+        const request:CurrentlyReadingUpdate = {
             readid: currentlyReading.readid,
             pageNumber: page,
             status: statusObj[status],
+            affiliateLink: affiliateLink,
         }
         if (changed.current) {
             const res = await fetch("/api/currentlyReading/updateBook", {
@@ -71,31 +74,26 @@ export function SetStatus({currentlyReading, book, setClicked, setCurrent}: {cur
     }
 
     return (
-        <div className={styles.fullContainer}>
-            <div className={styles.container}>
-                <PageHeader>EDIT STATUS</PageHeader>
-                <div className={styles.scores}>
-                    <div className={styles.score}>
-                        <h2 className={styles.scoreTitle}>STATUS</h2>
-                        <DropDownButton buttons={statusArray} state={status} setState={updateStatus}/>
-                    </div>
-                    <hr/>
-                    <div className={styles.score}>
-                        <h2 className={styles.scoreTitle}>PAGE</h2>
-                        <h1 className={styles.scoreRating}>
-                            <input type='number' onInput={pageHandler} value={page} className={styles.pageNumber + " " + styles.inputType} max={pageCount} min={0} step={1}/>
-                            <span className={styles.totalPages}>/{pageCount}</span></h1>
-                    </div>
+        <Popup title='EDIT STATUS' setClicked={setClicked} confirm={submitHandler}>
+            <div className={styles.scores}>
+                <div className={styles.score}>
+                    <h2 className={styles.scoreTitle}>STATUS</h2>
+                    <DropDownButton buttons={statusArray} state={status} setState={updateStatus}/>
                 </div>
-                <div className={styles.submitButtonWrapper}>
-                    <button className={styles.cancelButton} onClick={() => setClicked(false)}>
-                        CANCEL
-                    </button>
-                    <button className={styles.submitButton} style={changed.current ? {backgroundColor: "var(--theme-green)"}: {}} onClick={submitHandler}>
-                        SUMBIT
-                    </button>
+                <hr/>
+                <div className={styles.score}>
+                    <h2 className={styles.scoreTitle}>PAGE</h2>
+                    <h1 className={styles.scoreRating}>
+                        <input type='number' onInput={pageHandler} value={page} className={styles.pageNumber + " " + styles.inputType} max={pageCount} min={0} step={1}/>
+                        <span className={styles.totalPages}>/{pageCount}</span>
+                    </h1>
+                </div>
+                <hr/>
+                <div className={styles.score}>
+                    <h2 className={styles.scoreTitle}>AFFILIATE LINK</h2>
+                    <input type='text' value={affiliateLink} onChange={(e) => setAffiliateLink(e.target.value)}/>
                 </div>
             </div>
-        </div>
+        </Popup>
     )
 }

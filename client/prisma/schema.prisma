@@ -114,6 +114,7 @@ model CurrentlyReading {
   book          Book      @relation(fields: [bookid], references: [bookid])
   bookid        String
   averageRating Float
+  affiliateLink String    @default("")
   dateStarted   DateTime  @default(now())
   pageNumber    Int
   status        Int

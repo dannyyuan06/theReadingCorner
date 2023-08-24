@@ -21,7 +21,7 @@ export function BookTile({book}: {book: CurrentlyReadingIncludingBook}) {
                             <Link href={`/books/${book.book.bookid}`}><h2 className={styles.bookTitle}>{book.book.title}</h2></Link>
                             <h3>AUTHOR: {book.book.author}</h3>
                             <h3>START DATE: <span>{book.dateStarted.toLocaleDateString("en-GB")}</span></h3>
-                            <h3>PAGE: {book.pageNumber}/{book.book.pageCount}</h3>
+                            <h3>PAGE: {book.pageNumber === -1 ? "" : book.pageNumber}/{book.book.pageCount}</h3>
                         </div>
                         <div className={styles.scoreContainer}>
                             <div className={styles.scoreWrapper}>

@@ -1,23 +1,9 @@
-.fullContainer {
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    left: 0;
-    top: 0;
-    background-color: var(--theme-see-through-grey);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-}
 
-.container {
-    width: 500px;
+
+.editContainer {
     display: flex;
     flex-direction: column;
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
+    gap: 10px
 }
 
 .scores {
@@ -26,6 +12,8 @@
     justify-content: space-around;
     flex: 3;
     margin-top: 5px;
+    gap: 5px;
+    width: 500px;
 }
 
 .score {
@@ -34,6 +22,7 @@
     align-items: center;
     text-align: center;
     width: 100%;
+    justify-content: space-between;
 }
 
 .myScore {
@@ -42,6 +31,7 @@
     outline-width: 0;
     border: 0;
 }
+
 
 .scoreRating {
     font-size: 2em;

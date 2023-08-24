@@ -1,8 +1,6 @@
 import Image from 'next/image'
 import styles from './PastReadingBook.module.css'
-import { bookexample } from '../bookexample'
 import Link from 'next/link'
-import { allBooks } from '../bulletinBoard/books'
 import { getCurrentlyReadingBooksType } from '@/models/CurrentlyReading'
 
 export function PastReadingBook({currentlyReading}: {currentlyReading: getCurrentlyReadingBooksType}) {
@@ -19,6 +17,7 @@ export function PastReadingBook({currentlyReading}: {currentlyReading: getCurren
                         <h3>AUTHOR{book.author.includes(',') && "S"}: {book.author}</h3>
                         <h3>START DATE: <span>{(new Date(currentlyReading.dateStarted).toLocaleDateString("en-GB"))}</span></h3>
                         <h3>STATUS: {currentlyReading.status}</h3>
+                        {currentlyReading.affiliateLink && <h3>AFFILIATE LINK: <span><a href={currentlyReading.affiliateLink} target="_blank">LINK</a></span></h3>}
                     </div>
                     <div className={styles.scoreContainer}>
                         <div className={styles.scoreWrapper}>
