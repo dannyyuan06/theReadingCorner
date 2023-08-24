@@ -37,15 +37,13 @@ export default async function Books({ params }: {params: {bookId: string}}) {
                 <PageHeader>{book.volumeInfo.title}</PageHeader>
                 <AddToCurrentlyReading book={book}/>
             </div>
-            <div className={styles.bodyContainer}>
+            <div className={styles.body}>
                 <div className={styles.leftBody}>
                     <Image loading='eager' alt='books image' src={imageLink} width={200} height={320} style={{objectFit: 'cover', boxShadow: "var(--shadow-button-color)"}}/>
                 </div>
                 <div className={styles.rightBody}>
                     <BookRatings book={book}/>
                 </div>
-            </div>
-            <div className={styles.bottomBody}>
                 <div className={styles.bottomLeftBody}>
                     <div className={styles.quickInfo}>
                         <h3>QUICK INFO</h3>

@@ -27,7 +27,7 @@ export default function SearchBooks() {
     useEffect(() => {
         setLoading(true)
         const searched = searchParams.get('search')
-        if (!searched) return
+        if (!searched) return setLoading(false)
         fetchBooks(searched).then((books) => {
             setBookValues(books)
             setLoading(false)

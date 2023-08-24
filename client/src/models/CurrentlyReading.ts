@@ -1,3 +1,4 @@
+import { CurrentlyReadingInput, CurrentlyReadingUpdate, CurrentlyReadingUpdatePrisma } from "@/lib/types/fetchTypes/currentlyReading";
 import { prisma } from "@/prisma/db";
 import { Book, UserBook, CurrentlyReading as CurrentlyReadingPrismaType } from "@prisma/client";
 
@@ -43,7 +44,7 @@ export class CurrentlyReading {
             return [null, `${err}`]
         }
     }
-    static async addCurrentlyReadingBook(currentlyReadingBook: any) {
+    static async addCurrentlyReadingBook(currentlyReadingBook: CurrentlyReadingInput) {
         try {
             const res = await prisma.currentlyReading.create({
                 data: currentlyReadingBook
@@ -52,7 +53,7 @@ export class CurrentlyReading {
             return [null, `${error}`]
         }
     }
-    static async updateCurrentlyReadingBook(currentlyReadingBook: any) {
+    static async updateCurrentlyReadingBook(currentlyReadingBook: CurrentlyReadingUpdatePrisma) {
         const {readid, ...updateData} = currentlyReadingBook
         try {
             const res = await prisma.currentlyReading.update({

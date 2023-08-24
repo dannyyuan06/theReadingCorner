@@ -4,7 +4,7 @@ import styles from './Popup.module.css'
 import { PageHeader } from './PageHeader'
 
 
-export function Popup({children, title, setClicked, confirm}: {children: ReactNode, title: string, setClicked: Dispatch<SetStateAction<boolean>>, confirm: () => void}) {
+export function Popup({children, title, setClicked, confirm}: {children: ReactNode, title?: string, setClicked: Dispatch<SetStateAction<boolean>>, confirm: () => void}) {
 
     const onCancel = () => {
         setClicked(false)

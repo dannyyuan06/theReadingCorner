@@ -12,6 +12,7 @@ export type currentBookType = {
     dateStarted: Date;
     pageNumber: number;
     status: number;
+    affiliateLink: string;
 }
 
 export function SetStatusButton(props: {currentlyReading: CurrentlyReading, book: Book, setCurrent: Dispatch<SetStateAction<currentBookType>>}) {
