@@ -19,13 +19,13 @@
 
 .confirmationWrapper {
     background-color: white;
-    border-radius: 10px;
-    overflow: hidden;
     width: 400px;
-    height: 260px;
-    padding: 30px;
     display: flex;
     flex-direction: column;
+}
+
+.confirmationWrapper label {
+    font-family: var(--font-header);
 }
 
 .buttonscontainer {

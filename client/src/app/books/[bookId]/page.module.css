@@ -8,25 +8,29 @@
     align-items: baseline;
 }
 
-.bodyContainer {
-    display: flex;
-    width: 100%;
+.body {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
     gap: 20px;
 }
 
-.leftBody {
+.left {
     flex: 1;
+}
+
+.right {
+    flex: 4
+}
+
+.leftBody img {
+    width: 100%;
+    height: auto;
 }
 
 .rightBody {
     flex: 4;
     display: flex;
-}
-
-.bottomBody {
-    margin-top: 10px;
-    display: flex;
-    gap: 20px;
+    min-height: calc();
 }
 
 .bottomLeftBody {
