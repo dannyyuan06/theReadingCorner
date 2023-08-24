@@ -1,9 +1,7 @@
 import { PageHeader } from "@/app/components/PageHeader";
-import Image from "next/image";
 import styles from './page.module.css'
 import { Split } from "./Split";
 import { ProfileMini } from "@/app/components/ProfileMini";
-import { friends } from "./friends";
 import { SmallBook } from "./SmallBook";
 import User, { userWithFriendid } from "@/models/User";
 import { getLastOnlineStatus } from "./calculateDate";
@@ -12,15 +10,19 @@ import { getServerSession } from "next-auth";
 import { FriendContainer } from "./FriendContainer";
 import { FriendRequestButton } from "./FriendRequestButton";
 import { EditButton } from "./EditButton";
+import { ResetButton } from "@/app/components/ResetButton";
+import { headers } from "next/dist/client/components/headers";
 
-const getEmails = (friends:userWithFriendid[]) => {
-    return friends.map((friend) => friend.email)
+const getUsernames = (friends:userWithFriendid[]) => {
+    return friends.map((friend) => friend.username)
 }
 
 export default async function Profile({ params }: {params: {userId: string}}) {
 
     const [user, err] = await getUser(params.userId)
-    const session = await getServerSession()
+    const headersList = headers()
+    const userUsername = headersList.get('username')
+    // const session = await getServerSession()
     
     if (!user) return (
         <div className={styles.container}>
@@ -28,15 +30,18 @@ export default async function Profile({ params }: {params: {userId: string}}) {
         </div>
     )
 
-    const isSelf = session?.user.email === user.email
-    const halfFriends = [...getEmails(user.incomingRequestFriends), ...getEmails(user.requestPendingFriends)]
+    const isSelf = userUsername === user.username;
+    const halfFriends = [...getUsernames(user.incomingRequestFriends), ...getUsernames(user.requestPendingFriends)]
 
 
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-            <PageHeader>{user.username}&apos;S PROFILE</PageHeader>
-            {!isSelf && <FriendRequestButton friendUsername={user.username} alreadyRequested={halfFriends.includes(session?.user.email ?? "")} alreadyFriends={getEmails(user.friends).includes(session?.user.email ?? "")}/>}
+            <PageHeader>
+                {user.username}&apos;S PROFILE
+            </PageHeader>
+            <ResetButton/>
+            {!isSelf && <FriendRequestButton friendUsername={user.username} alreadyRequested={halfFriends.includes(userUsername ?? "")} alreadyFriends={getUsernames(user.friends).includes(userUsername ?? "")}/>}
             </div>
             <div className={styles.bodyContainer}>
                 <div className={styles.bodyLeft}>

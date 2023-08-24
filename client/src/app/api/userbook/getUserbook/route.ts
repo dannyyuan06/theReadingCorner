@@ -11,6 +11,6 @@ export async function POST(req: NextRequest) {
     if (!access) return res
     
     const [userbook, err] = await User.hasReadBook(body.username, body.bookid)
-    if (err !== "") return NextResponse.json({})
+    if (!userbook) return NextResponse.json({})
     return NextResponse.json(userbook)
 }
