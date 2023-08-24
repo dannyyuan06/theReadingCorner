@@ -3,8 +3,7 @@ import { booksType } from "./Book";
 import * as bcrypt from 'bcrypt'
 import { userBookWithBook } from "./UserBook";
 import { Book, UserBook, Users as UserPrismaType, Users } from "@prisma/client";
-import { AddUserbookBookType, AddUserbookType } from "@/lib/types/fetchTypes/addUserbook";
-import { UpdateUserbookType } from "@/lib/types/fetchTypes/updateUserbook";
+import { AddUserbookBookType } from "@/lib/types/fetchTypes/addUserbook";
 
 // Initiallisation
 
@@ -183,7 +182,16 @@ export default class User {
                     booksRead: {
                         include: {
                             book: true,
-                        }
+                        },
+                        orderBy: [
+                            {
+                                status: 'asc'
+                            },
+                            {
+                                dateStarted: 'desc'
+                            },
+                        ],
+                        take: 10,
                     },
                     friend1: {
                         include: {
@@ -276,7 +284,7 @@ export default class User {
         }
     }
 
-    static async hasReadBook(username: string, bookid: string) {
+    static async hasReadBook(username: string, bookid: string): Promise<[UserBook|null, string]> {
         try {
             const userbook = await prisma.userBook.findFirst({
                 where: {
@@ -287,19 +295,22 @@ export default class User {
             prisma.$disconnect()
             return [userbook, ""]
         } catch(err) {
-            return [null, err]
+            return [null, `${err}`]
         }
     }
 
-    static async updateReadBook(userbook: UpdateUserbookType) {
+    static async updateReadBook(userbook: AddUserbookBookType) {
         try {
             const userBook = await prisma.userBook.update({
-                where: {userbookid: userbook.userbookid},
+                where: {bookid_username: {
+                    bookid: userbook.bookid,
+                    username: userbook.username,
+                }},
                 data: {
                     score: userbook.score,
                     status: userbook.status,
                     page: userbook.page,
-                    dateFinished: userbook.status === 2 ? new Date() : new Date(0)
+                    dateFinished: userbook.dateFinished,
                 }
             })
             prisma.$disconnect()

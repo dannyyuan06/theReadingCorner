@@ -1,5 +1,4 @@
 .container {
-    margin-left: auto;
     background-color: var(--theme-purple);
     height: fit-content;
     padding: 10px 20px;
