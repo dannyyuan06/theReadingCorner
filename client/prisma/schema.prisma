@@ -53,16 +53,16 @@ model Book {
 }
 
 model UserBook {
-  userbookid    Int       @id @default(autoincrement())
+  bookid        String   
+  username      String
   dateStarted   DateTime  @default(now())
   dateFinished  DateTime
   score         Int
   status        Int
   page          Int
-  user          Users      @relation(fields: [username], references: [username])
-  username      String
+  user          Users     @relation(fields: [username], references: [username])
   book          Book      @relation(fields: [bookid], references: [bookid])
-  bookid        String
+  @@id([bookid, username])
 }
 
 // status

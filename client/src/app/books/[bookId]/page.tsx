@@ -6,6 +6,10 @@ import { camelToTitle } from '@/app/navigationBar/camelAndTitle'
 import Image from 'next/image'
 import Book from '@/models/Book'
 import { AddToCurrentlyReading } from './AddToCurrentlyReading'
+import { headers } from 'next/dist/client/components/headers'
+import User from '@/models/User'
+import { UserBook } from '@prisma/client'
+import { BookType } from '@/app/bookexample'
 
 const usefulKeys = [
     "title",
@@ -19,8 +23,10 @@ const usefulKeys = [
 ]
 
 export default async function Books({ params }: {params: {bookId: string}}) {
-
-    const book = await getBook(params.bookId)
+    const headersList = headers()
+    const userUsername = headersList.get('username')
+    const [book, userbook] = await getBook(params.bookId, userUsername ?? "")
+    
     // @ts-ignore
     if (!book || book.error) return (
         <div>
@@ -42,7 +48,7 @@ export default async function Books({ params }: {params: {bookId: string}}) {
                     <Image loading='eager' alt='books image' src={imageLink} width={200} height={320} style={{objectFit: 'cover', boxShadow: "var(--shadow-button-color)"}}/>
                 </div>
                 <div className={styles.rightBody}>
-                    <BookRatings book={book}/>
+                    <BookRatings book={book} userbook={userbook}/>
                 </div>
                 <div className={styles.bottomLeftBody}>
                     <div className={styles.quickInfo}>
@@ -68,7 +74,8 @@ export default async function Books({ params }: {params: {bookId: string}}) {
     )
 }
 
-async function getBook(bookid: string) {
+async function getBook(bookid: string, userUsername:string):Promise<[BookType|null, UserBook|null]> {
     const book = await Book.getBookWithId(bookid)
-    return book
+    const [userBook] = await User.hasReadBook(userUsername, bookid)
+    return [book, userBook]
   }
