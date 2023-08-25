@@ -3,7 +3,6 @@ import Image from "next/image";
 import styles from "./ProfileMini.module.css"
 import { ProfileDropDown } from "./ProfileDropDown";
 import { useState } from "react";
-import { Users } from "@prisma/client";
 import Link from "next/link";
 import { userType } from "@/models/User";
 
@@ -30,7 +29,9 @@ export function ProfileMini(props: {user: userType, dateSent: string}) {
                 <div className={styles.userName}>{username}</div>
                 <div className={styles.userTimestamp}>{props.dateSent}</div>
             </div>
-            {showProfile && <ProfileDropDown setShowProfile={setShowProfile} user={props.user}/>}
+            <div className={styles.tooltip}>
+                <ProfileDropDown setShowProfile={setShowProfile} user={props.user}/>
+            </div>
         </Link>
     )
 }

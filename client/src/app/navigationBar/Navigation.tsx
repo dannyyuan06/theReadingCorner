@@ -54,10 +54,10 @@ export function Navigation() {
                         <NavigationButton setIsLoading={setIsLoading} currentPage={page} pageTitle='aboutOurClub'/>
                         <NavigationButton setIsLoading={setIsLoading} currentPage={page} pageTitle='bulletinBoard'/>
                         <NavigationButton setIsLoading={setIsLoading} currentPage={page} pageTitle='currentlyReading'/>
+                        <NavigationButton setIsLoading={setIsLoading} currentPage={page} pageTitle='discountDirectory'/>
                         <NavigationButton setIsLoading={setIsLoading} currentPage={page} pageTitle='meetings'/>
                         <NavigationButton setIsLoading={setIsLoading} currentPage={page} pageTitle='searchBooks'/>
                         <NavigationButton setIsLoading={setIsLoading} currentPage={page} pageTitle='suggestions'/>
-                        <NavigationButton setIsLoading={setIsLoading} currentPage={page} pageTitle='discountDirectory'/>
                         <button className={styles.logoutButton} onClick={() => signOut()}>LOGOUT</button>
                     </ul>
                 </div>

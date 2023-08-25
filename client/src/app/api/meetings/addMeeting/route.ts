@@ -1,4 +1,3 @@
-import { CurrentlyReading } from "@/models/CurrentlyReading";
 import { NextRequest, NextResponse } from "next/server";
 import { apiMiddleware } from "../../middleware";
 import { Meetings } from "@/models/Meetings";
