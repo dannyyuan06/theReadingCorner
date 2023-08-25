@@ -40,7 +40,17 @@ export const clientUser = {
 
 export type clientUserType = typeof clientUser
 
-export interface userWithFriendid extends userType {
+export type ProfileFriendType = {
+    username: string,
+    firstName: string,
+    lastName: string,
+    profilePicture: string,
+    lastOnline: Date,
+    numBulletinPosts: number,
+    numBooksRead: number,
+}
+
+export interface userWithFriendid extends ProfileFriendType {
     friendid: [string, string]
 }
 
@@ -195,12 +205,32 @@ export default class User {
                     },
                     friend1: {
                         include: {
-                            friend2: true
+                            friend2: {
+                                select: {
+                                    username: true,
+                                    firstName: true,
+                                    lastName: true,
+                                    lastOnline: true,
+                                    numBulletinPosts: true,
+                                    numBooksRead: true,
+                                    profilePicture: true,
+                                }
+                            }
                         }
                     },
                     friend2: {
                         include: {
-                            friend1: true
+                            friend1: {
+                                select: {
+                                    username: true,
+                                    firstName: true,
+                                    lastName: true,
+                                    lastOnline: true,
+                                    numBulletinPosts: true,
+                                    numBooksRead: true,
+                                    profilePicture: true,
+                                }
+                            }
                         }
                     },
                 }

@@ -6,12 +6,13 @@ import { UploadImage } from '../components/UploadImage'
 import { useSession } from 'next-auth/react'
 import { AddMeetingType } from '@/lib/types/fetchTypes/addMeeting'
 import { Popup } from '../components/Popup'
+import { useRouter } from 'next/navigation'
 
 
 type NameTypes = "title" | "host" | "dateOfMeeting" | "link" | "description" | "imageLink"
 
 export function AddMeeting() {
-
+    const router = useRouter()
     const [clicked, setClicked] = useState(false)
     const [formData, setFormData] = useState<AddMeetingType>({
         title: "",
@@ -44,8 +45,8 @@ export function AddMeeting() {
             headers: { "Content-Type": "application/json" }
         }).then(() => {
             setClicked(false)
+            router.refresh()
         })
-        
     }
 
     return (
