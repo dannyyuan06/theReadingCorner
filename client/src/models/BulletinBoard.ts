@@ -1,13 +1,14 @@
 import { AddMessageMessageType } from "@/lib/types/fetchTypes/addMessage";
 import { prisma } from "@/prisma/db";
 import { Book, BulletinBoardBooks, BulletinBoardMessages, Users } from "@prisma/client";
+import { ProfileFriendType } from "./User";
 
 interface booksRelationshipType extends BulletinBoardBooks {
     book: Book
 }
 
 export interface getMessagesType extends BulletinBoardMessages {
-    user: Users,
+    user: ProfileFriendType,
     books: booksRelationshipType[]
 }
 
@@ -28,7 +29,17 @@ export class BulletinBoard {
                         book: true
                     }
                 },
-                user: true
+                user: {
+                    select: {
+                        username: true,
+                        firstName: true,
+                        lastName: true,
+                        lastOnline: true,
+                        numBulletinPosts: true,
+                        numBooksRead: true,
+                        profilePicture: true,
+                    }
+                }
             }
         })
         prisma.$disconnect()

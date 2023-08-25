@@ -7,10 +7,11 @@ import { useState } from 'react'
 import { EditMeeting } from './EditMeeting'
 import { Popup } from '../components/Popup'
 import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 export function FutureMeeting(props: Meetings) {
     const {title, dateOfMeeting, description, host, link, imageLink, meetingid} = props
-
+    const router = useRouter()
     const [editMeeting, setEditMeeting] = useState(false)
     const [deleteMeeting, setDeleteMeeting] = useState(false)
     const { data }:any = useSession()
@@ -25,7 +26,8 @@ export function FutureMeeting(props: Meetings) {
             method: 'DELETE',
             headers: { "Content-Type": "application/json" }
         }).then(() => {
-            setDeleteMeeting(false)
+            setDeleteMeeting(false);
+            router.refresh();
         })
     }
     return (
