@@ -30,7 +30,7 @@ export default async function discountDirectory() {
             </div>
             <div className={styles.discountContainer}>
                 {discounts.map(discount => (
-                    <DiscountTile discount={discount} accessLevel={userAccessLevel}/>
+                    <DiscountTile key={discount.discountdirectoryid} discount={discount} accessLevel={userAccessLevel}/>
                 ))}
             </div>
         </div>

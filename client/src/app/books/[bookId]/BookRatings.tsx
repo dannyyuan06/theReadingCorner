@@ -128,7 +128,7 @@ export function BookRatings({book, userbook}: {book: BookType, userbook: UserBoo
         const {score, status, page} = userbook
         setStates(scoreArray[10-score], status, page)
         isAlreadyBook.current = true
-    }, [setStates])
+    }, [setStates, userbook])
 
     return (
         <div className={styles.container}>
