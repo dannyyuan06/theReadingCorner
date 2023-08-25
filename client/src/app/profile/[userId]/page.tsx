@@ -37,11 +37,10 @@ export default async function Profile({ params }: {params: {userId: string}}) {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-            <PageHeader>
-                {user.username}&apos;S PROFILE
-            </PageHeader>
-            <ResetButton/>
-            {!isSelf && <FriendRequestButton friendUsername={user.username} alreadyRequested={halfFriends.includes(userUsername ?? "")} alreadyFriends={getUsernames(user.friends).includes(userUsername ?? "")}/>}
+                <PageHeader>
+                    {user.username}&apos;S PROFILE
+                </PageHeader>
+                {!isSelf && <FriendRequestButton friendUsername={user.username} alreadyRequested={halfFriends.includes(userUsername ?? "")} alreadyFriends={getUsernames(user.friends).includes(userUsername ?? "")}/>}
             </div>
             <div className={styles.bodyContainer}>
                 <div className={styles.bodyLeft}>

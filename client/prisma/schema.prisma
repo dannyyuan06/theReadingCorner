@@ -143,3 +143,14 @@ model GenreSuggestion {
   username      String
   genre         String
 }
+
+model DiscountDirectory {
+  discountdirectoryid     Int     @id @default(autoincrement())
+  imageLink               String
+  title                   String
+  description             String
+  code                    String
+  startDate               DateTime
+  expireDate              DateTime
+  link                    String
+}

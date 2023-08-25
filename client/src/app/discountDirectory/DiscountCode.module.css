@@ -1,0 +1,24 @@
+.container {
+    display: flex;
+    align-items: center;
+}
+
+.codeTitle {
+    font-family: var(--font-small-header);
+}
+
+.code {
+    cursor: pointer;
+}
+
+.code:hover {
+    background-color: var(--theme-blue);
+}
+
+.copied {
+    margin-left: auto;
+    background-color: var(--theme-green);
+    padding: 5px;
+    border-radius: 5px;
+    height: fit-content;
+}
