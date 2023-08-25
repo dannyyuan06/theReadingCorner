@@ -1,0 +1,20 @@
+
+.popupContainer {
+    width: 800px;
+}
+
+.button {
+    padding: 10px 20px;
+    background-color: var(--theme-purple);
+}
+
+.field {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+}
+
+.field input {
+    width: 400px;
+}
+

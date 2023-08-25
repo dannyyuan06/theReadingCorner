@@ -13,7 +13,6 @@ type NameTypes = "title" | "host" | "dateOfMeeting" | "link" | "description" | "
 export function AddMeeting() {
 
     const [clicked, setClicked] = useState(false)
-    const { data }:any = useSession()
     const [formData, setFormData] = useState<AddMeetingType>({
         title: "",
         host: "",
@@ -51,12 +50,9 @@ export function AddMeeting() {
 
     return (
         <>
-            {
-                data && data.accessLevel === 3
-                && <div className={styles.container}>
-                    <button className={styles.button} onClick={() => setClicked(true)}>ADD MEETING</button>
-                </div>
-            }
+            <div className={styles.container}>
+                <button className={styles.button} onClick={() => setClicked(true)}>ADD MEETING</button>
+            </div>
             {
                 clicked
                 && 
