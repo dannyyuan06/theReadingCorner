@@ -1,12 +1,12 @@
 "use client"
-import { userType, userWithFriendid } from '@/models/User'
+import { ProfileFriendType, userType, userWithFriendid } from '@/models/User'
 import styles from './IncomingFriend.module.css'
 import { ProfileMini } from '@/app/components/ProfileMini'
 import { getLastOnlineStatus } from './calculateDate'
 import { Dispatch, SetStateAction } from 'react'
 
 type propsType = {
-    friend: userType, 
+    friend: ProfileFriendType, 
     username:string, 
     friendid:[string, string],
     setIncomingFriends:Dispatch<SetStateAction<userWithFriendid[]>>,

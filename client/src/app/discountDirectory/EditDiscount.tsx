@@ -5,6 +5,7 @@ import { UploadImage } from '../components/UploadImage'
 import { DiscountDirectory } from '@prisma/client'
 import { Popup } from '../components/Popup'
 import { DiscountType } from '@/lib/types/fetchTypes/discount'
+import { useRouter } from 'next/navigation'
 
 
 type NameTypes = "title"| "imageLink"| "description"| "code"| "startDate"| "expireDate"| "link"
@@ -12,6 +13,7 @@ type NameTypes = "title"| "imageLink"| "description"| "code"| "startDate"| "expi
 export function EditDiscount({discountDetails, setClicked}: {discountDetails: DiscountDirectory, setClicked: Dispatch<SetStateAction<boolean>>}) {
     const {discountdirectoryid, ...discount} = discountDetails
     const [formData, setFormData] = useState<DiscountType>(discount)
+    const router = useRouter()
     
     const uploadedImage = async (reader: FileReader) => {
         const req = {
@@ -39,7 +41,8 @@ export function EditDiscount({discountDetails, setClicked}: {discountDetails: Di
             body: JSON.stringify(formData),
             headers: { "Content-Type": "application/json" }
         }).then(() => {
-            setClicked(false)
+            setClicked(false);
+            router.refresh();
         })
     }
 
@@ -68,7 +71,7 @@ export function EditDiscount({discountDetails, setClicked}: {discountDetails: Di
                         <div className={styles.big}>
                             <label htmlFor="description"><h2>IMAGE</h2></label>
                             <div className={styles.imageUpload}>
-                                <UploadImage upload={uploadedImage} size={1080} aspectRatio={2}/>
+                                <UploadImage upload={uploadedImage} size={1080} aspectRatio={2} image={formData.imageLink}/>
                             </div>
                         </div>
                     </div>

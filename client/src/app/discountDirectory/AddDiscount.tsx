@@ -4,11 +4,12 @@ import { Popup } from '../components/Popup'
 import styles from '../meetings/AddMeeting.module.css'
 import { UploadImage } from '../components/UploadImage'
 import { DiscountType } from '@/lib/types/fetchTypes/discount'
+import { useRouter } from 'next/navigation'
 
 type NameTypes = "title"| "imageLink"| "description"| "code"| "startDate"| "expireDate"| "link"
 
 export function AddDiscount() {
-
+    const router = useRouter()
     const [clicked, setClicked] = useState(false)
     const [formData, setFormData] = useState({
         title: "",
@@ -46,7 +47,8 @@ export function AddDiscount() {
             body: JSON.stringify(formData),
             headers: { "Content-Type": "application/json" }
         }).then(() => {
-            setClicked(false)
+            setClicked(false);
+            router.refresh();
         })
     }
 
