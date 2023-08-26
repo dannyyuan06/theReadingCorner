@@ -49,12 +49,12 @@ export class CurrentlyReading {
             const res = await prisma.currentlyReading.create({
                 data: currentlyReadingBook
             })
+            return [res, ""]
         } catch (error) {
             return [null, `${error}`]
         }
     }
-    static async updateCurrentlyReadingBook(currentlyReadingBook: CurrentlyReadingUpdatePrisma) {
-        const {readid, ...updateData} = currentlyReadingBook
+    static async updateCurrentlyReadingBook(readid: number, updateData: CurrentlyReadingUpdatePrisma) {
         try {
             const res = await prisma.currentlyReading.update({
                 where: {

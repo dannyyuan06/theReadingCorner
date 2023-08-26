@@ -15,9 +15,8 @@ export default function SearchBooks() {
     const router = useRouter()
 
     const fetchBooks = async (bookQuery: string) => {
-        const res = await fetch("/api/books/findBooks",{
-            method: 'POST',
-            body: JSON.stringify({bookName: bookQuery}),
+        const res = await fetch(`/api/books/${bookQuery}`,{
+            method: 'GET',
             headers: { "Content-Type": "application/json" }
         })
         const body:BookType[] = await res.json()

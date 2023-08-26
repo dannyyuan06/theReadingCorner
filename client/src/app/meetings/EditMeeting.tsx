@@ -30,7 +30,7 @@ export function EditMeeting({meetingDetails, setClicked}: {meetingDetails: Meeti
 
     const submitHandler = async () => {
         if (formData.title === "" || formData.dateOfMeeting === null) return 
-        fetch(`/api/meetings/updateMeeting/${meetingid}`, {
+        fetch(`/api/meetings/${meetingid}`, {
             method: 'PATCH',
             body: JSON.stringify(formData),
             headers: { "Content-Type": "application/json" }

@@ -3,7 +3,7 @@
     box-shadow: var(--shadow-button-color);
     height: 300px;
     width: 400px;
-    border-radius: 10px;
+    border-radius: 4px;
     overflow: hidden;
 }
 

@@ -3,7 +3,7 @@ import { booksType } from "./Book";
 import * as bcrypt from 'bcrypt'
 import { userBookWithBook } from "./UserBook";
 import { Book, UserBook, Users as UserPrismaType, Users } from "@prisma/client";
-import { AddUserbookBookType } from "@/lib/types/fetchTypes/addUserbook";
+import { AddUserbookBookType, UpdateUserbookBookType } from "@/lib/types/fetchTypes/addUserbook";
 
 // Initiallisation
 
@@ -14,14 +14,9 @@ export const userInit = {
     lastName: "",
     lastOnline: new Date(),
     joinDate: new Date(),
-    numBulletinPosts: -1,
-    numReview: -1,
-    numBooksRead: -1,
     profilePicture: "",
     accessLevel: -2,
     description: "",
-    meanScore: -1,
-    daysRead: -1,
     lookedAtBulletin: false,
 }
 
@@ -46,8 +41,7 @@ export type ProfileFriendType = {
     lastName: string,
     profilePicture: string,
     lastOnline: Date,
-    numBulletinPosts: number,
-    numBooksRead: number,
+    joinDate: Date,
 }
 
 export interface userWithFriendid extends ProfileFriendType {
@@ -59,6 +53,12 @@ export interface getProfileInfoReturnType extends UserPrismaType {
     friends: userWithFriendid[],
     requestPendingFriends: userWithFriendid[],
     incomingRequestFriends: userWithFriendid[],
+    numBooksRead: number,
+    numBulletinPosts: number
+}
+
+export interface UpdateUser {
+    accessLevel: number
 }
 
 
@@ -69,14 +69,9 @@ export default class User {
     lastName:          string;
     lastOnline:        Date  ;
     joinDate:          Date;
-    numBulletinPosts:  number;
-    numReview:         number;
-    numBooksRead:      number;
     profilePicture:    string;
     accessLevel:       number;
     description:       string;
-    meanScore:         number;
-    daysRead:          number;
     lookedAtBulletin:  boolean;
     constructor(data: userType) {
         this.username = data.username
@@ -84,15 +79,10 @@ export default class User {
         this.firstName = data.firstName
         this.lastName = data.lastName
         this.lastOnline = data.lastOnline 
-        this.joinDate = data.joinDate 
-        this.numBulletinPosts = data.numBulletinPosts  
-        this.numReview = data.numReview 
-        this.numBooksRead = data.numBooksRead 
+        this.joinDate = data.joinDate
         this.profilePicture = data.profilePicture 
         this.accessLevel = data.accessLevel 
-        this.description = data.description 
-        this.meanScore = data.meanScore 
-        this.daysRead = data.daysRead 
+        this.description = data.description
         this.lookedAtBulletin = data.lookedAtBulletin  
     }
 
@@ -137,12 +127,7 @@ export default class User {
                     accessLevel: form.accessLevel,
                     description: form.description,
                     lastOnline: new Date(),
-                    numBulletinPosts: 0,
-                    numReview: 0,
-                    numBooksRead: 0,
                     profilePicture: form.profilePicture ? form.profilePicture : "/images/profile_picture_placeholder.png",
-                    meanScore: 0,
-                    daysRead: 0,
                     lookedAtBulletin: false,
                 }
             })
@@ -211,9 +196,8 @@ export default class User {
                                     firstName: true,
                                     lastName: true,
                                     lastOnline: true,
-                                    numBulletinPosts: true,
-                                    numBooksRead: true,
                                     profilePicture: true,
+                                    joinDate: true,
                                 }
                             }
                         }
@@ -226,9 +210,8 @@ export default class User {
                                     firstName: true,
                                     lastName: true,
                                     lastOnline: true,
-                                    numBulletinPosts: true,
-                                    numBooksRead: true,
                                     profilePicture: true,
+                                    joinDate: true,
                                 }
                             }
                         }
@@ -250,8 +233,19 @@ export default class User {
             const incomingRequestFriends:userWithFriendid[] = [...incomingFirstFriendRequests, ...incomingSecondFriendRequests].sort()
             
             const {friend1, friend2, ...usefulUserInfo} = user!
+
+            const numBulletinPosts = await prisma.bulletinBoardMessages.count({
+                where: { username: user.username}
+            })
+
+            const numBooksRead = await prisma.userBook.count({
+                where: {username: user.username}
+            })
+
             const usefulInfo = {
                 ...usefulUserInfo,
+                numBulletinPosts,
+                numBooksRead,
                 friends,
                 requestPendingFriends,
                 incomingRequestFriends
@@ -329,19 +323,14 @@ export default class User {
         }
     }
 
-    static async updateReadBook(userbook: AddUserbookBookType) {
+    static async updateReadBook(username: string, bookid: string, data: UpdateUserbookBookType) {
         try {
             const userBook = await prisma.userBook.update({
                 where: {bookid_username: {
-                    bookid: userbook.bookid,
-                    username: userbook.username,
+                    bookid,
+                    username
                 }},
-                data: {
-                    score: userbook.score,
-                    status: userbook.status,
-                    page: userbook.page,
-                    dateFinished: userbook.dateFinished,
-                }
+                data
             })
             prisma.$disconnect()
             return [userBook, ""]
@@ -368,6 +357,19 @@ export default class User {
             const user = await prisma.userPasswords.update({
                 where: {username},
                 data: {password: await bcrypt.hash(newPassword, 10)}
+            })
+            prisma.$disconnect()
+            return [user, ""]
+        } catch (error) {
+            return [null, `${error}`]
+        }
+    }
+
+    static async update(username: string, data:UpdateUser ) {
+        try {
+            const user = await prisma.users.update({
+                where: {username},
+                data: data
             })
             prisma.$disconnect()
             return [user, ""]
@@ -432,6 +434,7 @@ export default class User {
     }
 
     static async friendRequest(username: string, friendUsername: string) {
+        if (username === friendUsername) return [null, `Cannot request self`]
         try {
             const friend1Exists = await prisma.friends.findUnique({
                 where: {

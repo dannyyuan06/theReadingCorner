@@ -4,7 +4,7 @@ import styles from './BookRatings.module.css'
 import { DropDownButton } from '@/app/components/DropDownButton'
 import { BookType } from '@/app/bookexample'
 import { useSession } from 'next-auth/react'
-import { AddUserbookBookType, AddUserbookType } from '@/lib/types/fetchTypes/addUserbook'
+import { AddUserbookBookType, AddUserbookType, UpdateUserbookBookType } from '@/lib/types/fetchTypes/addUserbook'
 import { GetUserbookType } from '@/lib/types/fetchTypes/getUserbook'
 import { UserBook } from '@prisma/client'
 
@@ -104,16 +104,17 @@ export function BookRatings({book, userbook}: {book: BookType, userbook: UserBoo
             }
         }
         if (isAlreadyBook.current) {
-            const req:AddUserbookBookType = request.userbook
-            const res = await fetch("/api/userbook/updateUserbook", {
-                method: 'POST',
+            const {username, bookid, ...rest} = request.userbook
+            const req:UpdateUserbookBookType = rest
+            const res = await fetch(`/api/userbook/${username}/${bookid}`, {
+                method: 'PUT',
                 body: JSON.stringify(req),
                 headers: { "Content-Type": "application/json" }
             })
             const body = await res.json()
         }
         else {
-            const res = await fetch("/api/userbook/addUserbook", {
+            const res = await fetch("/api/userbook", {
                 method: 'POST',
                 body: JSON.stringify(request),
                 headers: { "Content-Type": "application/json" }

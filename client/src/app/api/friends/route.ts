@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
     if (!access) return res
 
     const [friendship, err] = await User.friendRequest(body.username, body.friendUsername)
-    if (!friendship) NextResponse.json({err}, {status: 400})
+    if (!friendship) return NextResponse.json({err}, {status: 400})
     return NextResponse.json({friendship})
 }
 
@@ -18,6 +18,6 @@ export async function PATCH(req: NextRequest) {
     if (!access) return res
 
     const [friendship, err] = await User.acceptFriendRequest(body.friendid, body.username)
-    if (!friendship) NextResponse.json({err}, {status: 400})
+    if (!friendship) return NextResponse.json({err}, {status: 400})
     return NextResponse.json({friendship})
 }

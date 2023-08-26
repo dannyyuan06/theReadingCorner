@@ -26,6 +26,14 @@
     flex: 4
 }
 
+.booksContainer {
+    display: grid;
+    grid-template-columns: 60px 150px 1fr 51px;
+    grid-auto-rows: 80px;
+    row-gap: 10px;
+    column-gap: 5px;
+}
+
 .bodyContainer section {
     margin-bottom: 20px;
 }

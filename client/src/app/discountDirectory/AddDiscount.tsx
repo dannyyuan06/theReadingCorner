@@ -11,13 +11,15 @@ type NameTypes = "title"| "imageLink"| "description"| "code"| "startDate"| "expi
 export function AddDiscount() {
     const router = useRouter()
     const [clicked, setClicked] = useState(false)
+    const todayDate = new Date()
+    todayDate.setMilliseconds(0)
     const [formData, setFormData] = useState({
         title: "",
         imageLink: "",
         description: "",
         code: "",
-        startDate: new Date(),
-        expireDate: new Date(),
+        startDate: todayDate,
+        expireDate: todayDate,
         link: "",
     })
 
@@ -67,12 +69,12 @@ export function AddDiscount() {
                     <Field name='code' type='text' setFormData={setFormData} formData={formData}>CODE</Field>
                     <div className={styles.field}>
                         <label htmlFor='start-date'><h2>START DATE</h2></label>
-                        <input type="datetime-local" id="start-date" name="start-date" defaultValue={formData.startDate.toISOString().slice(0, 19)} onChange={(e) => setFormData(prev => ({...prev, startDate: new Date(e.target.value)}))}/>
+                        <input type="datetime-local" id="start-date" name="start-date" defaultValue={formData.startDate.toISOString().slice(0, 16)} onChange={(e) => setFormData(prev => ({...prev, startDate: new Date(e.target.value)}))}/>
                     </div>
                     <hr/>
                     <div className={styles.field}>
                         <label htmlFor='expire-date'><h2>EXPIRE DATE</h2></label>
-                        <input type="datetime-local" id="expire-date" name="expire-date" defaultValue={formData.startDate.toISOString().slice(0, 19)} onChange={(e) => setFormData(prev => ({...prev, expireDate: new Date(e.target.value)}))} min={new Date().toISOString().slice(0, 16)}/>
+                        <input type="datetime-local" id="expire-date" name="expire-date" defaultValue={formData.startDate.toISOString().slice(0, 16)} onChange={(e) => setFormData(prev => ({...prev, expireDate: new Date(e.target.value)}))} min={new Date().toISOString().slice(0, 16)}/>
                     </div>
                     <hr/>
                     <Field name='link' type='text' setFormData={setFormData} formData={formData}>LINK</Field>
