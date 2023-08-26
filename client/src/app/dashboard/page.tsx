@@ -15,10 +15,6 @@ export default function Home() {
           <CurrentlyReadingTile/>
           <MessagesTile/>
         </div>
-        {/* <div className={styles.right}>
-          <BookSuggestionTile/>
-          <StatisticsTile/>
-        </div> */}
       </div>
     </div>
   )

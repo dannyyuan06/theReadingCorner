@@ -6,12 +6,11 @@ import { SmallBook } from "./SmallBook";
 import User, { userWithFriendid } from "@/models/User";
 import { getLastOnlineStatus } from "./calculateDate";
 import { ProfilePic } from "./ProfilePic";
-import { getServerSession } from "next-auth";
 import { FriendContainer } from "./FriendContainer";
 import { FriendRequestButton } from "./FriendRequestButton";
 import { EditButton } from "./EditButton";
-import { ResetButton } from "@/app/components/ResetButton";
 import { headers } from "next/dist/client/components/headers";
+import convertMinutes from "@/lib/minsToDate";
 
 const getUsernames = (friends:userWithFriendid[]) => {
     return friends.map((friend) => friend.username)
@@ -22,7 +21,6 @@ export default async function Profile({ params }: {params: {userId: string}}) {
     const [user, err] = await getUser(params.userId)
     const headersList = headers()
     const userUsername = headersList.get('username')
-    // const session = await getServerSession()
     
     if (!user) return (
         <div className={styles.container}>
@@ -33,6 +31,12 @@ export default async function Profile({ params }: {params: {userId: string}}) {
     const isSelf = userUsername === user.username;
     const halfFriends = [...getUsernames(user.incomingRequestFriends), ...getUsernames(user.requestPendingFriends)]
 
+    const totalAndNumberAndPages = user.booksRead.reduce((prev: {total: number, num: number, pages: number}, curr) => {
+        return {total: prev.total + curr.score, num: prev.num + 1, pages: prev.pages + curr.book.pageCount}
+    }, {total: 0, num: 0, pages: 0})
+
+    const mean = Math.round(totalAndNumberAndPages.total / totalAndNumberAndPages.num * 100) / 100
+    const time = convertMinutes(totalAndNumberAndPages.pages*1.7)
 
     return (
         <div className={styles.container}>
@@ -47,10 +51,9 @@ export default async function Profile({ params }: {params: {userId: string}}) {
                     <ProfilePic username={params.userId} profilePic={user.profilePicture}/>
                     <section>
                         <h3 className={styles.smallHeader}>QUICK INFO</h3>
-                        <Split title="LAST ONLINE" value={getLastOnlineStatus(user.lastOnline)}/>
+                        <Split title="LAST LOGGED ON" value={getLastOnlineStatus(user.lastOnline)}/>
                         <Split title="JOINED" value={(user.joinDate).toDateString().split(" ").slice(1).join(" ")}/>
                         <Split title="BULLETIN POSTS" value={user.numBulletinPosts.toString()}/>
-                        <Split title="REVIEWS" value={user.numReview.toString()}/>
                         <Split title="BOOKS READ" value={user.numBooksRead.toString()}/>
                     </section>
                     {isSelf
@@ -75,14 +78,12 @@ export default async function Profile({ params }: {params: {userId: string}}) {
                     <section className={styles.statistics}>
                         <h3 className={styles.smallHeader}>BOOKS</h3>
                         <div className={styles.splitContainer}>
-                            <span>Days: {user.daysRead}</span>
-                            <span className={styles.splitRight}>Mean Score: {user.meanScore}</span>
+                            <span>Total Reading Time: {time}</span>
+                            <span className={styles.splitRight}>Mean Score: {mean}</span>
                         </div>
-                        <div>
+                        <div className={styles.booksContainer}>
                             {user.booksRead.map((userbook) => (
-                                <div key={userbook.bookid}>
-                                    <SmallBook userbook={userbook}/>
-                                </div>
+                                <SmallBook key={userbook.bookid} userbook={userbook}/>
                             ))}
                         </div>
                     </section>

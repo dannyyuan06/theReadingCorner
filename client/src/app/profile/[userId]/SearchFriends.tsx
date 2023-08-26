@@ -64,7 +64,7 @@ function SearchProfile({friend, username, setRequestPendingFriends, allFriends}:
             <hr/>
             <div key={friend.username} className={styles.searchContainer}>
                 <ProfileMini user={friend} dateSent={getLastOnlineStatus(new Date(friend.lastOnline))}/>
-                <button className={styles.requestContainer} onClick={clickHandler}>REQUEST</button>
+                {username !== friend.username && <button className={styles.requestContainer} onClick={clickHandler}>REQUEST</button>}
             </div>
         </>
     )

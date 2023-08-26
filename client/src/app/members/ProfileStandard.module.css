@@ -9,6 +9,12 @@
     font-size: 0.9em;
 }
 
+#imagelink {
+    background-color: transparent;
+    height: fit-content;
+    display: inherit;
+}
+
 .userTimestamp {
     color: var(--theme-light-grey)
 }

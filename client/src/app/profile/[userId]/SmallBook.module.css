@@ -11,15 +11,6 @@
     width: 100%;
 }
 
-.titles {
-    flex: 2
-}
-
-.title {
-    color: black;
-    flex: 5
-}
-
 .title:hover {
     text-decoration: underline;
 }
@@ -44,7 +35,7 @@
     margin-left: auto;
     display: flex;
     gap: 40px;
-    flex: 1
+    /* flex: 1 */
 }
 
 .scoreWrapper {

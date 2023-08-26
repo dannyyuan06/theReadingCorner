@@ -27,9 +27,8 @@ export const usernameValidation = async (text: string):Promise<[boolean, string]
     await timeout()
 
     // Database Check
-    const res = await fetch("/api/users/findUser",{
-        method: 'POST',
-        body: JSON.stringify({username: text}),
+    const res = await fetch(`/api/users/${text}`,{
+        method: 'GET',
         headers: { "Content-Type": "application/json" }
     })
 

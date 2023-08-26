@@ -29,7 +29,7 @@ export function WithoutBookMessage({message}: {message: getMessagesType}) {
     }
 
     const report = () => {
-        fetch(`/api/bulletinBoard/reportMessage/${message.messageid}`, {
+        fetch(`/api/bulletinBoard/${message.messageid}`, {
             method: 'PATCH',
             headers: { "Content-Type": "application/json" }
         }).then(() => {
@@ -47,7 +47,7 @@ export function WithoutBookMessage({message}: {message: getMessagesType}) {
     }
 
     const deleteMessage = () => {
-        fetch(`/api/bulletinBoard/deleteMessage/${message.messageid}`, {
+        fetch(`/api/bulletinBoard/${message.messageid}`, {
             method: 'DELETE',
             headers: { "Content-Type": "application/json" }
         }).then(() => {
