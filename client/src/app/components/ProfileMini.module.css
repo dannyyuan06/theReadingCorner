@@ -10,6 +10,26 @@
     text-decoration: underline;
 }
 
+.tooltip {
+    display: block;
+    visibility: hidden;
+    transition: visibility .1s .5s;
+    z-index: 8;
+}
+
+#container:hover .tooltip {
+    visibility: visible;
+}
+
 .userTimestamp {
     color: var(--theme-light-grey)
+}
+
+@keyframes fadeInDelay {
+    0% {
+        visibility: hidden;
+    }
+    100% {
+        visibility: visible;
+    }
 }

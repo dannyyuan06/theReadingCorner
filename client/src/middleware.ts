@@ -33,12 +33,16 @@ const scopes = [
 export default withAuth(
   // `withAuth` augments your `Request` with the user's token.
   function middleware(req) {
+    const username = req.nextauth.token?.username!.toString()
+    const accessLevel = req.nextauth.token?.accessLevel!.toString()
+    const newHeader = {username, accessLevel}
     for (let i=0;i<scopes.length;i++) {
         const {pathname, accessLevel, redirect} = scopes[i]
         if (req.nextUrl.pathname.match(pathname) && accessLevel(parseInt(req.nextauth.token?.accessLevel!.toString()))) {
-            return NextResponse.rewrite(new URL(redirect, req.url))
+            return NextResponse.rewrite(new URL(redirect, req.url), {headers: newHeader})
         }
     }
+    return NextResponse.next({headers: newHeader})
   },
   {
     callbacks: {

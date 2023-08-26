@@ -41,16 +41,15 @@ export function AddBook({setDidAddBook, setBooks}: {setDidAddBook: Dispatch<SetS
     const inputHander = (e: ChangeEvent<HTMLInputElement>) => {
         clearTimeout(timer ?? "")
         timer = setTimeout(() => {
-            fetch("/api/books/findBooks",{
-                method: 'POST',
-                body: JSON.stringify({bookName: e.target.value}),
+            fetch(`/api/books/${e.target.value}`,{
+                method: 'GET',
                 headers: { "Content-Type": "application/json" }
             })
             .then(res => res.json())
             .then(body => {
                 setBooksQueried(body)
             })
-        }, 2000)
+        }, 500)
     }
 
     return(

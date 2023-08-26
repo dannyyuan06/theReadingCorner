@@ -1,0 +1,50 @@
+.container {
+    background-color: white;
+    box-shadow: var(--shadow-button-color);
+    height: 300px;
+    width: 400px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.imageContainer {
+    position: relative;
+}
+
+.title {
+    position: absolute;
+    bottom: 0;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    background-color: white;
+    border-radius: 3px;
+    padding: 5px 10px 0;
+    box-shadow: 0px 0 10px rgba(0, 0, 0, 0.188);
+}
+
+.editDiscountButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: 5px;
+    margin-right: 5px;
+    border-radius: 50%;
+    background-color: white;
+    box-shadow: 0px 0 10px rgba(0, 0, 0, 0.188);
+}
+
+.dates {
+    display: flex;
+    justify-content: space-between;
+}
+
+.textContainer {
+    padding: 5px;
+}
+
+.description {
+    height: 2.5em;
+    overflow: scroll;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

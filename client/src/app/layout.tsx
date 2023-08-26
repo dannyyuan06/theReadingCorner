@@ -3,7 +3,6 @@ import { Inter } from 'next/font/google'
 import { Navigation } from './navigationBar/Navigation'
 import styles from './layout.module.css'
 import { ReduxProvider } from '@/redux/Provider'
-import { SessionProvider } from 'next-auth/react'
 import { SessionProviders } from './components/SessionProviders'
 import { Header } from './components/Header'
 
@@ -29,7 +28,7 @@ export default function RootLayout({
           <ReduxProvider>
             <Navigation/>
             <div className={styles.bodyContainer}>
-              {/* <Header/> */}
+              <Header/>
               {children}
             </div>
           </ReduxProvider>

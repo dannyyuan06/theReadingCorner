@@ -25,7 +25,6 @@ export default async function members() {
                     <h3 style={{flex: 1}}>DATE JOINED</h3>
                     <h3 style={{flex: 1}}>LAST ONLINE</h3>
                     <h3 style={{flex: 2}}>EMAIL</h3>
-                    <h3 style={{flex: 1, textAlign: 'right'}}>BOOKS READ</h3>
                     <span style={{width: 35}}></span>
                 </div>
                 {users.map((values: Users) => (

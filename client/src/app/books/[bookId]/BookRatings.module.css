@@ -2,6 +2,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    max-height: 300px;
 }
 
 .scores {
@@ -59,6 +60,6 @@
 .submitButton {
     float: right;
     padding: 10px 20px;
-    background-color: var(--theme-light-light-grey);
+    background-color: var(--theme-blue);
     margin-top: 20px;
 }

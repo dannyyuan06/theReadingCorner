@@ -1,13 +1,14 @@
 import { AddMessageMessageType } from "@/lib/types/fetchTypes/addMessage";
 import { prisma } from "@/prisma/db";
-import { Book, BulletinBoardBooks, BulletinBoardMessages, Users } from "@prisma/client";
+import { Book, BulletinBoardBooks, BulletinBoardMessages } from "@prisma/client";
+import { ProfileFriendType } from "./User";
 
 interface booksRelationshipType extends BulletinBoardBooks {
     book: Book
 }
 
 export interface getMessagesType extends BulletinBoardMessages {
-    user: Users,
+    user: ProfileFriendType,
     books: booksRelationshipType[]
 }
 
@@ -28,30 +29,43 @@ export class BulletinBoard {
                         book: true
                     }
                 },
-                user: true
+                user: {
+                    select: {
+                        username: true,
+                        firstName: true,
+                        lastName: true,
+                        lastOnline: true,
+                        profilePicture: true,
+                        joinDate: true,
+                    }
+                }
             }
         })
         prisma.$disconnect()
         return rest
     }
  
-    static async addMessage(message: AddMessageMessageType) {
-        const res = await prisma.bulletinBoardMessages.create({
-            data: {
-                body: message.body,
-                username: message.username,
-            }
-        })
-        const bookObject = message.books.map((book) => ({
-            bookid: book.book.bookid,
-            messageid: res.messageid
-        }))
-        await prisma.bulletinBoardBooks.createMany({
-            data: bookObject,
-            skipDuplicates: true
-        })
-        prisma.$disconnect()
-        return res
+    static async addMessage(message: AddMessageMessageType):Promise<[BulletinBoardMessages|null, string]> {
+        try {
+            const res = await prisma.bulletinBoardMessages.create({
+                data: {
+                    body: message.body,
+                    username: message.username,
+                }
+            })
+            const bookObject = message.books.map((book) => ({
+                bookid: book.book.bookid,
+                messageid: res.messageid
+            }))
+            await prisma.bulletinBoardBooks.createMany({
+                data: bookObject,
+                skipDuplicates: true
+            })
+            prisma.$disconnect()
+            return [res, ""]
+        } catch (err) {
+            return [null, `${err}`]
+        }
     }
 
     static async reportMessage(messageid: number) {
@@ -80,8 +94,15 @@ export class BulletinBoard {
         }
     }
 
-    static async deleteMessage(messageid: number) {
+    static async deleteMessage(messageid: number, username: string, accessLevel: number) {
         try {
+            if (accessLevel !== 3) {
+                const message = await prisma.bulletinBoardMessages.findUnique({where: {messageid}})
+                if (message?.username !== username) {
+                    prisma.$disconnect();
+                    return [null, "User is not authorised"]
+                }
+            }
             const message = await prisma.bulletinBoardMessages.delete({
                 where: {messageid}
             })

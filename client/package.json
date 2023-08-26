@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@google-cloud/storage": "^6.12.0",
-    "@prisma/client": "^5.1.1",
+    "@prisma/client": "^5.2.0",
     "@reduxjs/toolkit": "^1.9.5",
     "@types/node": "20.3.1",
     "@types/react": "18.2.12",
@@ -36,7 +36,7 @@
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
     "@types/jsonwebtoken": "^9.0.2",
-    "prisma": "^5.1.1"
+    "prisma": "^5.2.0"
   },
   "optionalDependencies": {
     "utf-8-validate": "^5.0.10"

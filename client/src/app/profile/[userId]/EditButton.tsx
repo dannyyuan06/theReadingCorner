@@ -40,9 +40,9 @@ export function EditButton({user}: {user: getProfileInfoReturnType}) {
     }, [info])
 
     const submitHandler = () => {
-        fetch("/api/users/updateUser",{
-            method: 'PATCH',
-            body: JSON.stringify({...info, username: user.username}),
+        fetch(`/api/users/${user.username}`,{
+            method: 'PUT',
+            body: JSON.stringify(info),
             headers: { "Content-Type": "application/json" }
         }).then(() => {
             setClicked(false)

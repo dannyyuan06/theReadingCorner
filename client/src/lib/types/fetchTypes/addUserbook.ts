@@ -9,6 +9,13 @@ export interface AddUserbookBookType {
     dateFinished: Date,
 }
 
+export interface UpdateUserbookBookType {
+    score: number,
+    status: number,
+    page: number,
+    dateFinished: Date,
+}
+
 export interface AddUserbookType {
     book: BookType,
     userbook: AddUserbookBookType

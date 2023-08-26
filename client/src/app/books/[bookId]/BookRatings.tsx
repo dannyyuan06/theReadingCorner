@@ -4,8 +4,9 @@ import styles from './BookRatings.module.css'
 import { DropDownButton } from '@/app/components/DropDownButton'
 import { BookType } from '@/app/bookexample'
 import { useSession } from 'next-auth/react'
-import { AddUserbookType } from '@/lib/types/fetchTypes/addUserbook'
+import { AddUserbookBookType, AddUserbookType, UpdateUserbookBookType } from '@/lib/types/fetchTypes/addUserbook'
 import { GetUserbookType } from '@/lib/types/fetchTypes/getUserbook'
+import { UserBook } from '@prisma/client'
 
 type pageType = ""|number
 
@@ -33,7 +34,7 @@ export const statusArray = Object.keys(statusObj)
 
 let pageTimeout: NodeJS.Timeout
 
-export function BookRatings({book}: {book: BookType}) {
+export function BookRatings({book, userbook}: {book: BookType, userbook: UserBook|null}) {
 
     const pageCount = book.volumeInfo.pageCount
 
@@ -41,8 +42,8 @@ export function BookRatings({book}: {book: BookType}) {
     const [myScoreWithWords, setMyScoreWithWords] = useState<string>("")
     const [status, setStatus] = useState<string>(statusArray[0])
     const [page, setPage] = useState<pageType>("")
-    const userbookid = useRef("")
-    const changed = useRef(false)
+    const isAlreadyBook = useRef(false)
+    const [changed, setChanged] = useState(false)
 
     const { data }:any = useSession()
 
@@ -57,7 +58,6 @@ export function BookRatings({book}: {book: BookType}) {
         setMyScoreWithWords(scoreWithWords)
         setStatus(statusArray[status])
         setPage(page)
-        changed.current = true
     }, [])
 
     const updateStatus = (status: string) => {
@@ -67,17 +67,20 @@ export function BookRatings({book}: {book: BookType}) {
         else if (statusArray[3] === status) setStatus(status)
         else if (statusArray[4] === status) setStatus(status)
         else setStates("", 0, "")
+        setChanged(true)
     }
 
     const updatePageCount = (page: pageType) => {
         if (page === pageCount) setStates(myScoreWithWords, 2, pageCount)//setStatus("Finished")
         else if (page === "") setStates("-", 0, "")//setStatus(statusArray[0])
         else if (page <= pageCount) setStates(myScoreWithWords, 1, page)//setStatus("Reading")
+        setChanged(true)
     }
 
     const updateScore = (scoreWithWords: string) => {
         if (status === statusArray[0]) setStates(scoreWithWords, 1, 1)
         else setStates(scoreWithWords, statusObj[status], page)
+        setChanged(true)
     }
 
     const pageHandler = (e: FormEvent<HTMLInputElement>) => {
@@ -87,6 +90,8 @@ export function BookRatings({book}: {book: BookType}) {
     }
 
     const submitHandler = async () => {
+        if (changed === false) return
+        const finishDate = statusObj[status] <= 1 ? new Date(0) : new Date()
         const request: AddUserbookType = {
             book: book,
             userbook: {
@@ -95,47 +100,36 @@ export function BookRatings({book}: {book: BookType}) {
                 page: page === "" ? -1 : page,
                 username: data.username,
                 bookid: book.id,
-                dateFinished: new Date(0)
+                dateFinished: finishDate
             }
         }
-        if (userbookid.current) {
-            const res = await fetch("/api/userbook/updateUserbook", {
-                method: 'POST',
-                body: JSON.stringify({...request.userbook, userbookid: userbookid.current}),
+        if (isAlreadyBook.current) {
+            const {username, bookid, ...rest} = request.userbook
+            const req:UpdateUserbookBookType = rest
+            const res = await fetch(`/api/userbook/${username}/${bookid}`, {
+                method: 'PUT',
+                body: JSON.stringify(req),
                 headers: { "Content-Type": "application/json" }
             })
             const body = await res.json()
         }
         else {
-            const res = await fetch("/api/userbook/addUserbook", {
+            const res = await fetch("/api/userbook", {
                 method: 'POST',
                 body: JSON.stringify(request),
                 headers: { "Content-Type": "application/json" }
             })
             const body = await res.json()
         }
+        setChanged(false);
     }
 
     useEffect(() => {
-        if (!data) return
-        const request: GetUserbookType = {
-            username: data.username,
-            bookid: book.id
-        }
-        fetch("/api/userbook/getUserbook", {
-            method: 'POST',
-            body: JSON.stringify(request),
-            headers: { "Content-Type": "application/json" }
-        })
-        .then(req => req.json())
-        .then(body => {
-            if (body !== null) {
-                const {score, status, page} = body
-                setStates(scoreArray[11-score], status, page)
-                userbookid.current = body.userbookid
-            }
-        })
-    }, [data, book.id, setStates])
+        if (!userbook) return
+        const {score, status, page} = userbook
+        setStates(scoreArray[10-score], status, page)
+        isAlreadyBook.current = true
+    }, [setStates, userbook])
 
     return (
         <div className={styles.container}>
@@ -163,7 +157,7 @@ export function BookRatings({book}: {book: BookType}) {
                 </div>
             </div>
             <div className={styles.submitButtonWrapper}>
-                <button className={styles.submitButton} style={changed.current ? {backgroundColor: "var(--theme-blue)"}: {}} onClick={submitHandler}>
+                <button className={styles.submitButton} style={!changed ? {backgroundColor: "var(--theme-light-light-grey)"}: {}} onClick={submitHandler}>
                     SUMBIT
                 </button>
             </div>

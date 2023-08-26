@@ -3,19 +3,6 @@
     padding: 10px 15px;
 }
 
-.popupContainer {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background-color: var(--theme-see-through-grey);
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .popupWrapper {
     width: 800px;
 }

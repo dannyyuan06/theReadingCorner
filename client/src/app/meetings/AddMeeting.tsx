@@ -6,18 +6,20 @@ import { UploadImage } from '../components/UploadImage'
 import { useSession } from 'next-auth/react'
 import { AddMeetingType } from '@/lib/types/fetchTypes/addMeeting'
 import { Popup } from '../components/Popup'
+import { useRouter } from 'next/navigation'
 
 
 type NameTypes = "title" | "host" | "dateOfMeeting" | "link" | "description" | "imageLink"
 
 export function AddMeeting() {
-
+    const router = useRouter()
     const [clicked, setClicked] = useState(false)
-    const { data }:any = useSession()
+    const todayDate = new Date()
+    todayDate.setMilliseconds(0)
     const [formData, setFormData] = useState<AddMeetingType>({
         title: "",
         host: "",
-        dateOfMeeting: new Date(),
+        dateOfMeeting: todayDate,
         link: "",
         description: "",
         imageLink: ""
@@ -39,24 +41,21 @@ export function AddMeeting() {
     const submitHandler = () => {
         const {title, dateOfMeeting} = formData
         if (title === "" || dateOfMeeting === null) return 
-        fetch('/api/meetings/addMeeting', {
+        fetch('/api/meetings', {
             method: 'POST',
             body: JSON.stringify(formData),
             headers: { "Content-Type": "application/json" }
         }).then(() => {
             setClicked(false)
+            router.refresh()
         })
-        
     }
 
     return (
         <>
-            {
-                data && data.accessLevel === 3
-                && <div className={styles.container}>
-                    <button className={styles.button} onClick={() => setClicked(true)}>ADD MEETING</button>
-                </div>
-            }
+            <div className={styles.container}>
+                <button className={styles.button} onClick={() => setClicked(true)}>ADD MEETING</button>
+            </div>
             {
                 clicked
                 && 
@@ -66,7 +65,7 @@ export function AddMeeting() {
                         <Field name='host' type='text' setFormData={setFormData} formData={formData}>HOST</Field>
                         <div className={styles.field}>
                             <label htmlFor='dateOfMeeting'><h2>DATE</h2></label>
-                            <input type="datetime-local" id="dateOfMeeting" name="dateOfMeeting" defaultValue={formData.dateOfMeeting.toISOString().slice(0, 19)} onChange={(e) => setFormData(prev => ({...prev, dateOfMeeting: new Date(e.target.value)}))} min={new Date().toISOString().slice(0, 16)}/>
+                            <input type="datetime-local" id="dateOfMeeting" name="dateOfMeeting" defaultValue={formData.dateOfMeeting.toISOString().slice(0, 16)} onChange={(e) => setFormData(prev => ({...prev, dateOfMeeting: new Date(e.target.value)}))} min={new Date().toISOString().slice(0, 16)}/>
                         </div>
                         <hr/>
                         <Field name='link' type='text' setFormData={setFormData} formData={formData}>LINK</Field>

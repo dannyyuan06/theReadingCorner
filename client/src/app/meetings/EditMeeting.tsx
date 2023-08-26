@@ -1,12 +1,11 @@
 "use client"
 import { Dispatch, SetStateAction, useState } from 'react'
-import { PageHeader } from '../components/PageHeader'
 import styles from './AddMeeting.module.css'
 import { UploadImage } from '../components/UploadImage'
-import { useSession } from 'next-auth/react'
 import { AddMeetingType } from '@/lib/types/fetchTypes/addMeeting'
 import { Meetings } from '@prisma/client'
 import { Popup } from '../components/Popup'
+import { useRouter } from 'next/navigation'
 
 
 type NameTypes = "title" | "host" | "dateOfMeeting" | "link" | "description" | "imageLink"
@@ -14,6 +13,7 @@ type NameTypes = "title" | "host" | "dateOfMeeting" | "link" | "description" | "
 export function EditMeeting({meetingDetails, setClicked}: {meetingDetails: Meetings, setClicked: Dispatch<SetStateAction<boolean>>}) {
     const {meetingid, ...meeting} = meetingDetails
     const [formData, setFormData] = useState<AddMeetingType>(meeting)
+    const router = useRouter()
     
     const uploadedImage = async (reader: FileReader) => {
         const req = {
@@ -30,12 +30,13 @@ export function EditMeeting({meetingDetails, setClicked}: {meetingDetails: Meeti
 
     const submitHandler = async () => {
         if (formData.title === "" || formData.dateOfMeeting === null) return 
-        fetch(`/api/meetings/updateMeeting/${meetingid}`, {
+        fetch(`/api/meetings/${meetingid}`, {
             method: 'PATCH',
             body: JSON.stringify(formData),
             headers: { "Content-Type": "application/json" }
         }).then(() => {
-            setClicked(false)
+            setClicked(false);
+            router.refresh();
         })
         
     }

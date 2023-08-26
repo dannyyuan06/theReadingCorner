@@ -22,14 +22,9 @@ model Users {
   lastName          String
   lastOnline        DateTime  
   joinDate          DateTime  @default(now())
-  numBulletinPosts  Int
-  numReview         Int
-  numBooksRead      Int
   profilePicture    String
   accessLevel       Int
   description       String
-  meanScore         Float
-  daysRead          Float
   lookedAtBulletin  Boolean
   booksRead         UserBook[]
   friend1           Friends[] @relation(name: "friend1")
@@ -53,16 +48,16 @@ model Book {
 }
 
 model UserBook {
-  userbookid    Int       @id @default(autoincrement())
+  bookid        String   
+  username      String
   dateStarted   DateTime  @default(now())
   dateFinished  DateTime
   score         Int
   status        Int
   page          Int
-  user          Users      @relation(fields: [username], references: [username])
-  username      String
+  user          Users     @relation(fields: [username], references: [username])
   book          Book      @relation(fields: [bookid], references: [bookid])
-  bookid        String
+  @@id([bookid, username])
 }
 
 // status
@@ -114,6 +109,7 @@ model CurrentlyReading {
   book          Book      @relation(fields: [bookid], references: [bookid])
   bookid        String
   averageRating Float
+  affiliateLink String    @default("")
   dateStarted   DateTime  @default(now())
   pageNumber    Int
   status        Int
@@ -141,4 +137,15 @@ model GenreSuggestion {
   user          Users       @relation(fields: [username], references: [username])
   username      String
   genre         String
+}
+
+model DiscountDirectory {
+  discountdirectoryid     Int     @id @default(autoincrement())
+  imageLink               String
+  title                   String
+  description             String
+  code                    String
+  startDate               DateTime
+  expireDate              DateTime
+  link                    String
 }
