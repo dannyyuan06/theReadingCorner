@@ -1,4 +1,3 @@
-import { DiscountDirectory } from '@prisma/client'
 import { PageHeader } from '../components/PageHeader'
 import styles from './page.module.css'
 import { DiscountTile } from './DiscountTile'

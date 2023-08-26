@@ -16,8 +16,8 @@ export function AddToCurrentlyReading({book}: {book: BookType}) {
             ...book,
             affiliateLink
         }
-        const res = await fetch("/api/currentlyReading/addBook", {
-            method: 'PUT',
+        const res = await fetch("/api/currentlyReading", {
+            method: 'POST',
             body: JSON.stringify(req),
             headers: { "Content-Type": "application/json" }
         })

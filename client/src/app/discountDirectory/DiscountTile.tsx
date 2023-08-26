@@ -25,11 +25,11 @@ export function DiscountTile({discount, accessLevel}: {discount: DiscountDirecto
                 <div className={styles.dates}>
                     <div className={styles.startDate}>
                         Starts From:&nbsp;
-                        {new Date(discount.startDate).toLocaleDateString("en-GB")}
+                        {new Date(discount.startDate).toDateString().split(" ").slice(1).join(" ")}
                     </div>
                     <div className={styles.expireDate}>
                         Expires By:&nbsp;
-                        {new Date(discount.expireDate).toLocaleDateString("en-GB")}
+                        {new Date(discount.expireDate).toDateString().split(" ").slice(1).join(" ")}
                     </div>
                 </div>
             </div>

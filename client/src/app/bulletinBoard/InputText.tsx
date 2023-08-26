@@ -50,7 +50,7 @@ export function InputText() {
             user: data!,
             dateCreated: new Date()
         }
-        await fetch("/api/bulletinBoard/addMessage", {
+        await fetch("/api/bulletinBoard", {
             method: 'POST',
             body: JSON.stringify(req),
             headers: { "Content-Type": "application/json" }

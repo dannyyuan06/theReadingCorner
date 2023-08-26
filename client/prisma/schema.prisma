@@ -22,14 +22,9 @@ model Users {
   lastName          String
   lastOnline        DateTime  
   joinDate          DateTime  @default(now())
-  numBulletinPosts  Int
-  numReview         Int
-  numBooksRead      Int
   profilePicture    String
   accessLevel       Int
   description       String
-  meanScore         Float
-  daysRead          Float
   lookedAtBulletin  Boolean
   booksRead         UserBook[]
   friend1           Friends[] @relation(name: "friend1")

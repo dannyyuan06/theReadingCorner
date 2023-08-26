@@ -56,14 +56,13 @@ export function SetStatus({currentlyReading, book, setClicked, setCurrent}: {cur
 
     const submitHandler = async () => {
         const request:CurrentlyReadingUpdate = {
-            readid: currentlyReading.readid,
             pageNumber: page,
             status: statusObj[status],
             affiliateLink: affiliateLink,
         }
         if (changed.current) {
-            const res = await fetch("/api/currentlyReading/updateBook", {
-                method: 'POST',
+            const res = await fetch(`/api/currentlyReading/${currentlyReading.readid}`, {
+                method: 'PUT',
                 body: JSON.stringify(request),
                 headers: { "Content-Type": "application/json" }
             }) 

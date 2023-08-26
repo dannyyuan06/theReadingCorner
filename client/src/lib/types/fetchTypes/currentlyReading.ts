@@ -14,14 +14,12 @@ export interface CurrentlyReadingInput {
 }
 
 export interface CurrentlyReadingUpdate {
-    readid: number,
     pageNumber: ""|number,
     status: number,
     affiliateLink: string,
 }
 
 export interface CurrentlyReadingUpdatePrisma {
-    readid: number,
     pageNumber: number,
     status: number,
     affiliateLink: string,
