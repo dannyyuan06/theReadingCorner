@@ -5,7 +5,7 @@ import { StatsType } from '@/models/Pages'
 
 export function StatisticsTile({stats}: {stats: StatsType}) {
 
-    const displayAverageRating = stats.averageRating === -1 ? "No Readers" : stats.averageRating.toFixed(2) ?? ""
+    const displayAverageRating = stats.averageRating === -1 ? "-" : stats.averageRating.toFixed(2) ?? ""
 
     return(
         <div>
