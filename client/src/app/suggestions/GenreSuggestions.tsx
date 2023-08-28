@@ -5,6 +5,7 @@ import { AddGenre } from './AddGenre'
 import { GenreAttachment } from './GenreAttachment'
 import { useSession } from 'next-auth/react'
 import { GenreSuggestionType } from '@/lib/types/fetchTypes/genreSuggestion'
+import useAuthSession from '@/redux/useAuthSession'
 
 export const genres = [
      "Autobiography",
@@ -39,10 +40,10 @@ export function GenreSuggestions() {
 
     const [didAddGenre, setDidAddGenre] = useState(false)
     const [genres, setGenres] = useState<string[]>([])
-    const { data }:any = useSession()
+    const user = useAuthSession()
 
     const onSubmit = async () => {
-        const req:GenreSuggestionType[] = genres.map((genre) => ({genre: genre, username:data?.username}))
+        const req:GenreSuggestionType[] = genres.map((genre) => ({genre: genre, username:user?.username ?? ""}))
         const res = await fetch("/api/genreSuggestions", {
             method: 'POST',
             body: JSON.stringify(req),

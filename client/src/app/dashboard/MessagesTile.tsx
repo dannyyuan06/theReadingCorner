@@ -1,10 +1,9 @@
 import Link from 'next/link'
 import { WithoutBookMessage } from '../bulletinBoard/WithoutBookMessage'
 import tStyles from './tiles.module.css'
-import { BulletinBoard } from '@/models/BulletinBoard'
+import { getMessagesType } from '@/models/BulletinBoard'
 
-export async function MessagesTile() {
-    const messages = await getMessages()
+export async function MessagesTile({messages}: {messages: getMessagesType[]}) {
     return(
         <div>
             <Link href='/bulletinBoard' className={tStyles.title}><h2>RECENT MESSAGES</h2></Link>
@@ -15,9 +14,4 @@ export async function MessagesTile() {
             </div>
         </div>
     )
-}
-
-async function getMessages() {
-    const messages = BulletinBoard.getMessages(5)
-    return messages
 }

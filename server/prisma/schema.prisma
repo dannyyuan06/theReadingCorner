@@ -41,6 +41,7 @@ model Book {
   author        String
   description   String
   pageCount     Int
+  averageRating Float       @default(-1)
   usersRead     UserBook[]
   currentlyR    CurrentlyReading[]
   suggestions   BookSuggestions[]
@@ -117,10 +118,6 @@ model CurrentlyReading {
 
 model Statistics {
   statid                Int     @id @default(autoincrement())
-  currentlyReadingBook  String
-  averageRating         Float
-  numOfMembers          Int
-  numOfBooksRead        Int
   bulletinEngagement    Float
 }
 

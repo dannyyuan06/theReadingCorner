@@ -1,15 +1,13 @@
 import Link from 'next/link'
 import { BookTile } from './BookTile'
 import tStyles from './tiles.module.css'
-import { CurrentlyReading } from '@/models/CurrentlyReading'
+import { CurrentlyReading, getCurrentlyReadingBooksType } from '@/models/CurrentlyReading'
 
-export async function CurrentlyReadingTile() {
-    const [book, err] = await getBook();
+export async function CurrentlyReadingTile({currentlyReading}: {currentlyReading: getCurrentlyReadingBooksType | null}) {
 
-    if (!book) return (
+    if (!currentlyReading) return (
         <div>
             Error fetching book <br/>
-            {err}
         </div>
     )
 
@@ -17,12 +15,7 @@ export async function CurrentlyReadingTile() {
     return (
         <div>
             <Link href="/currentlyReading" className={tStyles.title}><h2>CURRENTLY READING</h2></Link>
-            <BookTile book={book}/>
+            <BookTile book={currentlyReading}/>
         </div>
     )
-}
-
-async function getBook() {
-    const book = CurrentlyReading.getCurrentlyReadingBook()
-    return book
 }

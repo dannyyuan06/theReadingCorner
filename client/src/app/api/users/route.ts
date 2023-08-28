@@ -1,3 +1,5 @@
+import { userModelType } from "@/app/register/credentials/Form";
+import confirmPasswordValidation from "@/lib/validation/ConfirmPassword";
 import { emailValidation } from "@/lib/validation/Email";
 import { passwordValidation } from "@/lib/validation/Password";
 import { usernameFastValidation } from "@/lib/validation/UsernameFast";
@@ -6,17 +8,9 @@ import User from "@/models/User";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-    const body = await req.json()
+    const {formData, type}:{formData:userModelType, type: string} = await req.json()
 
-    const username = body.username;
-    const email = body.email;
-    const firstName = body.firstName;
-    const lastName = body.lastName;
-    const accessLevel = body.accessLevel;
-    const description = body.description;
-    const password = body.password;
-    const profilePicture = body.profilePicture;
-    const type = body.type
+    const {username, email, firstName, lastName, description, password, confirmPassword} = formData;
 
     const errorResult = (str: string) => NextResponse.json({
         body: "Error in sending data " + str,
@@ -31,16 +25,13 @@ export async function POST(req: NextRequest) {
     if (!isFirstNameValid) return errorResult("first name")
     const [isLastNameValid,] = nameValidation(lastName)
     if (!isLastNameValid) return errorResult("last name")
-    const isAccessLevelValid = !isNaN(parseInt(accessLevel))
-    if (!isAccessLevelValid) return errorResult("access level")
     const isDescriptionValid = typeof description === "string"
     if (!isDescriptionValid) return errorResult("description")
     const [isPasswordValid,] = passwordValidation(password)
     if (!isPasswordValid && type === "credentials") return errorResult("password")
-    const isProfilePictureValid = typeof profilePicture === "string"
-    if (!isProfilePictureValid) return errorResult("profile picture")
+    const [isConfirmPasswordValid,] = confirmPasswordValidation(password, confirmPassword)
+    if (!isConfirmPasswordValid && type === "credentials") return errorResult("password")
     
-
-    const res = await User.addUserInDatabse(body)
+    const res = await User.addUserInDatabse(formData)
     return NextResponse.json({res: res})
 }
