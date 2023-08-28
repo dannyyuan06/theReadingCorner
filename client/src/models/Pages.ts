@@ -51,7 +51,6 @@ export default class Pages {
                     book: {
                         select: {
                             title: true,
-                            averageRating: true
                         }
                     }
                 }
