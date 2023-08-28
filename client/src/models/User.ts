@@ -4,6 +4,7 @@ import * as bcrypt from 'bcrypt'
 import { userBookWithBook } from "./UserBook";
 import { Book, UserBook, Users as UserPrismaType, Users } from "@prisma/client";
 import { AddUserbookBookType, UpdateUserbookBookType } from "@/lib/types/fetchTypes/addUserbook";
+import { userModelType } from "@/app/register/credentials/Form";
 
 // Initiallisation
 
@@ -116,7 +117,7 @@ export default class User {
         }
     }
 
-    static async addUserInDatabse(form: clientUserType) {
+    static async addUserInDatabse(form: userModelType) {
         try {
             const user = await prisma.users.create({
                 data: {
@@ -124,10 +125,10 @@ export default class User {
                     email: form.email,
                     firstName: form.firstName,
                     lastName: form.lastName,
-                    accessLevel: form.accessLevel,
+                    accessLevel: 1,
                     description: form.description,
                     lastOnline: new Date(),
-                    profilePicture: form.profilePicture ? form.profilePicture : "/images/profile_picture_placeholder.png",
+                    profilePicture: "/images/profile_picture_placeholder.png",
                     lookedAtBulletin: false,
                 }
             })
