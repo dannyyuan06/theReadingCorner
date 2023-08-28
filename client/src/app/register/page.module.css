@@ -1,7 +1,7 @@
 .container {
-    padding: 8vw;
+    padding: 20px;
+    padding-top: 40px;
 }
-
 
 .wrapper {
     display: flex;

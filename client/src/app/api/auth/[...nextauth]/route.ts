@@ -23,7 +23,7 @@ callbacks.signIn = async ({
         if (account!.type === "credentials") return true
         else if (account!.type === "oauth") {
             const email = user.email
-            const res = email ? User.emailMake(email) : null
+            const [res, err] = email ? await User.emailMake(email) : [null, ""]
             if (res) return true
             else {
                 const {id, ...usefulInfo} = user!
