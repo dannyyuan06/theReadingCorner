@@ -1,0 +1,47 @@
+.form {
+    flex: 1;
+}
+
+.formGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 20px;
+    row-gap: 5px;
+    margin-bottom: 5px;
+}
+
+.form label{
+    font-size: 1.2em;
+    color: black;
+}
+
+.form input[type="text"], .form input[type="password"], .form input[type="email"], .form textarea {
+    border: 0;
+    background-color: var(--theme-input-light-grey);
+    font-size: 1.6em;
+    padding: 10px;
+    width: 100%;
+}
+
+.form textarea {
+    resize: none;
+    font-family: var(--font-mono);
+    font-size: 1em;
+    height: 130px;
+    margin-bottom: 10px;
+}
+
+
+.backButton {
+    font-size: 1.5em;
+    padding: 10px 20px;
+    background-color: var(--theme-orange);
+    display: block;
+    float: left;
+}
+
+.form input[type="submit"] {
+    font-size: 1.4em;
+    float: right;
+    padding: 10px 20px;
+}
