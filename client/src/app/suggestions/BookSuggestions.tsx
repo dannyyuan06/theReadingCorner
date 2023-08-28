@@ -4,17 +4,17 @@ import styles from './Suggestions.module.css'
 import { AddBook } from '../components/AddBook'
 import { BookAttackment } from '../components/BookAttachment'
 import { Book } from '@prisma/client'
-import { useSession } from 'next-auth/react'
 import { BookSuggestionType } from '@/lib/types/fetchTypes/bookSuggestion'
+import useAuthSession from '@/redux/useAuthSession'
 
 export function BookSuggestions() {
 
     const [didAddBook, setDidAddBook] = useState(false)
     const [books, setBooks] = useState<Book[]>([])
-    const { data }:any = useSession()
+    const user = useAuthSession()
 
     const onSubmit = async () => {
-        const req:BookSuggestionType[] = books.map((book) => ({bookid: book.bookid, username:data?.username}))
+        const req:BookSuggestionType[] = books.map((book) => ({bookid: book.bookid, username:user?.username ?? ""}))
         const res = await fetch("/api/bookSuggestions", {
             method: 'POST',
             body: JSON.stringify(req),

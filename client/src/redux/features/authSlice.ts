@@ -1,19 +1,17 @@
+import { Users } from "@prisma/client"
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 
-type InitialStateType = {
-    isAuthenticated: boolean
-    username: string,
-    profilePicture: string,
-    uid: string,
-    authority: number,
-}
-
-const initialState:InitialStateType = {
-    isAuthenticated: false,
+const initialState = {
     username: "",
+    email: "",
+    firstName: "",
+    lastName: "",
+    lastOnline: new Date(0),
+    joinDate: new Date(0),
     profilePicture: "/images/profile_picture_placeholder.png",
-    uid: "",
-    authority: 0,
+    accessLevel: -2,
+    description: "",
+    lookedAtBulletin: false,
 }
 
 export const auth = createSlice({
@@ -23,18 +21,13 @@ export const auth = createSlice({
         logOut: () => {
             return initialState
         },
-        logIn: (state, action: PayloadAction<string>) => {
-            return {
-                isAuthenticated: true,
-                username: action.payload,
-                profilePicture: initialState.profilePicture,
-                uid: "somerandomstring",
-                authority: 1
-            }
+        logIn: (state, action: PayloadAction<Users>) => {
+            return action.payload
         }
     }
 })
 
 export const {logIn, logOut} = auth.actions
+export const userInitialState = initialState
 
 export default auth.reducer
