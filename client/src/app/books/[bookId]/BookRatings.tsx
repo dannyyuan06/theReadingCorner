@@ -5,7 +5,7 @@ import { DropDownButton } from '@/app/components/DropDownButton'
 import { BookType } from '@/app/bookexample'
 import { useSession } from 'next-auth/react'
 import { AddUserbookType, UpdateUserbookBookType } from '@/lib/types/fetchTypes/addUserbook'
-import { UserBook } from '@prisma/client'
+import { Book, UserBook } from '@prisma/client'
 
 type pageType = ""|number
 
@@ -31,7 +31,7 @@ export const statusObj:{[id: string]: number} = {
 }
 export const statusArray = Object.keys(statusObj)
 
-export function BookRatings({book, userbook}: {book: BookType, userbook: UserBook|null}) {
+export function BookRatings({book, userbook, bookInDB}: {book: BookType, userbook: UserBook|null, bookInDB: Book|null}) {
 
     const pageCount = book.volumeInfo.pageCount
 
@@ -137,12 +137,13 @@ export function BookRatings({book, userbook}: {book: BookType, userbook: UserBoo
         isAlreadyBook.current = true
     }, [setStates, userbook])
 
+    const displayAverageRating = bookInDB?.averageRating === -1 || !userbook ? "No Readers" : bookInDB?.averageRating.toFixed(2) ?? ""
     return (
         <div className={styles.container}>
             <div className={styles.scores}>
                 <div className={styles.score}>
                     <h2 className={styles.scoreTitle}>SCORE</h2>
-                    <h1 className={styles.scoreRating}>4</h1>
+                    <h1 className={styles.scoreRating}>{displayAverageRating}</h1>
                 </div>
                 <hr/>
                 <div className={styles.score}>
