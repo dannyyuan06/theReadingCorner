@@ -4,15 +4,7 @@ import { Dispatch, SetStateAction } from 'react'
 
 export function GenreAttachment({genre, index, setGenres}: {genre: string, index: number, setGenres?: Dispatch<SetStateAction<string[]>>}) {
     const crosshandler = () => {
-        setGenres!((prev: string[]) => {
-            let prevCopy:string[] = JSON.parse(JSON.stringify(prev))
-            for (let i=0;i<prevCopy.length;i++) {
-                if (prevCopy[i] === genre) {
-                    prevCopy.splice(i,1)
-                }
-            }
-            return prevCopy
-        })
+        setGenres!((prev: string[]) => prev.filter(val => val !== genre))
     }
 
     return (

@@ -16,6 +16,7 @@ export async function POST(req: NextRequest) {
         pageCount: body.volumeInfo.pageCount,
         author: body.volumeInfo.authors.join(", "),
         description: body.volumeInfo.description,
+        averageRating: -1,
         bookPicture: Object.values(body.volumeInfo.imageLinks)[0]
     }
     const [alreadyPresentBook, err] = await Book.bookidMake(body.id)

@@ -19,5 +19,5 @@
 
 .container h3 {
     height: 70px;
-    overflow: scroll;
+    overflow: auto;
 }
