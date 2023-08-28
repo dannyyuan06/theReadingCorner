@@ -62,7 +62,6 @@ export interface UpdateUser {
     accessLevel: number
 }
 
-
 export default class User {
     username:          string;
     email:             string;
@@ -319,7 +318,7 @@ export default class User {
                 where: {
                     username: username,
                     bookid: bookid
-                }
+                },
             })
             prisma.$disconnect()
             return [userbook, ""]

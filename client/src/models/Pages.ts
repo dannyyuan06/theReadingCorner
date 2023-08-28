@@ -209,7 +209,7 @@ export default class Pages {
                 currentlyReadingBook: currentlyReadingBook!.book.title,
                 numberOfMembers,
                 bulletinBoardEngagement: enages?.bulletinEngagement ?? 0,
-                averageRating: currentlyReadingBook!.averageRating,
+                averageRating: currentlyReadingBook!.book.averageRating,
                 booksRead
             }
 

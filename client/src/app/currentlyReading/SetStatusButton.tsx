@@ -8,7 +8,6 @@ import { Book, CurrentlyReading } from '@prisma/client'
 export type currentBookType = {
     readid: number;
     bookid: string;
-    averageRating: number;
     dateStarted: Date;
     pageNumber: number;
     status: number;

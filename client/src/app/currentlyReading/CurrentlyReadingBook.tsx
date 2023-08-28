@@ -12,6 +12,8 @@ export function CurrentlyReadingBook({currentlyReading}: {currentlyReading: getC
     const [current, setCurrent] = useState(currentBook)
 
     const imageLink = `https://books.google.com/books/publisher/content/images/frontcover/${book.bookid}?fife=w400-h600&source=gbs_api&`
+
+    const displayAverageRating = book.averageRating === -1 ? "No Readers" : book.averageRating.toFixed(2) ?? ""
     return (
         <div className={styles.container}>
             <Link href={`/books/${book.bookid}`} style={{backgroundColor: 'transparent'}}>
@@ -30,7 +32,7 @@ export function CurrentlyReadingBook({currentlyReading}: {currentlyReading: getC
                     <div className={styles.scoreContainer}>
                         <div className={styles.scoreWrapper}>
                             <h3>AVERAGE SCORE</h3>
-                            <div className={styles.displayScore}>{currentlyReading.averageRating * 2}</div>
+                            <div className={styles.displayScore}>{displayAverageRating}</div>
                         </div>
                     </div>
                 </div>

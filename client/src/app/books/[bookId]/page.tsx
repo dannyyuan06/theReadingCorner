@@ -8,7 +8,7 @@ import Book from '@/models/Book'
 import { AddToCurrentlyReading } from './AddToCurrentlyReading'
 import { headers } from 'next/dist/client/components/headers'
 import User from '@/models/User'
-import { UserBook } from '@prisma/client'
+import { UserBook, Book as BookPrisma } from '@prisma/client'
 import { BookType } from '@/app/bookexample'
 
 const usefulKeys = [
@@ -25,7 +25,7 @@ const usefulKeys = [
 export default async function Books({ params }: {params: {bookId: string}}) {
     const headersList = headers()
     const userUsername = headersList.get('username')
-    const [book, userbook] = await getBook(params.bookId, userUsername ?? "")
+    const [bookInDB, book, userbook] = await getBook(params.bookId, userUsername ?? "")
     
     // @ts-ignore
     if (!book || book.error) return (
@@ -48,7 +48,7 @@ export default async function Books({ params }: {params: {bookId: string}}) {
                     <Image loading='eager' alt='books image' src={imageLink} width={200} height={320} style={{objectFit: 'cover', boxShadow: "var(--shadow-button-color)"}}/>
                 </div>
                 <div className={styles.rightBody}>
-                    <BookRatings book={book} userbook={userbook}/>
+                    <BookRatings book={book} userbook={userbook} bookInDB={bookInDB}/>
                 </div>
                 <div className={styles.bottomLeftBody}>
                     <div className={styles.quickInfo}>
@@ -74,11 +74,13 @@ export default async function Books({ params }: {params: {bookId: string}}) {
     )
 }
 
-async function getBook(bookid: string, userUsername:string):Promise<[BookType|null, UserBook|null]> {
+async function getBook(bookid: string, userUsername:string):Promise<[BookPrisma|null, BookType|null, UserBook|null]> {
+    const bookInDBPromise = Book.bookidMake(bookid)
     const bookPromise = Book.getBookWithId(bookid);
     const userBookPromise = User.hasReadBook(userUsername, bookid)
-    const settleResult = await Promise.all([bookPromise, userBookPromise])
-    const book = settleResult[0]
-    const [userBook] = settleResult[1]
-    return [book, userBook]
+    const settleResult = await Promise.all([bookInDBPromise, bookPromise, userBookPromise])
+    const [bookInDB] = settleResult[0]
+    const book = settleResult[1]
+    const [userBook] = settleResult[2]
+    return [bookInDB, book, userBook]
   }
