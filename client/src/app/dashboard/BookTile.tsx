@@ -9,6 +9,7 @@ interface CurrentlyReadingIncludingBook extends CurrentlyReading {
 }
 
 export function BookTile({book}: {book: CurrentlyReadingIncludingBook}) {
+    const displayAverageRating = book.book.averageRating === -1 ? "-" : book.book.averageRating.toFixed(2) ?? ""
     return (
         <div className={tStyles.container}>
             <div className={styles.container}>
@@ -26,7 +27,7 @@ export function BookTile({book}: {book: CurrentlyReadingIncludingBook}) {
                         <div className={styles.scoreContainer}>
                             <div className={styles.scoreWrapper}>
                                 <h3>SCORE</h3>
-                                <div className={styles.displayScore}>{book.averageRating}</div>
+                                <div className={styles.displayScore}>{displayAverageRating}</div>
                             </div>
                         </div>
                     </div>

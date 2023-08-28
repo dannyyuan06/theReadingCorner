@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
         pageCount: sentBook.volumeInfo.pageCount,
         author: sentBook.volumeInfo.authors.join(", "),
         description: sentBook.volumeInfo.description,
-        averageRating: -1,
+        averageRating: body.userbook.score,
         bookPicture: Object.values(sentBook.volumeInfo.imageLinks)[0]!.toString()
     }
     
