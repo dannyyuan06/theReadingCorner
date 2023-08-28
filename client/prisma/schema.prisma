@@ -41,7 +41,7 @@ model Book {
   author        String
   description   String
   pageCount     Int
-  averageRating Float       @default(0)
+  averageRating Float       @default(-1)
   usersRead     UserBook[]
   currentlyR    CurrentlyReading[]
   suggestions   BookSuggestions[]

@@ -1,5 +1,7 @@
 import { prisma } from "@/prisma/db"
 import { Book } from "@prisma/client";
+import { headers } from "next/dist/client/components/headers";
+import { NextRequest, NextResponse } from "next/server";
 
 interface bookWithUser extends Book {
     usersRead: {
@@ -60,28 +62,20 @@ async function engagement() {
     return engagementPromise
 }
 
-export async function PUT(req: Request) {
-    
+export async function PUT(req: NextRequest) {
+    const headerlist = headers()
+    const auth = headerlist.get("Authorization")
+    if (auth !== process.env.GOOGLE_SCHEDULER_SECRET) return NextResponse.json({error: "Unauthorized"}, {status: 401,})
     try {
         const updateBookPromise = updateBooks();
         const engagementPromise = engagement();
         await Promise.all([updateBookPromise, engagementPromise])
-        return new Response('Success', {
+        return NextResponse.json({success: "Success"}, {
             status: 200,
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'PUT',
-                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-            },
         })
     } catch (err) {
-        return new Response(`Error: ${err}`, {
+        return NextResponse.json({error: `${err}`}, {
             status: 500,
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'PUT',
-                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-            },
         })
     }
 }
