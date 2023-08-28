@@ -4,8 +4,7 @@ import styles from './BookRatings.module.css'
 import { DropDownButton } from '@/app/components/DropDownButton'
 import { BookType } from '@/app/bookexample'
 import { useSession } from 'next-auth/react'
-import { AddUserbookBookType, AddUserbookType, UpdateUserbookBookType } from '@/lib/types/fetchTypes/addUserbook'
-import { GetUserbookType } from '@/lib/types/fetchTypes/getUserbook'
+import { AddUserbookType, UpdateUserbookBookType } from '@/lib/types/fetchTypes/addUserbook'
 import { UserBook } from '@prisma/client'
 
 type pageType = ""|number
@@ -31,8 +30,6 @@ export const statusObj:{[id: string]: number} = {
     "Dropped": 4
 }
 export const statusArray = Object.keys(statusObj)
-
-let pageTimeout: NodeJS.Timeout
 
 export function BookRatings({book, userbook}: {book: BookType, userbook: UserBook|null}) {
 
@@ -72,7 +69,7 @@ export function BookRatings({book, userbook}: {book: BookType, userbook: UserBoo
 
     const updatePageCount = (page: pageType) => {
         if (page === pageCount) setStates(myScoreWithWords, 2, pageCount)//setStatus("Finished")
-        else if (page === "") setStates("-", 0, "")//setStatus(statusArray[0])
+        else if (page === "") setStates(myScoreWithWords, 0, "")//setStatus(statusArray[0])
         else if (page <= pageCount) setStates(myScoreWithWords, 1, page)//setStatus("Reading")
         setChanged(true)
     }
@@ -95,7 +92,7 @@ export function BookRatings({book, userbook}: {book: BookType, userbook: UserBoo
         const request: AddUserbookType = {
             book: book,
             userbook: {
-                score: parseInt(`${myScore}`),
+                score: parseInt(`${myScore}`) ?? -1,
                 status: statusObj[status],
                 page: page === "" ? -1 : page,
                 username: data.username,
@@ -105,13 +102,22 @@ export function BookRatings({book, userbook}: {book: BookType, userbook: UserBoo
         }
         if (isAlreadyBook.current) {
             const {username, bookid, ...rest} = request.userbook
-            const req:UpdateUserbookBookType = rest
-            const res = await fetch(`/api/userbook/${username}/${bookid}`, {
-                method: 'PUT',
-                body: JSON.stringify(req),
-                headers: { "Content-Type": "application/json" }
-            })
-            const body = await res.json()
+            if (statusObj[status] !== 0) {
+                const req:UpdateUserbookBookType = rest
+                const res = await fetch(`/api/userbook/${username}/${bookid}`, {
+                    method: 'PUT',
+                    body: JSON.stringify(req),
+                    headers: { "Content-Type": "application/json" }
+                })
+                const body = await res.json()
+            }
+            else {
+                const res = await fetch(`/api/userbook/${username}/${bookid}`, {
+                    method: 'DELETE',
+                    headers: { "Content-Type": "application/json" }
+                })
+                const body = await res.json()
+            }
         }
         else {
             const res = await fetch("/api/userbook", {

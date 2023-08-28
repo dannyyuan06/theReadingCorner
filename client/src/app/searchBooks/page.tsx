@@ -57,7 +57,7 @@ export default function SearchBooks() {
                 }
                 {bookValues.length !== 0
                 && <div className={styles.titles}>
-                    <span style={{width: 70}}></span>
+                    <span style={{width: 50}}></span>
                     <h3 style={{flex: 2}}>BOOK TITLE</h3>
                     <h3 style={{flex: 2}}>AUTHOR(S)</h3>
                     <h3 style={{flex: 1}}>DATE PUBLISHED</h3>

@@ -234,13 +234,17 @@ export default class User {
             
             const {friend1, friend2, ...usefulUserInfo} = user!
 
-            const numBulletinPosts = await prisma.bulletinBoardMessages.count({
+            const numBulletinPostsPromise = prisma.bulletinBoardMessages.count({
                 where: { username: user.username}
             })
 
-            const numBooksRead = await prisma.userBook.count({
+            const numBooksReadPromise = prisma.userBook.count({
                 where: {username: user.username}
             })
+
+            const settlePromise = await Promise.all([numBulletinPostsPromise, numBooksReadPromise])
+
+            const [numBulletinPosts, numBooksRead] = settlePromise
 
             const usefulInfo = {
                 ...usefulUserInfo,
@@ -335,7 +339,23 @@ export default class User {
             prisma.$disconnect()
             return [userBook, ""]
         } catch (err) {
-            return [null, err]
+            return [null, `${err}`]
+        }
+    }
+
+    static async deleteUserBook(username: string, bookid: string) {
+        try {
+            const userBook = await prisma.userBook.delete({
+                where: {bookid_username: {
+                    bookid,
+                    username
+                }}
+            })
+            return [userBook, ""]
+        } catch (err) {
+            return [null, `${err}`]
+        } finally {
+            prisma.$disconnect()
         }
     }
 
@@ -498,6 +518,24 @@ export default class User {
                 return [returnFriendship, '']
             }
             return [null, 'Not authorised']
+        } catch (err) {
+            return [null, `${err}`]
+        }
+    }
+
+
+    static async hasLookedAtBulletinBoard(username: string): Promise<[{lookedAtBulletin: boolean}|null, string]> {
+        try {
+            const res = await prisma.users.update({
+                where: {username},
+                data: {
+                    lookedAtBulletin: true
+                },
+                select: {
+                    lookedAtBulletin: true
+                }
+            })
+            return [res, ""]
         } catch (err) {
             return [null, `${err}`]
         }

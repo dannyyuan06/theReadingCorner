@@ -1,5 +1,5 @@
 'use client'
-import { ClipboardEvent, useRef, useState } from 'react'
+import { ClipboardEvent, useEffect, useRef, useState } from 'react'
 import styles from './InputText.module.css'
 import Image from 'next/image'
 import { AddBook } from '../components/AddBook'
@@ -8,6 +8,9 @@ import { useSession } from 'next-auth/react'
 import { Book } from '@prisma/client'
 import { AddMessageType } from '@/lib/types/fetchTypes/addMessage'
 import { GetSessionDataType } from '@/lib/types/fetchTypes/getSessionData'
+import { useDispatch } from 'react-redux'
+import { AppDispatch, useAppSelector } from '@/redux/store'
+import { changeBulletin } from '@/redux/features/bulletinSlice'
 
 const textCap = 5000
 
@@ -19,6 +22,12 @@ export function InputText() {
     const inputRef = useRef<HTMLInputElement>(null)
     const {data}: any = useSession()
     const user:GetSessionDataType = data
+    const lookedAtBulletin = useAppSelector((state) => state.bulletinReducer)
+    const dispatch = useDispatch<AppDispatch>()
+
+    useEffect(() => {
+        dispatch(changeBulletin(data?.lookedAtBulletin ?? false))
+    }, [data, dispatch])
 
     const pasteHandler = (e:ClipboardEvent<HTMLDivElement>) => {
         e.preventDefault()
@@ -58,6 +67,14 @@ export function InputText() {
         setTextContent("")
         setDidAddBook(false)
         setBooks([])
+        if (!data.lookedAtBulletin && !lookedAtBulletin) {
+            await fetch(`/api/statisitics/${data.username}`, {
+                method: 'PATCH',
+                body: JSON.stringify(req),
+                headers: { "Content-Type": "application/json" }
+            })
+            dispatch(changeBulletin(true))
+        }
         inputRef.current!.textContent = ""
     }
     

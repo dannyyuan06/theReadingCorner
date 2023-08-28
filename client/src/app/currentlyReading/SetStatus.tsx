@@ -90,7 +90,7 @@ export function SetStatus({currentlyReading, book, setClicked, setCurrent}: {cur
                 <hr/>
                 <div className={styles.score}>
                     <h2 className={styles.scoreTitle}>AFFILIATE LINK</h2>
-                    <input type='text' value={affiliateLink} onChange={(e) => setAffiliateLink(e.target.value)}/>
+                    <input type='text' value={affiliateLink} onChange={(e) => {setAffiliateLink(e.target.value);changed.current === true}}/>
                 </div>
             </div>
         </Popup>

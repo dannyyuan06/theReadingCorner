@@ -75,7 +75,10 @@ export default async function Books({ params }: {params: {bookId: string}}) {
 }
 
 async function getBook(bookid: string, userUsername:string):Promise<[BookType|null, UserBook|null]> {
-    const book = await Book.getBookWithId(bookid)
-    const [userBook] = await User.hasReadBook(userUsername, bookid)
+    const bookPromise = Book.getBookWithId(bookid);
+    const userBookPromise = User.hasReadBook(userUsername, bookid)
+    const settleResult = await Promise.all([bookPromise, userBookPromise])
+    const book = settleResult[0]
+    const [userBook] = settleResult[1]
     return [book, userBook]
   }
