@@ -10,7 +10,7 @@ export const fetchCache = 'force-no-store';
 export const dynamic = 'force-dynamic'
 
 export default async function clubStatistics() {
-    const [allData, err] = await getStats()
+    const [allData, err] = await Pages.statistics()
     if (!allData) return (
         <div>
             <PageHeader>ERROR OCCURED</PageHeader>
@@ -52,9 +52,4 @@ export default async function clubStatistics() {
             </section>
         </div>
     )
-}
-
-async function getStats() {
-    const allData = Pages.statistics()
-    return allData
 }

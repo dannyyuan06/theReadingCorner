@@ -4,6 +4,7 @@ import { PageHeader } from "../components/PageHeader"
 import styles from "./AddBook.module.css"
 import { BookType } from "../bookexample"
 import { Book } from "@prisma/client"
+import Image from "next/image"
 
 let timer:ReturnType<typeof setTimeout> | null
 
@@ -11,6 +12,7 @@ export function AddBook({setDidAddBook, setBooks}: {setDidAddBook: Dispatch<SetS
     const [selectedBook, setSelectedBook] = useState<BookType|null>(null)
     const [noBookSelected, setNoBookSelected] = useState(-1)
     const [booksQueried, setBooksQueried] = useState<BookType[]>([])
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         selectedBook === null ? setNoBookSelected(p => p !== -1 ? 0 : -1) : setNoBookSelected(p => p !== -1 ? 1 : -1)
@@ -40,7 +42,9 @@ export function AddBook({setDidAddBook, setBooks}: {setDidAddBook: Dispatch<SetS
 
     const inputHander = (e: ChangeEvent<HTMLInputElement>) => {
         clearTimeout(timer ?? "")
+        setLoading(true)
         timer = setTimeout(() => {
+            setLoading(false)
             fetch(`/api/books/${e.target.value}`,{
                 method: 'GET',
                 headers: { "Content-Type": "application/json" }
@@ -58,9 +62,16 @@ export function AddBook({setDidAddBook, setBooks}: {setDidAddBook: Dispatch<SetS
                 <PageHeader>ADD BOOK</PageHeader>
                 <form className={styles.form} onSubmit={submitHandler}>
                     <label htmlFor="bname">Search</label>
-                    <input onChange={inputHander} type="text" name="bname"/>
+                    <input onChange={inputHander} type="text" name="bname" autoComplete="off"/>
                     <div className={styles.booksDropDown}>
                         <DropDownMenu books={booksQueried} setSelectedBook={setSelectedBook} selectedBook={selectedBook}/>
+                        {loading
+                        && <div className={styles.loadingContainer}>
+                            <div className={styles.loading}>
+                                <Image src='/images/TRC_Icon_01_Light_RGB.svg' width={30} height={30} alt="loading"/>
+                            </div>
+                        </div>
+                        }
                     </div>
                     <div className={styles.finishButtons}>
                         <div className={styles.notSelectedBook}>{noBookSelected === 0 && "Please select a book"}</div>

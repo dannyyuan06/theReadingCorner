@@ -6,7 +6,7 @@
     padding: 10px;
     border-radius: 5px;
     box-shadow: var(--shadow-button-color);
-    overflow: scroll;
+    overflow: auto;
     width: max-content;
     z-index: 3;
     font-size: 1em;

@@ -48,7 +48,7 @@
 .bodyWrapper {
     margin-top: 20px;
     height: 100px;
-    overflow: scroll;
+    overflow: auto;
     padding-right: 10px;
 }
 

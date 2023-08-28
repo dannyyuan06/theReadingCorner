@@ -28,7 +28,7 @@
     margin-top: 5px;
     flex: 8;
     height: 90%;
-    overflow: scroll;
+    overflow: auto;
 }
 
 .cancelCross {
