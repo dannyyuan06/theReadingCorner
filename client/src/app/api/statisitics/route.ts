@@ -79,3 +79,24 @@ export async function PUT(req: NextRequest) {
         })
     }
 }
+
+export async function PATCH(req: NextRequest) {
+    const headerlist = headers()
+    const auth = headerlist.get("Authorization")
+    if (auth !== process.env.GOOGLE_SCHEDULER_SECRET) return NextResponse.json({error: "Unauthorized"}, {status: 401,})
+    try {
+        await prisma.users.updateMany({
+            where: {},
+            data: {
+                lookedAtBulletin: false
+            }
+        })
+        return NextResponse.json({success: "Success"}, {
+            status: 200,
+        })
+    } catch (err) {
+        return NextResponse.json({error: `${err}`}, {
+            status: 500,
+        })
+    }
+}
