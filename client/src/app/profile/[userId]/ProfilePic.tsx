@@ -5,9 +5,10 @@ import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 import { UploadImageType } from '@/lib/types/fetchTypes/uploadImage'
 import { UploadProfile } from './UploadProfile'
+import useAuthSession from '@/redux/useAuthSession'
 
 export function ProfilePic({username, profilePic}: {username: string, profilePic: string}) {
-    const {data}:any = useSession()
+    const user = useAuthSession()
 
     const [clicked, setClicked] = useState(false)
 
@@ -28,7 +29,7 @@ export function ProfilePic({username, profilePic}: {username: string, profilePic
     return (
         <>
         <div className={styles.container}>
-            {data?.username === username ? (
+            {user?.username === username ? (
                 <button id={styles.changeImage} onClick={() => setClicked(true)}>
                     <Image src={profilePic} width={100} height={100} alt="profile picture placeholder"/>
                     <div className={styles.changeProfilePic}>Change Profile Picture</div>

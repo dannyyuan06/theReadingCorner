@@ -3,6 +3,7 @@ import { PageHeader } from './components/PageHeader'
 import { SignInButton } from './components/SignInButton'
 import styles from './page.module.css'
 import Image from 'next/image'
+import RegisterButton from './components/RegisterButton'
 
 export default function Home() {
   return (
@@ -19,7 +20,7 @@ export default function Home() {
           </p>
           <div className={styles.buttonContainer}>
             <SignInButton className={styles.authButton}/>
-            <Link href="/register/credentials" className={styles.authButton}>Register</Link>
+            <RegisterButton className={styles.authButton}/>
           </div>
         </div>
       </div>

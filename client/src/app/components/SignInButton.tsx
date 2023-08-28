@@ -19,7 +19,7 @@ export function SignInButton({className}: {className: string}) {
     }
     return (
         <>
-            <button className={className} onClick={clickHandler}>Sign In</button>
+            <button className={className} onClick={clickHandler}>SIGN IN</button>
             {
                 clicked && <Loading />
             }

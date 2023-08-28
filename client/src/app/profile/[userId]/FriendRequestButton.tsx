@@ -2,11 +2,12 @@
 import { useSession } from 'next-auth/react'
 import styles from './FriendRequestButton.module.css'
 import { useState } from 'react'
+import useAuthSession from '@/redux/useAuthSession'
 
 
 export function FriendRequestButton({friendUsername, alreadyRequested, alreadyFriends}: {friendUsername: string, alreadyRequested:boolean, alreadyFriends:boolean}) {
 
-    const { data }: any = useSession()
+    const user = useAuthSession()
     const [showed, setShowed] = useState(true)
 
     const requested = showed && !alreadyRequested
@@ -15,7 +16,7 @@ export function FriendRequestButton({friendUsername, alreadyRequested, alreadyFr
         if (!requested) return
         await fetch('/api/friends', {
             method: 'POST',
-            body: JSON.stringify({username: data.username, friendUsername}),
+            body: JSON.stringify({username: user?.username ?? "", friendUsername}),
             headers: { "Content-Type": "application/json" }
         }).then((res) => res.json())
         .then(() => {
