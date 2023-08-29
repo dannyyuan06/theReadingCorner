@@ -62,6 +62,10 @@ export interface UpdateUser {
     accessLevel: number
 }
 
+export interface PaginatedBooks extends UserBook {
+    book: Book
+}
+
 export default class User {
     username:          string;
     email:             string;
@@ -92,7 +96,7 @@ export default class User {
                 where: {username}
             })
             if (!user) return [null, `User not found`]
-            prisma.$disconnect()
+            
             return [new User(user), ""]
         } catch (error) {
             return [null, `${error}`]
@@ -108,7 +112,7 @@ export default class User {
                 where: {username: user?.username},
                 data: {lastOnline: new Date()}
             })
-            prisma.$disconnect()
+            
             if (!user) return [null, `User not found`]
             return [new User(user), ""]
         } catch (error) {
@@ -137,7 +141,7 @@ export default class User {
                     password: form.password ? await bcrypt.hash(form.password, 10) : "",
                 }
             })
-            prisma.$disconnect()
+            
             return [true, `Created ${form.username} in the database!`, user]
         } catch(err) {
             console.error("Unable to create user in database")
@@ -161,7 +165,7 @@ export default class User {
             const users = await prisma.users.findMany({
                 take: 15
             })
-            prisma.$disconnect()
+            
             return [users, ""]
         } catch (error) {
             return [null, `${error}`]
@@ -186,7 +190,7 @@ export default class User {
                                 dateStarted: 'desc'
                             },
                         ],
-                        take: 10,
+                        take: 20,
                     },
                     friend1: {
                         include: {
@@ -254,7 +258,7 @@ export default class User {
                 requestPendingFriends,
                 incomingRequestFriends
             }
-            prisma.$disconnect()
+            
             return [usefulInfo, ""]
             
         } catch(err) {
@@ -293,7 +297,7 @@ export default class User {
                 const user = await prisma.users.findUnique({where: {username}})
                 return [true, user]
             }
-            prisma.$disconnect()
+            
             return [false, null]
         } catch (error) {
             return [false, null]
@@ -305,7 +309,7 @@ export default class User {
             const userBook = await prisma.userBook.create({
                 data: userbook
             })
-            prisma.$disconnect()
+            
             return [userBook, ""]
         } catch (err) {
             return [null, err]
@@ -320,7 +324,7 @@ export default class User {
                     bookid: bookid
                 },
             })
-            prisma.$disconnect()
+            
             return [userbook, ""]
         } catch(err) {
             return [null, `${err}`]
@@ -336,7 +340,7 @@ export default class User {
                 }},
                 data
             })
-            prisma.$disconnect()
+            
             return [userBook, ""]
         } catch (err) {
             return [null, `${err}`]
@@ -355,7 +359,7 @@ export default class User {
         } catch (err) {
             return [null, `${err}`]
         } finally {
-            prisma.$disconnect()
+            
         }
     }
 
@@ -365,7 +369,7 @@ export default class User {
                 where: {username},
                 data: {profilePicture}
             })
-            prisma.$disconnect()
+            
             return [user, ""]
         } catch (error) {
             return [null, `${error}`]
@@ -378,7 +382,7 @@ export default class User {
                 where: {username},
                 data: {password: await bcrypt.hash(newPassword, 10)}
             })
-            prisma.$disconnect()
+            
             return [user, ""]
         } catch (error) {
             return [null, `${error}`]
@@ -391,7 +395,7 @@ export default class User {
                 where: {username},
                 data: data
             })
-            prisma.$disconnect()
+            
             return [user, ""]
         } catch (error) {
             return [null, `${error}`]
@@ -404,7 +408,7 @@ export default class User {
                 where: {username},
                 data: {accessLevel: -1}
             })
-            prisma.$disconnect()
+            
             return [user, ""]
         } catch (error) {
             return [null, `${error}`]
@@ -417,7 +421,7 @@ export default class User {
                 where: {username},
                 data: {accessLevel: 1}
             })
-            prisma.$disconnect()
+            
             return [user, ""]
         } catch (error) {
             return [null, `${error}`]
@@ -429,7 +433,7 @@ export default class User {
             const user = await prisma.users.delete({
                 where: {username}
             })
-            prisma.$disconnect()
+            
             return [user, ""]
         } catch (error) {
             return [null, `${error}`]
@@ -446,7 +450,7 @@ export default class User {
                     }
                 }
             })
-            prisma.$disconnect()
+            
             return [users, ""]
         } catch (err) {
             return [null, `${err}`]
@@ -483,7 +487,7 @@ export default class User {
                     status: 1
                 }
             })
-            prisma.$disconnect()
+            
             return [friendRelationship, ""]
         } catch (err) {
             return [null, `${err}`]
@@ -514,7 +518,7 @@ export default class User {
                         status: 3
                     }
                 })
-                prisma.$disconnect()
+                
                 return [returnFriendship, '']
             }
             return [null, 'Not authorised']
@@ -533,6 +537,30 @@ export default class User {
                 },
                 select: {
                     lookedAtBulletin: true
+                }
+            })
+            return [res, ""]
+        } catch (err) {
+            return [null, `${err}`]
+        }
+    }
+
+    static async paginationBooks(pageNumber: number, username: string): Promise<[PaginatedBooks[]|null, string]> {
+        try {
+            const res = await prisma.userBook.findMany({
+                where: {username},
+                orderBy: [
+                    {
+                        status: 'asc'
+                    },
+                    {
+                        dateStarted: 'desc'
+                    },
+                ],
+                take: 40,
+                skip: (pageNumber - 1) * 40,
+                include: {
+                    book: true
                 }
             })
             return [res, ""]

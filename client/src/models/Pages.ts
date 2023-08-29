@@ -95,7 +95,7 @@ export default class Pages {
                 booksRead: booksReadR, 
                 bulletinEngagement: bulletinEngagementR 
             }
-            prisma.$disconnect()
+            
             return [alldata, ""]
         } catch (error) {
             return [null, `${error}`]
@@ -138,7 +138,7 @@ export default class Pages {
             })
             const [currentlyReadingBook, messages] = await Promise.all([currentlyReadingPromise, messagesPromise])
 
-            prisma.$disconnect()
+            
             return [{currentlyReadingBook, messages}, ""]
         } catch (err) {
             return [null, `${err}`]
@@ -213,7 +213,7 @@ export default class Pages {
                 booksRead
             }
 
-            prisma.$disconnect()
+            
             return [{currentlyReadingBook, messages, stats, bookSuggestions, reportedMessages}, ""]
         } catch (err) {
             return [null, `${err}`]
