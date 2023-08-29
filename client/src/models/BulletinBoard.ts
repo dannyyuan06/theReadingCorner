@@ -41,7 +41,7 @@ export class BulletinBoard {
                 }
             }
         })
-        prisma.$disconnect()
+        
         return rest
     }
  
@@ -61,7 +61,7 @@ export class BulletinBoard {
                 data: bookObject,
                 skipDuplicates: true
             })
-            prisma.$disconnect()
+            
             return [res, ""]
         } catch (err) {
             return [null, `${err}`]
@@ -74,7 +74,7 @@ export class BulletinBoard {
                 where: {messageid},
                 data: {reported: true}
             })
-            prisma.$disconnect()
+            
             return [message, ""]
         } catch(err) {
             return [null, err]
@@ -87,7 +87,7 @@ export class BulletinBoard {
                 where: {messageid},
                 data: {reported: false}
             })
-            prisma.$disconnect()
+            
             return [message, ""]
         } catch(err) {
             return [null, err]
@@ -99,14 +99,14 @@ export class BulletinBoard {
             if (accessLevel !== 3) {
                 const message = await prisma.bulletinBoardMessages.findUnique({where: {messageid}})
                 if (message?.username !== username) {
-                    prisma.$disconnect();
+                    ;
                     return [null, "User is not authorised"]
                 }
             }
             const message = await prisma.bulletinBoardMessages.delete({
                 where: {messageid}
             })
-            prisma.$disconnect()
+            
             return [message, ""]
         } catch(err) {
             return [null, `${err}`]
@@ -128,7 +128,7 @@ export class BulletinBoard {
                     user: true
                 }
             })
-            prisma.$disconnect()
+            
             return [messages, ""]
         } catch (err) {
             return [null, `${err}`]
