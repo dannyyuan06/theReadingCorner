@@ -16,7 +16,7 @@ export class Discount {
                     }
                 }
             })
-            prisma.$disconnect()
+            
             return [discounts, ""]
         } catch (err) {
             return [null, `${err}`]
@@ -28,7 +28,7 @@ export class Discount {
             const discounts = await prisma.discountDirectory.create({
                 data: updateInfo,
             })
-            prisma.$disconnect()
+            
             return [discounts, ""]
         } catch (err) {
             return [null, `${err}`]
@@ -41,7 +41,7 @@ export class Discount {
                 where: {discountdirectoryid: discountid},
                 data: updateInfo,
             })
-            prisma.$disconnect()
+            
             return [discounts, ""]
         } catch (err) {
             return [null, `${err}`]
@@ -53,7 +53,7 @@ export class Discount {
             const discounts = await prisma.discountDirectory.delete({
                 where: {discountdirectoryid: discountid},
             })
-            prisma.$disconnect()
+            
             return [discounts, ""]
         } catch (err) {
             return [null, `${err}`]

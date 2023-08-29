@@ -15,7 +15,7 @@ export class Meetings {
                 }
             }
         })
-        prisma.$disconnect()
+        
         return res
     }
 
@@ -25,7 +25,7 @@ export class Meetings {
                 where: {meetingid},
                 data: data
             })
-            prisma.$disconnect()
+            
             return [res, ""]
         } catch (err) {
             return [null, `${err}`]
@@ -36,7 +36,7 @@ export class Meetings {
         const res = await prisma.meetings.create({
             data: data
         })
-        prisma.$disconnect()
+        
         return res
     }
 
@@ -45,7 +45,7 @@ export class Meetings {
             const meeting = await prisma.meetings.delete({
                 where: {meetingid}
             })
-            prisma.$disconnect()
+            
             return [meeting, ""]
         } catch (err) {
             return [null, `${err}`]

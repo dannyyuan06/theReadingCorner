@@ -11,6 +11,7 @@ import { FriendRequestButton } from "./FriendRequestButton";
 import { EditButton } from "./EditButton";
 import { headers } from "next/dist/client/components/headers";
 import convertMinutes from "@/lib/minsToDate";
+import Link from "next/link";
 
 const getUsernames = (friends:userWithFriendid[]) => {
     return friends.map((friend) => friend.username)
@@ -86,6 +87,7 @@ export default async function Profile({ params }: {params: {userId: string}}) {
                                 <SmallBook key={userbook.bookid} userbook={userbook}/>
                             ))}
                         </div>
+                        <Link href={`/profile/${params.userId}/books/1`} className={styles.allBooks}>ALL BOOKS</Link>
                     </section>
                 </div>
             </div>
