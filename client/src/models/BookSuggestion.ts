@@ -12,7 +12,7 @@ export default class BookSuggestion {
         const res = await prisma.bookSuggestions.createMany({
             data: bookSuggestions
         })
-        prisma.$disconnect()
+        
         return res
     }
     static async getSuggestions() {
@@ -25,7 +25,7 @@ export default class BookSuggestion {
                 book: true
             }
         })
-        prisma.$disconnect()
+        
         return res
     }
 }

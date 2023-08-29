@@ -10,7 +10,7 @@ export default class GenreSuggestion {
         const res = await prisma.genreSuggestion.createMany({
             data: genreSuggestions
         })
-        prisma.$disconnect()
+        
         return res
     }
     static async getSuggestions() {
@@ -20,7 +20,7 @@ export default class GenreSuggestion {
                 genresuggestionid: 'desc'
             },
         })
-        prisma.$disconnect()
+        
         return res
     }
 }

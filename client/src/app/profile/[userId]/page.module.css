@@ -63,3 +63,12 @@
 .friendContainer {
     margin: 10px 0;
 }
+
+.allBooks {
+    background-color: var(--theme-green);
+    padding: 5px 10px;
+    margin-top: 10px;
+    display: block;
+    width: fit-content;
+    margin-left: auto;
+}

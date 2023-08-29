@@ -21,7 +21,7 @@ export class CurrentlyReading {
                     book: true
                 }
             })
-            prisma.$disconnect()
+            
             return [res, ""]
         } catch (err) {
             return [null, `${err}`]
@@ -38,7 +38,7 @@ export class CurrentlyReading {
                     book: true
                 }
             })
-            prisma.$disconnect()
+            
             return [res, ""]
         } catch (err) {
             return [null, `${err}`]
@@ -62,7 +62,7 @@ export class CurrentlyReading {
                 },
                 data: updateData
             })
-            prisma.$disconnect()
+            
             return [res, ""]
         } catch (error) {
             return [null, `${error}`]
