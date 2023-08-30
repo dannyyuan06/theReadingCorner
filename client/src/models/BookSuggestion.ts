@@ -1,5 +1,5 @@
 import { BookType } from "@/app/bookexample"
-import { prisma } from "@/prisma/db"
+import prisma from "@/prisma/db"
 import { Book, Book as BookPrismaType, BookSuggestions } from "@prisma/client"
 
 type addSuggestionInput = {

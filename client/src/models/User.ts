@@ -1,4 +1,4 @@
-import { prisma } from "@/prisma/db";
+import prisma from "@/prisma/db";
 import { booksType } from "./Book";
 import * as bcrypt from 'bcrypt'
 import { userBookWithBook } from "./UserBook";

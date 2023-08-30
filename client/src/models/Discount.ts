@@ -1,5 +1,5 @@
 import { DiscountType } from "@/lib/types/fetchTypes/discount";
-import { prisma } from "@/prisma/db";
+import prisma from "@/prisma/db";
 import { DiscountDirectory } from "@prisma/client";
 
 
