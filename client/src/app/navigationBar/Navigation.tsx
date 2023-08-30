@@ -36,32 +36,34 @@ export function Navigation() {
 
     return !doNotShow && (
         <>
-            <nav className={styles.container} >
-                <div className={styles.wrapper}>
-                    <Link className={styles.logoButton} href={'/dashboard' }>
-                    <Image src='/images/TRC_Master_Logos_RGB_TRC_Logo_Primary_RGB.svg' width={160} height={160} alt='TRC Logo' style={imageStyle}/>
-                    </Link>
-                    <ul className={styles.ul}>
-                        <NavigationButton setIsLoading={setIsLoading} currentPage={page} pageTitle='dashboard'/>
-                        <ProfileButton setIsLoading={setIsLoading} currentPage={page} pageTitle='profile' username={data?.username}/>
-                        {data?.accessLevel === 3 && (
-                            <>
-                                <NavigationButton setIsLoading={setIsLoading} currentPage={page} pageTitle='members'/>
-                                <NavigationButton setIsLoading={setIsLoading} currentPage={page} pageTitle='clubStatistics'/>
-                            </>
-                        )}
-                        <hr color='black'/>
-                        <NavigationButton setIsLoading={setIsLoading} currentPage={page} pageTitle='aboutOurClub'/>
-                        <NavigationButton setIsLoading={setIsLoading} currentPage={page} pageTitle='bulletinBoard'/>
-                        <NavigationButton setIsLoading={setIsLoading} currentPage={page} pageTitle='currentlyReading'/>
-                        <NavigationButton setIsLoading={setIsLoading} currentPage={page} pageTitle='discountDirectory'/>
-                        <NavigationButton setIsLoading={setIsLoading} currentPage={page} pageTitle='meetings'/>
-                        <NavigationButton setIsLoading={setIsLoading} currentPage={page} pageTitle='searchBooks'/>
-                        <NavigationButton setIsLoading={setIsLoading} currentPage={page} pageTitle='suggestions'/>
-                        <button className={styles.logoutButton} onClick={() => signOut()}>LOGOUT</button>
-                    </ul>
-                </div>
-            </nav>
+            <div className={styles.wrapper}>
+                <nav className={styles.container} >
+                    <div className={styles.wrapper}>
+                        <Link className={styles.logoButton} href={'/dashboard' }>
+                        <Image src='/images/TRC_Master_Logos_RGB_TRC_Logo_Primary_RGB.svg' width={160} height={160} alt='TRC Logo' style={imageStyle}/>
+                        </Link>
+                        <ul className={styles.ul}>
+                            <NavigationButton setIsLoading={setIsLoading} currentPage={page} pageTitle='dashboard'/>
+                            <ProfileButton setIsLoading={setIsLoading} currentPage={page} pageTitle='profile' username={data?.username}/>
+                            {data?.accessLevel === 3 && (
+                                <>
+                                    <NavigationButton setIsLoading={setIsLoading} currentPage={page} pageTitle='members'/>
+                                    <NavigationButton setIsLoading={setIsLoading} currentPage={page} pageTitle='clubStatistics'/>
+                                </>
+                            )}
+                            <hr color='black'/>
+                            <NavigationButton setIsLoading={setIsLoading} currentPage={page} pageTitle='aboutOurClub'/>
+                            <NavigationButton setIsLoading={setIsLoading} currentPage={page} pageTitle='bulletinBoard'/>
+                            <NavigationButton setIsLoading={setIsLoading} currentPage={page} pageTitle='currentlyReading'/>
+                            <NavigationButton setIsLoading={setIsLoading} currentPage={page} pageTitle='discountDirectory'/>
+                            <NavigationButton setIsLoading={setIsLoading} currentPage={page} pageTitle='meetings'/>
+                            <NavigationButton setIsLoading={setIsLoading} currentPage={page} pageTitle='searchBooks'/>
+                            <NavigationButton setIsLoading={setIsLoading} currentPage={page} pageTitle='suggestions'/>
+                            <button className={styles.logoutButton} onClick={() => signOut()}>LOGOUT</button>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
             {
                 isLoading && <Loading/>
             }

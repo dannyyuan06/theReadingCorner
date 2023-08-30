@@ -1,5 +1,5 @@
 import { BookType } from "@/app/bookexample"
-import { prisma } from "@/prisma/db"
+import prisma from "@/prisma/db"
 import { Book as BookPrismaType } from "@prisma/client"
 
 export const booksInit = {

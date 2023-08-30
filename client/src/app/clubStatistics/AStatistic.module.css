@@ -1,6 +1,7 @@
 .container {
     display: flex;
     font-size: 2em;
+    align-items: center;
     font-family: var(--font-header);
 }
 
