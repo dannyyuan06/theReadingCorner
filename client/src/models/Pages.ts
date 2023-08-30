@@ -1,4 +1,4 @@
-import { prisma } from "@/prisma/db"
+import prisma from "@/prisma/db"
 import { Book, BookSuggestions, CurrentlyReading, GenreSuggestion, Statistics } from "@prisma/client"
 import { getMessagesType } from "./BulletinBoard"
 import { getCurrentlyReadingBooksType } from "./CurrentlyReading"
@@ -213,7 +213,6 @@ export default class Pages {
                 booksRead
             }
 
-            
             return [{currentlyReadingBook, messages, stats, bookSuggestions, reportedMessages}, ""]
         } catch (err) {
             return [null, `${err}`]

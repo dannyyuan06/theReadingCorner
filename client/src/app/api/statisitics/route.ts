@@ -1,4 +1,4 @@
-import { prisma } from "@/prisma/db"
+import prisma from "@/prisma/db"
 import { Book } from "@prisma/client";
 import { headers } from "next/dist/client/components/headers";
 import { NextRequest, NextResponse } from "next/server";

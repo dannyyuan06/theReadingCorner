@@ -27,9 +27,11 @@ export default function RootLayout({
         <SessionProviders>
           <ReduxProvider>
             <Navigation/>
-            <div className={styles.bodyContainer}>
-              <Header/>
-              {children}
+            <div className={styles.bodyWrapper}>
+              <div className={styles.bodyContainer}>
+                <Header/>
+                {children}
+              </div>
             </div>
           </ReduxProvider>
         </SessionProviders>

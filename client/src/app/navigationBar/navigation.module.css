@@ -1,6 +1,14 @@
-.container {
+.wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 220px;
     min-width: fit-content;
-    width: 15vw;
+    height: 100%;
+}
+
+.container {
+    position: fixed;
     background-color: var(--background-color);
     height: 100vh;
     color: black;
