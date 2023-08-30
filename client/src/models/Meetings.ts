@@ -1,5 +1,5 @@
 import { AddMeetingType } from "@/lib/types/fetchTypes/addMeeting";
-import { prisma } from "@/prisma/db";
+import prisma from "@/prisma/db";
 
 
 export class Meetings {

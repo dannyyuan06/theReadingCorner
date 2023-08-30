@@ -1,5 +1,5 @@
 import { AddMessageMessageType } from "@/lib/types/fetchTypes/addMessage";
-import { prisma } from "@/prisma/db";
+import prisma from "@/prisma/db";
 import { Book, BulletinBoardBooks, BulletinBoardMessages } from "@prisma/client";
 import { ProfileFriendType } from "./User";
 

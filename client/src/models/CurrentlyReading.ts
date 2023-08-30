@@ -1,5 +1,5 @@
 import { CurrentlyReadingInput, CurrentlyReadingUpdate, CurrentlyReadingUpdatePrisma } from "@/lib/types/fetchTypes/currentlyReading";
-import { prisma } from "@/prisma/db";
+import prisma from "@/prisma/db";
 import { Book, UserBook, CurrentlyReading as CurrentlyReadingPrismaType } from "@prisma/client";
 
 interface bookWithUserType extends Book {

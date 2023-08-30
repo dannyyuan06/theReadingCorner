@@ -48,7 +48,6 @@ h3 {
 
 body {
   display: flex;
-  overflow: hidden;
   background-color: rgb(var(--background-color));
 }
 
