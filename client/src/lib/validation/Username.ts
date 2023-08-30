@@ -1,7 +1,9 @@
 
 let timer
+let prevText = '';
 
 export const usernameValidation = async (text: string):Promise<[boolean, string]> => {
+    prevText = text;
     // No spaces \S => non whitespace char, $ => End of expression
     const noSpacesRegex = /^\w*$/
     if (!noSpacesRegex.test(text)) return [false, "Username can only contain alphanumeric characters and underscores."]
@@ -17,14 +19,16 @@ export const usernameValidation = async (text: string):Promise<[boolean, string]
     // Final Check
     const finalRegex = /^([A-Za-z]\w{5,19})$/
     if (!(finalRegex.test(text))) return [false, "Username is invalid"]
-    const userNameTimer = "userNameTimer"
 
     function timeout() {
-        return new Promise(resolve => timer = setTimeout(resolve, 2000, userNameTimer));
+        return new Promise(resolve => timer = setTimeout(resolve, 1000));
     }
-
+    
     clearTimeout(timer!)
     await timeout()
+    if (text !== prevText) {
+        return [false, "Username is invalid"];
+    }
 
     // Database Check
     const res = await fetch(`/api/users/${text}`,{
