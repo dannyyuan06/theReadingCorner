@@ -13,7 +13,6 @@ type NameTypes = "title"| "imageLink"| "description"| "code"| "startDate"| "expi
 export function EditDiscount({discountDetails, setClicked}: {discountDetails: DiscountDirectory, setClicked: Dispatch<SetStateAction<boolean>>}) {
     const {discountdirectoryid, ...discount} = discountDetails
     const [formData, setFormData] = useState<DiscountType>(discount)
-    const router = useRouter()
     
     const uploadedImage = async (reader: FileReader) => {
         const req = {
@@ -36,13 +35,10 @@ export function EditDiscount({discountDetails, setClicked}: {discountDetails: Di
             formData.code === ""
         ) return
         const req:DiscountType = formData
-        fetch(`/api/discountDirectory/${discountdirectoryid}`, {
+        await fetch(`/api/discountDirectory/${discountdirectoryid}`, {
             method: 'PUT',
-            body: JSON.stringify(formData),
+            body: JSON.stringify(req),
             headers: { "Content-Type": "application/json" }
-        }).then(() => {
-            setClicked(false);
-            router.refresh();
         })
     }
 

@@ -31,7 +31,6 @@ const scopes = [
 ]
 
 export default withAuth(
-  // `withAuth` augments your `Request` with the user's token.
   function middleware(req) {
     const username = req.nextauth.token?.username ? req.nextauth.token?.username.toString() : "unauthorised"
     const accessLevel = req.nextauth.token?.accessLevel ? req.nextauth.token?.accessLevel.toString() : "unauthorised"

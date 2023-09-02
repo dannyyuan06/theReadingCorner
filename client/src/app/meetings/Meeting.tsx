@@ -21,12 +21,10 @@ export function Meeting(props: Meetings) {
         "Delete": () => {setDeleteMeeting(true)}
     }
 
-    const deleteMeetingHandler = () => {
-        fetch(`/api/meetings/${meetingid}`, {
+    const deleteMeetingHandler = async () => {
+        await fetch(`/api/meetings/${meetingid}`, {
             method: 'DELETE',
             headers: { "Content-Type": "application/json" }
-        }).then(() => {
-            setDeleteMeeting(false)
         })
     }
     return (

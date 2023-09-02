@@ -2,17 +2,20 @@
 import { Dispatch, ReactNode, SetStateAction } from 'react'
 import styles from './Popup.module.css'
 import { PageHeader } from './PageHeader'
+import { useRouter } from 'next/navigation'
 
 
-export function Popup({children, title, setClicked, confirm}: {children: ReactNode, title?: string, setClicked: Dispatch<SetStateAction<boolean>>, confirm: () => void}) {
+export function Popup({children, title, setClicked, confirm}: {children: ReactNode, title?: string, setClicked: Dispatch<SetStateAction<boolean>>, confirm: () => Promise<void>}) {
 
+    const router = useRouter();
     const onCancel = () => {
-        setClicked(false)
+        setClicked(false);
     }
 
-    const onConfirm = () => {
-        confirm()
-        // setClicked(false)
+    const onConfirm = async () => {
+        await confirm();
+        router.refresh();
+        setClicked(false)
     }
 
     return (

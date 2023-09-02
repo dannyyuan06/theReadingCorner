@@ -69,7 +69,6 @@ export function SetStatus({currentlyReading, book, setClicked, setCurrent}: {cur
             const body = await res.json()
             setCurrent(body.res[0])
         }
-        setClicked(false)
     }
 
     return (

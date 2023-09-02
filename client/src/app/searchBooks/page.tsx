@@ -4,7 +4,7 @@ import { PageHeader } from "../components/PageHeader";
 import styles from './page.module.css'
 import { BookType } from "../bookexample";
 import { BookStandard } from "./BookStandard";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Loading from "../loading/Loading";
 
@@ -12,6 +12,7 @@ export default function SearchBooks() {
     const [bookValues, setBookValues] = useState<BookType[]>([])
     const [loading, setLoading] = useState(false);
     const searchParams = useSearchParams();
+    const inputRef = useRef<HTMLInputElement|null>(null)
     const router = useRouter()
 
     const fetchBooks = async (bookQuery: string) => {
@@ -31,6 +32,9 @@ export default function SearchBooks() {
             setBookValues(books)
             setLoading(false)
         })
+        if (searched && inputRef.current) {
+            inputRef.current.value = searched
+        }
     },[searchParams])
     
 
@@ -48,7 +52,7 @@ export default function SearchBooks() {
             <div className={styles.searchBar}>
                 <Image alt="Search Button" src="/images/search_icon.svg" width={30} height={30}/>
                 <form onSubmit={submitHandler} className={styles.searchForm}>
-                    <input className={styles.searchInput} type="search" name="search" results={2} placeholder="Search by book title"/>
+                    <input ref={inputRef} className={styles.searchInput} type="search" name="search" results={2} placeholder="Search by book title"/>
                 </form>
             </div>
             <div className={styles.profilesContainer}>
