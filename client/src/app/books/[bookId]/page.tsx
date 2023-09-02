@@ -18,7 +18,6 @@ const usefulKeys = [
     "publishedDate",
     "pageCount",
     "printType",
-    "ratingsCount",
     "categories",
 ]
 

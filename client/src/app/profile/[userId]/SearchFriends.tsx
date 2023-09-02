@@ -1,14 +1,14 @@
 "use client"
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react'
 import styles from './SearchFriends.module.css'
-import { userType, userWithFriendid } from '@/models/User'
+import { ProfileFriendType, userType, userWithFriendid } from '@/models/User'
 import { ProfileMini } from '@/app/components/ProfileMini'
 import { getLastOnlineStatus } from './calculateDate'
 
 let timeout:ReturnType<typeof setTimeout> | null
 
 export function SearchFriends({username, setRequestPendingFriends, allFriends}: {username: string, setRequestPendingFriends:Dispatch<SetStateAction<userWithFriendid[]>>, allFriends:string[]}) {
-    const [friends, setFriends] = useState<userType[]>([])
+    const [friends, setFriends] = useState<ProfileFriendType[]>([])
     const [err, setErr] = useState("")
 
     const inputHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +45,7 @@ export function SearchFriends({username, setRequestPendingFriends, allFriends}: 
 }
 
 
-function SearchProfile({friend, username, setRequestPendingFriends, allFriends}: {friend: userType, username: string, setRequestPendingFriends:Dispatch<SetStateAction<userWithFriendid[]>>, allFriends:string[]}) {
+function SearchProfile({friend, username, setRequestPendingFriends, allFriends}: {friend: ProfileFriendType, username: string, setRequestPendingFriends:Dispatch<SetStateAction<userWithFriendid[]>>, allFriends:string[]}) {
     const clickHandler = async () => {
         await fetch('/api/friends', {
             method: 'POST',

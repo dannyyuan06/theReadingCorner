@@ -8,17 +8,13 @@ import { useRouter } from "next/navigation";
 
 export function EditDiscountButton({discountDetails}: {discountDetails: DiscountDirectory}) {
 
-    const router = useRouter()
     const [inEdit, setInEdit] = useState(false)
     const [inDelete, setInDelete] = useState(false)
     
-    const deleted = () => {
-        fetch(`/api/discountDirectory/${discountDetails.discountdirectoryid}`, {
+    const deleted = async () => {
+        await fetch(`/api/discountDirectory/${discountDetails.discountdirectoryid}`, {
             method: 'DELETE',
             headers: { "Content-Type": "application/json" }
-        }).then(() => {
-            setInDelete(false);
-            router.refresh();
         })
     }
 

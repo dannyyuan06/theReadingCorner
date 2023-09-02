@@ -18,7 +18,7 @@ export function WithoutBookMessage({message}: {message: getMessagesType}) {
     const [unreported, setUnreported] = useState(false)
     const { data }:any = useSession()
 
-    const share = () => {
+    const share = async () => {
         const shareText = `Hi, look at this post on The Reading Corner: ${window.location.href}#${message.messageid}`;
         navigator.clipboard.writeText(shareText).then(() => {
             setCopied(true)
@@ -28,30 +28,24 @@ export function WithoutBookMessage({message}: {message: getMessagesType}) {
         })
     }
 
-    const report = () => {
-        fetch(`/api/bulletinBoard/${message.messageid}`, {
+    const report = async () => {
+        await fetch(`/api/bulletinBoard/${message.messageid}`, {
             method: 'PATCH',
             headers: { "Content-Type": "application/json" }
-        }).then(() => {
-            setReported(false)
         })
     }
 
-    const allow = () => {
-        fetch(`/api/bulletinBoard/unreportMessage/${message.messageid}`, {
+    const allow = async () => {
+        await fetch(`/api/bulletinBoard/unreportMessage/${message.messageid}`, {
             method: 'PATCH',
             headers: { "Content-Type": "application/json" }
-        }).then(() => {
-            setUnreported(false)
         })
     }
 
-    const deleteMessage = () => {
-        fetch(`/api/bulletinBoard/${message.messageid}`, {
+    const deleteMessage = async () => {
+        await fetch(`/api/bulletinBoard/${message.messageid}`, {
             method: 'DELETE',
             headers: { "Content-Type": "application/json" }
-        }).then(() => {
-            setDeleted(false)
         })
     }
 

@@ -45,6 +45,11 @@ export type ProfileFriendType = {
     joinDate: Date,
 }
 
+export interface MemberType extends ProfileFriendType {
+    email: string,
+    accessLevel: number
+}
+
 export interface userWithFriendid extends ProfileFriendType {
     friendid: [string, string]
 }
@@ -440,7 +445,7 @@ export default class User {
         }
     }
 
-    static async searchUsers(username: string) {
+    static async searchUsers(username: string): Promise<[ProfileFriendType[]|null, string]> {
         try {
             const users = await prisma.users.findMany({
                 where: {
@@ -448,7 +453,16 @@ export default class User {
                         contains: username,
                         mode: 'insensitive'
                     }
-                }
+                },
+                select: {
+                    username: true,
+                    firstName: true,
+                    lastName: true,
+                    lastOnline: true,
+                    profilePicture: true,
+                    joinDate: true,
+                },
+                take: 40
             })
             
             return [users, ""]
@@ -456,6 +470,52 @@ export default class User {
             return [null, `${err}`]
         }
     }
+
+    static async getMembers(username: string|null): Promise<[MemberType[]|null, string]> {
+        try {
+            if (username) {
+                const users = await prisma.users.findMany({
+                    where: {
+                        username: {
+                            contains: username,
+                            mode: 'insensitive'
+                        }
+                    },
+                    select: {
+                        username: true,
+                        firstName: true,
+                        lastName: true,
+                        lastOnline: true,
+                        profilePicture: true,
+                        joinDate: true,
+                        email: true,
+                        accessLevel: true
+                    },
+                    take: 40
+                })
+                return [users, ""]
+            }
+            else {
+                const users = await prisma.users.findMany({
+                    select: {
+                        username: true,
+                        firstName: true,
+                        lastName: true,
+                        lastOnline: true,
+                        profilePicture: true,
+                        joinDate: true,
+                        email: true,
+                        accessLevel: true
+                    },
+                    take: 40
+                })
+                return [users, ""]
+            }
+        } catch (err) {
+            return [null, `${err}`]
+        }
+    }
+
 
     static async friendRequest(username: string, friendUsername: string) {
         if (username === friendUsername) return [null, `Cannot request self`]

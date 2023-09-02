@@ -36,7 +36,7 @@ export function AddDiscount() {
         setFormData(prev => ({...prev, imageLink: body.imageUrl}))
     }
 
-    const confirm = () => {
+    const confirm = async () => {
         if (
             formData.title === "" ||
             formData.expireDate === null ||
@@ -44,13 +44,10 @@ export function AddDiscount() {
             formData.code === ""
         ) return 
         const req:DiscountType = formData
-        fetch(`/api/discountDirectory`, {
+        await fetch(`/api/discountDirectory`, {
             method: 'POST',
             body: JSON.stringify(formData),
             headers: { "Content-Type": "application/json" }
-        }).then(() => {
-            setClicked(false);
-            router.refresh();
         })
     }
 

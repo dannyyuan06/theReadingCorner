@@ -11,7 +11,6 @@ import { useRouter } from 'next/navigation'
 
 export function FutureMeeting(props: Meetings) {
     const {title, dateOfMeeting, description, host, link, imageLink, meetingid} = props
-    const router = useRouter()
     const [editMeeting, setEditMeeting] = useState(false)
     const [deleteMeeting, setDeleteMeeting] = useState(false)
     const { data }:any = useSession()
@@ -21,13 +20,10 @@ export function FutureMeeting(props: Meetings) {
         "Delete": () => {setDeleteMeeting(true)}
     }
 
-    const deleteMeetingHandler = () => {
-        fetch(`/api/meetings/${meetingid}`, {
+    const deleteMeetingHandler = async () => {
+        await fetch(`/api/meetings/${meetingid}`, {
             method: 'DELETE',
             headers: { "Content-Type": "application/json" }
-        }).then(() => {
-            setDeleteMeeting(false);
-            router.refresh();
         })
     }
     return (
