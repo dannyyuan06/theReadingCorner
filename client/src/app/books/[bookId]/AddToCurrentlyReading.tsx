@@ -18,12 +18,11 @@ export function AddToCurrentlyReading({book}: {book: BookType}) {
             ...book,
             affiliateLink
         }
-        const res = await fetch("/api/currentlyReading", {
+        await fetch("/api/currentlyReading", {
             method: 'POST',
             body: JSON.stringify(req),
             headers: { "Content-Type": "application/json" }
         })
-        router.refresh();
     }
     
     return ( data  && data.accessLevel === 3 && 
