@@ -29,7 +29,6 @@ export async function POST(req: NextRequest) {
 
     const currentbook:CurrentlyReadingInput = {
         bookid: book.bookid,
-        averageRating: 0,
         pageNumber: 0,
         affiliateLink: body.affiliateLink,
         status: 1
