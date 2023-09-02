@@ -12,7 +12,7 @@ import { useRouter } from 'next/navigation'
 type NameTypes = "title" | "host" | "dateOfMeeting" | "link" | "description" | "imageLink"
 
 export function AddMeeting() {
-    const router = useRouter()
+
     const [clicked, setClicked] = useState(false)
     const todayDate = new Date()
     todayDate.setMilliseconds(0)
@@ -38,16 +38,13 @@ export function AddMeeting() {
         setFormData(prev => ({...prev, imageLink: body.imageUrl}))
     }
 
-    const submitHandler = () => {
+    const submitHandler = async () => {
         const {title, dateOfMeeting} = formData
         if (title === "" || dateOfMeeting === null) return 
-        fetch('/api/meetings', {
+        await fetch('/api/meetings', {
             method: 'POST',
             body: JSON.stringify(formData),
             headers: { "Content-Type": "application/json" }
-        }).then(() => {
-            setClicked(false)
-            router.refresh()
         })
     }
 

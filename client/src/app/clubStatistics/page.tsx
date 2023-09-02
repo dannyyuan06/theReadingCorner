@@ -2,7 +2,6 @@ import { BookAttackment } from "../components/BookAttachment";
 import { PageHeader } from "../components/PageHeader";
 import { GenreAttachment } from "../suggestions/GenreAttachment";
 import { AStatistic } from "./AStatistic";
-import UpdateButton from "./UpdateButton";
 import styles from './page.module.css'
 import Pages from "@/models/Pages";
 
@@ -26,7 +25,6 @@ export default async function clubStatistics() {
         <div className={styles.container}>
             <div className={styles.header}>
                 <PageHeader>CLUB STATISTICS</PageHeader>
-                <UpdateButton/>
             </div>
             <section>
                 <h2 className={styles.titles}>QUICK STATS</h2>

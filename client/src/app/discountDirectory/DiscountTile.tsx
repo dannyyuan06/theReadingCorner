@@ -33,6 +33,7 @@ export function DiscountTile({discount, accessLevel}: {discount: DiscountDirecto
                     </div>
                 </div>
             </div>
+            
         </div>
     )
 }

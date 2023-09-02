@@ -39,13 +39,11 @@ export function EditButton({user}: {user: getProfileInfoReturnType}) {
         else setErr(prev => ({...prev, email: ""}))
     }, [info])
 
-    const submitHandler = () => {
-        fetch(`/api/users/${user.username}`,{
+    const submitHandler = async () => {
+        await fetch(`/api/users/${user.username}`,{
             method: 'PUT',
             body: JSON.stringify(info),
             headers: { "Content-Type": "application/json" }
-        }).then(() => {
-            setClicked(false)
         })
     }
 
