@@ -4,14 +4,14 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Loading from "../loading/Loading";
 
-export default function RegisterButton({className}: {className: string}) {
-    const {data}: any = useSession()
+export default function RegisterButton({className, signedIn}: {className: string, signedIn: boolean}) {
+    // const {data}: any = useSession()
     const router = useRouter()
     const [clicked, setClicked] = useState(false)
 
     const clickHandler = () => {
         setClicked(true)
-        if (data && data.accessLevel > 0) {
+        if (signedIn) {
             router.push("/dashboard")
         }
         else {

@@ -1,11 +1,12 @@
-import Link from 'next/link'
 import { PageHeader } from './components/PageHeader'
 import { SignInButton } from './components/SignInButton'
 import styles from './page.module.css'
 import Image from 'next/image'
 import RegisterButton from './components/RegisterButton'
+import { getSession } from 'next-auth/react'
 
 export default function Home() {
+  const session = getSession()
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
@@ -19,8 +20,8 @@ export default function Home() {
             By becoming a member, you&apos;ll have access to exclusive events, workshops, and discussions led by experts in various fields. Immerse yourself in a supportive environment where curiosity is celebrated and knowledge is shared.
           </p>
           <div className={styles.buttonContainer}>
-            <SignInButton className={styles.authButton}/>
-            <RegisterButton className={styles.authButton}/>
+            <SignInButton className={styles.authButton} signedIn={!!session}/>
+            <RegisterButton className={styles.authButton} signedIn={!!session}/>
           </div>
         </div>
       </div>

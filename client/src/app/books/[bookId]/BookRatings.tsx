@@ -165,7 +165,7 @@ export function BookRatings({book, userbook, bookInDB}: {book: BookType, userboo
             </div>
             <div className={styles.submitButtonWrapper}>
                 <button className={styles.submitButton} style={!changed ? {backgroundColor: "var(--theme-light-light-grey)"}: {}} onClick={submitHandler}>
-                    SUMBIT
+                    SUBMIT
                 </button>
             </div>
         </div>

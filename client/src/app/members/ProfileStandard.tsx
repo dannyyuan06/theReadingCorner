@@ -3,12 +3,20 @@ import Image from "next/image";
 import styles from './ProfileStandard.module.css'
 import { TitleSplit } from "./TitleSplit";
 import { MoreButton } from "../components/MoreButton";
-import { Users } from "@prisma/client";
-import { useRef, useState } from "react";
+import { Dispatch, SetStateAction, useRef, useState } from "react";
 import { Popup } from "../components/Popup";
 import Link from "next/link";
+import { MemberType } from "@/models/User";
 
-export function ProfileStandard(user: Users) {
+
+const accessLevelKey:{[id: string]: string} = {
+    "-1": "Blocked",
+    "1": "User",
+    "3": "Admin"
+}
+
+export function ProfileStandard({user, setUsers, index}: {user:MemberType, setUsers: Dispatch<SetStateAction<MemberType[]>>, index: number}) {
+
 
     const [deleteConfirm, setDeleteConfirm] = useState(false)
     const [disableConfirm, setDisableConfirm] = useState(false)
@@ -16,43 +24,43 @@ export function ProfileStandard(user: Users) {
     const [resetPassword, setResetPassword] = useState(false)
     const inputPasswordRef = useRef<HTMLInputElement>(null)
 
-    const deleteAccount = () => {
-        fetch(`/api/users/${user.username}`,{
+    const deleteAccount = async () => {
+        await fetch(`/api/users/${user.username}`,{
             method: 'DELETE',
             headers: { "Content-Type": "application/json" }
-        }).then(() => {
-            setDeleteConfirm(false)
         })
     }
 
-    const disableAccount = () => {
-        fetch(`/api/users/${user.username}`, {
+    const disableAccount = async () => {
+        await fetch(`/api/users/${user.username}`, {
             method: 'PATCH',
             body: JSON.stringify({accessLevel: -1}),
             headers: { "Content-Type": "application/json" }
-        }).then(() => {
-            setDisableConfirm(false)
         })
+        setUsers(prev => prev.map((use) => {
+            if (use.username !== user.username) return use                
+            return {...use, accessLevel: -1}
+        }))
     }
 
-    const enableAccount = () => {
-        fetch(`/api/users/${user.username}`, {
+    const enableAccount = async () => {
+        await fetch(`/api/users/${user.username}`, {
             method: 'PATCH',
             body: JSON.stringify({accessLevel: 1}),
             headers: { "Content-Type": "application/json" }
-        }).then(() => {
-            setEnableConfirm(false)
         })
+        setUsers(prev => prev.map((use) => {
+            if (use.username !== user.username) return use                
+            return {...use, accessLevel: 1}
+        }))
     }
 
-    const resetPasswordAccount = () => {
+    const resetPasswordAccount = async () => {
         const newPassword = inputPasswordRef.current?.value
-        const res = fetch(`/api/users/updatePassword/${user.username}`, {
+        await fetch(`/api/users/updatePassword/${user.username}`, {
             body: JSON.stringify({password: newPassword}),
             method: 'PATCH',
             headers: { "Content-Type": "application/json" }
-        }).then(() => {
-            setResetPassword(false)
         })
     }
 
@@ -79,6 +87,7 @@ export function ProfileStandard(user: Users) {
                 <TitleSplit tAlign="left" flex={1}>{(new Date(user.joinDate).toDateString().split(" ").slice(1).join(" "))}</TitleSplit>
                 <TitleSplit tAlign="left" flex={1}>{(new Date(user.lastOnline).toDateString().split(" ").slice(1).join(" "))}</TitleSplit>
                 <TitleSplit tAlign="left" flex={2}>{user.email}</TitleSplit>
+                <TitleSplit tAlign="left" flex={1}>{accessLevelKey[`${user.accessLevel}`]}</TitleSplit>
                 <MoreButton buttons={moreButtons}/>
             </div>
             {deleteConfirm

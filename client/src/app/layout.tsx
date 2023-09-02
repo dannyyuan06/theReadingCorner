@@ -4,7 +4,6 @@ import { Navigation } from './navigationBar/Navigation'
 import styles from './layout.module.css'
 import { ReduxProvider } from '@/redux/Provider'
 import { SessionProviders } from './components/SessionProviders'
-import { Header } from './components/Header'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -29,7 +28,6 @@ export default function RootLayout({
             <Navigation/>
             <div className={styles.bodyWrapper}>
               <div className={styles.bodyContainer}>
-                <Header/>
                 {children}
               </div>
             </div>

@@ -32,7 +32,6 @@
 .wrapper {
     margin-bottom: 0vh;
     padding: 20px 30px;
-    /* height: 100%; */
     flex: 1;
     width: 360px;
 }
@@ -69,11 +68,14 @@
     background-color: var(--theme-blue);
 }
 
-.form label{
+.form label {
     font-size: 1.2em;
 }
 
-.form input[type="text"], .form input[type="password"], .form input[type="email"], .form textarea {
+.form input[type="text"],
+.form input[type="password"],
+.form input[type="email"],
+.form textarea {
     border: 0;
     background-color: var(--theme-input-light-grey);
     font-size: 1.3em;
@@ -82,7 +84,7 @@
     margin-bottom: 10px;
 }
 
-.backLink a {
+.backLink {
     margin-top: 20px;
     background-color: var(--theme-orange);
     display: inline-block;
@@ -90,7 +92,7 @@
 }
 
 .error {
-    overflow:hidden;
+    overflow: hidden;
 }
 
 .loading {
@@ -102,11 +104,67 @@
 }
 
 .loading img {
-    animation:spin 1.5s linear infinite;
-} 
+    animation: spin 1.5s linear infinite;
+}
+
+.submitButton {
+    display: flex;
+    align-items: center;
+    color: var(--theme-orange);
+}
 
 @keyframes spin {
     100% {
         transform: rotate(360deg);
     }
-  }
+}
+
+@media only screen and (max-width: 1000px) {
+    .insideContainer hr {
+        display: none;
+    }
+    
+    .insideContainer {
+        flex-direction: column;
+        width: 100vw;
+        padding: 30px;
+        max-width: 500px;
+    }
+    .wrapper {
+        flex-direction: column;
+        height: auto;
+        padding: 0;
+        width: auto;
+    }
+
+    .form input[type="text"],
+    .form input[type="password"],
+    .form input[type="email"],
+    .form textarea {
+        width: 100%;
+    }
+
+    .image img {
+        width: 100px;
+        height: 100px;
+        object-fit: contain;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .wrapper {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .image img {
+        width: 100px;
+        height: 100px;
+        object-fit: contain;
+    }
+
+    .container {
+        position: relative;
+        height: auto;
+    }
+}
