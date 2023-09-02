@@ -5,11 +5,13 @@ import { useSession } from 'next-auth/react'
 import { BookType } from '@/app/bookexample'
 import { Popup } from '@/app/components/Popup'
 import { CurrentlyReadingType } from '@/lib/types/fetchTypes/currentlyReading'
+import { useRouter } from 'next/navigation'
 
 export function AddToCurrentlyReading({book}: {book: BookType}) {
     const [pressed, setPressed] = useState(false)
     const [affiliateLink, setAffiliateLink] = useState("")
     const { data }:any = useSession()
+    const router = useRouter()
 
     const submitHandler = async () => {
         const req:CurrentlyReadingType = {
@@ -21,6 +23,7 @@ export function AddToCurrentlyReading({book}: {book: BookType}) {
             body: JSON.stringify(req),
             headers: { "Content-Type": "application/json" }
         })
+        router.refresh();
     }
     
     return ( data  && data.accessLevel === 3 && 
