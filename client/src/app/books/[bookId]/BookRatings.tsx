@@ -6,6 +6,7 @@ import { BookType } from '@/app/bookexample'
 import { useSession } from 'next-auth/react'
 import { AddUserbookType, UpdateUserbookBookType } from '@/lib/types/fetchTypes/addUserbook'
 import { Book, UserBook } from '@prisma/client'
+import { useRouter } from 'next/navigation'
 
 type pageType = ""|number
 
@@ -34,7 +35,7 @@ export const statusArray = Object.keys(statusObj)
 export function BookRatings({book, userbook, bookInDB}: {book: BookType, userbook: UserBook|null, bookInDB: Book|null}) {
 
     const pageCount = book.volumeInfo.pageCount
-
+    const router = useRouter()
     const [myScore, setMyScore] = useState<string|number>("-")
     const [myScoreWithWords, setMyScoreWithWords] = useState<string>("")
     const [status, setStatus] = useState<string>(statusArray[0])
@@ -127,6 +128,7 @@ export function BookRatings({book, userbook, bookInDB}: {book: BookType, userboo
             })
             const body = await res.json()
         }
+        router.refresh();
         setChanged(false);
     }
 
