@@ -7,7 +7,6 @@ export interface CurrentlyReadingType extends BookType {
 
 export interface CurrentlyReadingInput {
     bookid: string,
-    averageRating: number,
     pageNumber: number,
     affiliateLink: string,
     status: number,
