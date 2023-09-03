@@ -49,6 +49,7 @@ h3 {
 body {
   display: flex;
   background-color: rgb(var(--background-color));
+  min-height: 100vh;
 }
 
 button, input[type=submit], nav a {
