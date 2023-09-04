@@ -3,10 +3,10 @@ import { SignInButton } from './components/SignInButton'
 import styles from './page.module.css'
 import Image from 'next/image'
 import RegisterButton from './components/RegisterButton'
-import { getSession } from 'next-auth/react'
+import { getServerSession } from 'next-auth'
 
-export default function Home() {
-  const session = getSession()
+export default async function Home() {
+  const session = await getServerSession()
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>

@@ -115,7 +115,6 @@ export function Form({name, email, picture}: propsType) {
     }
 
     const correctBool = Object.values(isCorrect)
-    const reduceCorrect = correctBool.length === 4 && correctBool.reduce((bool1, bool2) => bool1 && bool2)
 
     return (
         <form onSubmit={(e) => submitHandler(e)} className={styles.form}>
