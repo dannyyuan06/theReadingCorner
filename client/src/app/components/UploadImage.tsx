@@ -29,17 +29,15 @@ export function UploadImage({upload, size, aspectRatio, image}: {upload: (reader
         if (imageFile.size / 1024 < 10) return
         
         const options = {
-            maxSizeMB: 1,
+            maxSizeMB: 0.5,
             maxWidthOrHeight: size,
             useWebWorker: true,
         }
         try {
             const compressedFile = await imageCompression(imageFile, options);
             getBase64(compressedFile)
-            
-            // await uplo(compressedFile); // write your own logic
         } catch (error) {
-            // console.log(error);
+            console.log(error);
         }
         
     };
