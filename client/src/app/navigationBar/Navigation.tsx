@@ -12,7 +12,7 @@ import { changePage } from '@/redux/features/pageSlice'
 import { signOut, useSession } from 'next-auth/react'
 import Loading from '../loading/Loading'
 
-
+// For styling the main logo at the top of the navigation bar.
 const imageStyle:CSSProperties = {
     margin: 5,
     objectFit: 'cover',
@@ -21,17 +21,21 @@ const imageStyle:CSSProperties = {
 }
 
 export function Navigation() {
+    // Get the path name of the page E.g /aboutOurClub
     const pathname = usePathname()
+    // Store this in the browser
     const page = useAppSelector((state) => state.pageReducer)
-    const { status, data }: any = useSession()
+    const { status, data }: any = useSession() // Is user authenticated
     const [isLoading, setIsLoading] = useState(false)
 
-    const dispatch = useDispatch<AppDispatch>()
+    const dispatch = useDispatch<AppDispatch>() // Change store in browser
     useEffect(() => {
+        // Change the blue indicator every time the path name changes.
         dispatch(changePage(pathname.slice(1)))
         setIsLoading(false)
     }, [pathname, dispatch])
 
+    // Logic for not showing the navigation for certain pathnames, only showing when authenticated
     const doNotShow = pathname === "/" || pathname.slice(1) === "register" || status !== "authenticated" || data.accessLevel === -1
 
     return !doNotShow && (
@@ -68,6 +72,5 @@ export function Navigation() {
                 isLoading && <Loading/>
             }
         </>
-
     )
 }
