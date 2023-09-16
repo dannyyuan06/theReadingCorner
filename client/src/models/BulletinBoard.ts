@@ -37,6 +37,7 @@ export class BulletinBoard {
                         lastOnline: true,
                         profilePicture: true,
                         joinDate: true,
+                        accessLevel: true,
                     }
                 }
             }
