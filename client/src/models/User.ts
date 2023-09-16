@@ -43,6 +43,7 @@ export type ProfileFriendType = {
     profilePicture: string,
     lastOnline: Date,
     joinDate: Date,
+    accessLevel: number,
 }
 
 export interface MemberType extends ProfileFriendType {
@@ -207,6 +208,7 @@ export default class User {
                                     lastOnline: true,
                                     profilePicture: true,
                                     joinDate: true,
+                                    accessLevel: true,
                                 }
                             }
                         }
@@ -221,6 +223,7 @@ export default class User {
                                     lastOnline: true,
                                     profilePicture: true,
                                     joinDate: true,
+                                    accessLevel: true,
                                 }
                             }
                         }
@@ -461,6 +464,7 @@ export default class User {
                     lastOnline: true,
                     profilePicture: true,
                     joinDate: true,
+                    accessLevel: true,
                 },
                 take: 40
             })

@@ -16,3 +16,15 @@
     font-size: 1.4em;
     text-decoration: underline;
 }
+
+.admin {
+  padding: 2px 5px;
+  border-radius: 3px;
+  background-color: var(--theme-green);
+  margin-left: 10px;
+}
+
+.topContainer {
+  display: flex;
+  align-items: center;
+}
