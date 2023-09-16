@@ -1,10 +1,10 @@
 import prisma from "@/prisma/db";
-import { booksType } from "./Book";
 import * as bcrypt from 'bcrypt'
 import { userBookWithBook } from "./UserBook";
 import { Book, UserBook, Users as UserPrismaType, Users } from "@prisma/client";
 import { AddUserbookBookType, UpdateUserbookBookType } from "@/lib/types/fetchTypes/addUserbook";
 import { userModelType } from "@/app/register/credentials/Form";
+import mergeSortByUsername from "@/lib/algorithms/mergeSort";
 
 // Initiallisation
 
@@ -231,15 +231,15 @@ export default class User {
 
             const firstFriends:userWithFriendid[] = user.friend1.reduce((prev:userWithFriendid[], friend) => friend.status === 3 ? [...prev, {...friend.friend2, friendid: [friend.friend1id, friend.friend2id]}]: prev, [])
             const secondFriends:userWithFriendid[] = user.friend2.reduce((prev:userWithFriendid[], friend) => friend.status === 3 ? [...prev, {...friend.friend1, friendid: [friend.friend1id, friend.friend2id]}]: prev, [])
-            const friends:userWithFriendid[] = [...firstFriends, ...secondFriends].sort()
+            const friends:userWithFriendid[] = mergeSortByUsername([...firstFriends, ...secondFriends])
 
             const requestPendingFirstFriends:userWithFriendid[] = user.friend1.reduce((prev:userWithFriendid[], friend) => friend.status === 1 ? [...prev, {...friend.friend2, friendid: [friend.friend1id, friend.friend2id]}]: prev, [])
             const requestPendingSecondFriends:userWithFriendid[] = user.friend2.reduce((prev:userWithFriendid[], friend) => friend.status === 2 ? [...prev, {...friend.friend1, friendid: [friend.friend1id, friend.friend2id]}]: prev, [])
-            const requestPendingFriends:userWithFriendid[] = [...requestPendingFirstFriends, ...requestPendingSecondFriends].sort()
+            const requestPendingFriends:userWithFriendid[] = mergeSortByUsername([...requestPendingFirstFriends, ...requestPendingSecondFriends])
 
             const incomingFirstFriendRequests:userWithFriendid[] = user.friend1.reduce((prev:userWithFriendid[], friend) => friend.status === 2 ? [...prev, {...friend.friend2, friendid: [friend.friend1id, friend.friend2id]}]: prev, [])
             const incomingSecondFriendRequests:userWithFriendid[] = user.friend2.reduce((prev:userWithFriendid[], friend) => friend.status === 1 ? [...prev, {...friend.friend1, friendid: [friend.friend1id, friend.friend2id]}]: prev, [])
-            const incomingRequestFriends:userWithFriendid[] = [...incomingFirstFriendRequests, ...incomingSecondFriendRequests].sort()
+            const incomingRequestFriends:userWithFriendid[] = mergeSortByUsername([...incomingFirstFriendRequests, ...incomingSecondFriendRequests])
             
             const {friend1, friend2, ...usefulUserInfo} = user!
 
