@@ -7,13 +7,18 @@ import { ProfileFriendType } from "@/models/User";
 let timeout:ReturnType<typeof setTimeout>
 
 export function ProfileMini(props: {user: ProfileFriendType, dateSent: string}) {
-    const {username, profilePicture} = props.user
+    const {username, profilePicture, accessLevel} = props.user
 
     return (
         <Link id={styles.container} href={`/profile/${username}`}>
             <Image style={{borderRadius: '50%'}} alt='profile picture placeholder' src={profilePicture} width={40} height={40}/>
             <div className={styles.userMeta}>
-                <div className={styles.userName}>{username}</div>
+                <div className={styles.usernameContainer}>
+                  <div className={styles.userName}>{username}</div>
+                  {accessLevel && <div className={styles.admin}>
+                    ADMIN
+                    </div>}
+                </div>
                 <div className={styles.userTimestamp}>{props.dateSent}</div>
             </div>
             <div className={styles.tooltip}>
