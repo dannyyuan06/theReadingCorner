@@ -8,6 +8,7 @@ export const fetchCache = 'force-no-store';
 export const dynamic = 'force-dynamic'
 
 export default async function bulletinBoard() {
+    // use the async function below
     const messages = await getMessages()
     return (
         <div className={styles.container}>
@@ -22,6 +23,8 @@ export default async function bulletinBoard() {
     )
 }
 
+
+// Get the most recent messages from the 
 async function getMessages() {
     const messages = await BulletinBoard.getMessages(10)
     return messages
