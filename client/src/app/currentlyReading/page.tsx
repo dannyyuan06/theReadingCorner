@@ -39,7 +39,7 @@ export default async function currentlyReading() {
     )
 }
 
-// When rendered on server side, get the books from the database.
+// When rendered on the server side, get the books from the database.
 // No need to call a lambda function as it itself is a serverless function
 async function getCurrentlyReadingBooks() {
     const [books, err] = await CurrentlyReading.getCurrentlyReadingBooks()
