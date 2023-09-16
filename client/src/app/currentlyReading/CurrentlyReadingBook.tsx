@@ -5,6 +5,13 @@ import Link from "next/link";
 import { getCurrentlyReadingBooksType } from "@/models/CurrentlyReading";
 import { SetStatusButton } from "./SetStatusButton";
 import { useState } from "react";
+const statuses = [
+  "Haven't Read",
+  "Reading",
+  "Finished",
+  "On Hold",
+  "Dropped",
+]
 
 export function CurrentlyReadingBook({
   currentlyReading,
@@ -62,7 +69,7 @@ export function CurrentlyReadingBook({
               </span>
             </h3>
             <h3>
-              STATUS: <span>{current.status}</span>
+              STATUS: <span>{statuses[current.status]}</span>
             </h3>
             <h3>
               AFFILIATE LINK:{" "}

@@ -19,10 +19,10 @@ type pageType = "" | number;
 // Dictionary of status and how they are stored in the database
 export const statusObj: { [id: string]: number } = {
   "Haven't Read": 0,
-  Reading: 1,
-  Finished: 2,
+  "Reading": 1,
+  "Finished": 2,
   "On Hold": 3,
-  Dropped: 4,
+  "Dropped": 4,
 };
 // Array of the status
 export const statusArray = Object.keys(statusObj);
