@@ -1,18 +1,18 @@
 .bodyWrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    overflow-y: visible;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  overflow-y: visible;
 }
 
 .bodyContainer {
-    background-color: white;
-    color: black;
-    flex: 1;
-    overflow-x: hidden;
-    overflow: visible;
-    padding: 0vw 5vw 0 5vw;
-    max-width: 1500px;
-    font-family: var(--font-mono);
-    padding-top: 120px;
+  background-color: white;
+  color: black;
+  flex: 1;
+  overflow-x: hidden;
+  overflow: visible;
+  padding: 0vw 5vw 0 5vw;
+  max-width: 1500px;
+  font-family: var(--font-mono);
+  padding-top: 120px;
 }
