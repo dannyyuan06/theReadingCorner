@@ -25,7 +25,7 @@ export function ProfileMini(props: {
       <div className={styles.userMeta}>
         <div className={styles.usernameContainer}>
           <div className={styles.userName}>{username}</div>
-          {accessLevel && <div className={styles.admin}>ADMIN</div>}
+          {accessLevel === 3 && <div className={styles.admin}>ADMIN</div>}
         </div>
         <div className={styles.userTimestamp}>{props.dateSent}</div>
       </div>
