@@ -25,7 +25,7 @@ export default function SignInPage() {
         if (error === "CredentialsSignin") {
             setErr("Incorrect Username or Password");
         }
-    }, [])
+    }, [searchParams])
 
     const submitHandler = async (e:FormEvent<HTMLFormElement>) => {
         e.preventDefault();
