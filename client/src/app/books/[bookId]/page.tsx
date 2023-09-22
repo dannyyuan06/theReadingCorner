@@ -72,10 +72,10 @@ export default async function Books({
             <h3>QUICK INFO</h3>
 
             {usefulKeys.map((key) => (
-              // @ts-ignore
               <QuickInfo
                 key={key}
                 title={camelToTitle(key)}
+                // @ts-ignore
                 value={book.volumeInfo[key]}
               />
             ))}
