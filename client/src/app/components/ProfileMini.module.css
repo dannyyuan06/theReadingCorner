@@ -25,6 +25,18 @@
     color: var(--theme-light-grey)
 }
 
+.usernameContainer {
+  display: flex;
+  align-items: center;
+}
+
+.admin {
+  padding: 2px 5px;
+  border-radius: 3px;
+  background-color: var(--theme-green);
+  margin-left: 10px;
+}
+
 @keyframes fadeInDelay {
     0% {
         visibility: hidden;

@@ -132,6 +132,7 @@ export default class Pages {
                             lastOnline: true,
                             profilePicture: true,
                             joinDate: true,
+                            accessLevel: true,
                         }
                     }
                 }
@@ -174,6 +175,7 @@ export default class Pages {
                             lastOnline: true,
                             profilePicture: true,
                             joinDate: true,
+                            accessLevel: true,
                         }
                     }
                 }

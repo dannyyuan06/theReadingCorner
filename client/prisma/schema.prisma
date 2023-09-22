@@ -67,7 +67,6 @@ model UserBook {
 // 3: both are friends
 
 model Friends {
-  // friendid      Int       @id @default(autoincrement())
   friend1       Users      @relation(fields: [friend1id], references: [username], name: "friend1")
   friend1id     String
   friend2       Users      @relation(fields: [friend2id], references: [username], name: "friend2")
@@ -91,7 +90,7 @@ model BulletinBoardBooks {
   bulletinboardbookid   Int   @id @default(autoincrement())
   book                  Book  @relation(fields: [bookid], references: [bookid])
   bookid                String 
-  bulletinBoardMessage  BulletinBoardMessages @relation(fields: [messageid], references: [messageid])
+  bulletinBoardMessage  BulletinBoardMessages @relation(fields: [messageid], references: [messageid], onDelete: Cascade)
   messageid             Int
 }
 
