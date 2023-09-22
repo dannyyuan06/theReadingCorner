@@ -36,7 +36,7 @@
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
     "@types/jsonwebtoken": "^9.0.2",
-    "prisma": "^5.2.0"
+    "prisma": "^5.3.1"
   },
   "optionalDependencies": {
     "utf-8-validate": "^5.0.10"
