@@ -90,7 +90,7 @@ model BulletinBoardBooks {
   bulletinboardbookid   Int   @id @default(autoincrement())
   book                  Book  @relation(fields: [bookid], references: [bookid])
   bookid                String 
-  bulletinBoardMessage  BulletinBoardMessages @relation(fields: [messageid], references: [messageid])
+  bulletinBoardMessage  BulletinBoardMessages @relation(fields: [messageid], references: [messageid], onDelete: Cascade)
   messageid             Int
 }
 
