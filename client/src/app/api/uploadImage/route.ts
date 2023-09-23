@@ -36,19 +36,19 @@ export async function POST(req: NextRequest) {
   if (!access) return errRes;
 
   try {
-    const base64String = body.image; // Assuming you receive the base64 string in the 'image' field of the request body
+    // Receive the base64 string in the 'image' field of the request body
+    const base64String = body.image;
 
     if (!base64String) {
       return NextResponse.json({ error: "No image data found.", status: 400 });
     }
+    // Create an image buffer which will allow the image to be sent in the correct format
     const imageBuffer = Buffer.from(
       base64String.split(";base64,").pop()!,
       "base64"
     );
-    const bufferStream = new Stream.PassThrough();
-    bufferStream.end(imageBuffer);
     // Set any desired file extension here, depending on the image format
-    const gcsFileName = body.username + new Date().valueOf() + ".jpg"; // You can set any desired file extension here, depending on the image format
+    const gcsFileName = body.username + new Date().valueOf() + ".jpg";
     await storage.bucket(bucketName).file(gcsFileName).save(imageBuffer);
 
     const imageUrl = `https://storage.googleapis.com/${bucketName}/${gcsFileName}`;
