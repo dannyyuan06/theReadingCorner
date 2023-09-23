@@ -36,42 +36,25 @@ export async function POST(req: NextRequest) {
   if (!access) return errRes;
 
   try {
-    // Assuming you receive the base64 string in the 'image' field of the request body
-    const base64String = body.image; 
-    // Error handling
+    const base64String = body.image; // Assuming you receive the base64 string in the 'image' field of the request body
+
     if (!base64String) {
       return NextResponse.json({ error: "No image data found.", status: 400 });
     }
-    // Convert from base64
     const imageBuffer = Buffer.from(
       base64String.split(";base64,").pop()!,
       "base64"
     );
-    // Use a stream of data to send the image as 
-    // some files might be quite large
     const bufferStream = new Stream.PassThrough();
     bufferStream.end(imageBuffer);
-    // Set storage bucket name
+    // Set any desired file extension here, depending on the image format
     const gcsFileName =
       Math.random().toString(16).slice(2) + new Date().valueOf() + ".jpg";
-    const bucket = storage.bucket(bucketName);
-    // Send data as a stream to storage bucket
-    bufferStream.pipe(
-      bucket.file(gcsFileName).createWriteStream({
-        metadata: {
-          contentType: "image/jpeg",
-          metadata: {
-            custom: "metadata",
-          },
-          public: true,
-        },
-      })
-    );
-    // Return public URL when the data is stored
+    await storage.bucket(bucketName).file(gcsFileName).save(imageBuffer);
+
     const imageUrl = `https://storage.googleapis.com/${bucketName}/${gcsFileName}`;
     return NextResponse.json({ imageUrl });
   } catch (err) {
-    // Error handling
-    return NextResponse.json({ err: `${err}` }, { status: 500 });
+    return NextResponse.json({ error: `${err}`, status: 400 });
   }
 }
