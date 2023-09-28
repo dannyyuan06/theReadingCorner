@@ -4,7 +4,6 @@ import { ProfileDropDown } from "./ProfileDropDown";
 import Link from "next/link";
 import { ProfileFriendType } from "@/models/User";
 
-let timeout: ReturnType<typeof setTimeout>;
 
 export function ProfileMini(props: {
   user: ProfileFriendType;

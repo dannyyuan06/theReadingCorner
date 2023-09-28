@@ -4,10 +4,7 @@ import styles from './ProfileDropDown.module.css'
 import { ProfileFriendType } from '@/models/User'
 import { getLastOnlineStatus } from '../bulletinBoard/getOnlineStatus'
 
-let timeout:ReturnType<typeof setTimeout>
-
 export function ProfileDropDown({user} : {user: ProfileFriendType}) {
-  console.log(user.accessLevel)
   return (
     <div className={styles.container}>
       <Image alt="profile picture placeholder" src={user.profilePicture} style={{borderRadius: '50%'}} width={50} height={50}/>

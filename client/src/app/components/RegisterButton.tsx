@@ -1,28 +1,33 @@
-"use client"
+"use client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Loading from "../loading/Loading";
 
-export default function RegisterButton({className, signedIn}: {className: string, signedIn: boolean}) {
-    const router = useRouter()
-    const [clicked, setClicked] = useState(false)
+export default function RegisterButton({
+  className,
+  signedIn,
+}: {
+  className: string;
+  signedIn: boolean;
+}) {
+  const router = useRouter();
+  const [clicked, setClicked] = useState(false);
 
-    const clickHandler = () => {
-        setClicked(true)
-        if (signedIn) {
-            router.push("/dashboard")
-        }
-        else {
-            router.push("/register/credentials")
-        }
+  const clickHandler = () => {
+    setClicked(true);
+    if (signedIn) {
+      router.push("/dashboard");
+    } else {
+      router.push("/register/credentials");
     }
+  };
 
-    return (
-        <>
-            <button className={className} onClick={clickHandler}>REGISTER</button>
-            {
-                clicked && <Loading />
-            }
-        </>
-    )
+  return (
+    <>
+      <button className={className} onClick={clickHandler}>
+        REGISTER
+      </button>
+      {clicked && <Loading />}
+    </>
+  );
 }
