@@ -51,7 +51,7 @@ describe("SignInPage Component", () => {
     const submitButton = getByTestId("sign-in");
     fireEvent.click(submitButton);
 
-    // Wait for the error message to appear
+    // Wait for the signIn function to be called.
     await waitFor(() => {
       expect(signIn).toHaveBeenCalledWith("credentials", {"password": "Password0!", "username": "dannyyuan"})
     });
@@ -63,10 +63,5 @@ describe("SignInPage Component", () => {
     // Simulate a click on the Google OAuth button
     const googleOAuthButton = getByAltText("Google Image").closest("button");
     fireEvent.click(googleOAuthButton!);
-
-    // You can add assertions here based on the behavior of the OAuth button click
-    // For example, if it opens a new window for OAuth authentication
   });
-
-  // Add more test cases as needed
 });
