@@ -19,7 +19,7 @@ export function Popup({children, title, setClicked, confirm}: {children: ReactNo
     }
 
     return (
-        <div className={styles.container}>
+        <div className={styles.container} data-testid="popup">
             <div className={styles.wrapper}>
                 <PageHeader>{title}</PageHeader>
                 <div>
