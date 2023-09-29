@@ -5,13 +5,7 @@ import Link from "next/link";
 import { getCurrentlyReadingBooksType } from "@/models/CurrentlyReading";
 import { SetStatusButton } from "./SetStatusButton";
 import { useState } from "react";
-const statuses = [
-  "Haven't Read",
-  "Reading",
-  "Finished",
-  "On Hold",
-  "Dropped",
-]
+const statuses = ["Haven't Read", "Reading", "Finished", "On Hold", "Dropped"];
 
 export function CurrentlyReadingBook({
   currentlyReading,
