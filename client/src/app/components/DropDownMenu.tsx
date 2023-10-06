@@ -47,6 +47,7 @@ function DropDownMenuButton({
   return (
     <button
       className={styles.button}
+      data-testid="drop-down-menu-button"
       onClick={() => {
         setState(name);
         setClicked(false);

@@ -5,7 +5,7 @@ import { DiscountDirectory } from "@prisma/client";
 
 
 
-export class Discount {
+export default class Discount {
 
     static async getDiscounts(): Promise<[DiscountDirectory[]|null, string]> {
         try {

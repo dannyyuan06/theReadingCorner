@@ -3,7 +3,7 @@ import prisma from "@/prisma/db";
 import { Book, BulletinBoardBooks, BulletinBoardMessages } from "@prisma/client";
 import { ProfileFriendType } from "./User";
 
-interface booksRelationshipType extends BulletinBoardBooks {
+export interface booksRelationshipType extends BulletinBoardBooks {
     book: Book
 }
 

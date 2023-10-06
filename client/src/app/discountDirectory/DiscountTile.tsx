@@ -6,7 +6,7 @@ import { EditDiscountButton } from './EditDiscountButton'
 
 export function DiscountTile({discount, accessLevel}: {discount: DiscountDirectory, accessLevel: number}) {
     return (
-        <div className={styles.container}>
+        <div className={styles.container} data-testid="discount-tile">
             <div className={styles.imageContainer}>
                 <Image style={{objectFit: 'cover'}} src={discount.imageLink} width={400} height={150} alt={discount.title} />
                 <h2 className={styles.title}>{discount.title.toUpperCase()}</h2>
