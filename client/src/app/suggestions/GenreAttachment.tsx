@@ -10,7 +10,7 @@ export function GenreAttachment({genre, index, setGenres}: {genre: string, index
     return (
         <>
             {index !== 0 && <hr/>}
-            <div className={styles.genreContainer}>
+            <div className={styles.genreContainer} data-testid="genre-attachment">
                 <div className={styles.genresInfoTitle}>{genre}</div>
                 {
                     setGenres && 

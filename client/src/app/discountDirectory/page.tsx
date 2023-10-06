@@ -3,7 +3,7 @@ import styles from "./page.module.css";
 import { DiscountTile } from "./DiscountTile";
 import { headers } from "next/dist/client/components/headers";
 import { AddDiscount } from "./AddDiscount";
-import { Discount } from "@/models/Discount";
+import Discount from "@/models/Discount";
 
 export default async function discountDirectory() {
   const headersList = headers();
@@ -11,7 +11,7 @@ export default async function discountDirectory() {
     headersList.get("accessLevel")?.toString() ?? ""
   );
   // Get from database with Error handling
-  const [discounts, err] = await getDiscounts();
+  const [discounts, err] = await Discount.getDiscounts();
 
   // Validation
   if (!discounts)
@@ -39,8 +39,4 @@ export default async function discountDirectory() {
       </div>
     </div>
   );
-}
-
-async function getDiscounts() {
-  return Discount.getDiscounts();
 }

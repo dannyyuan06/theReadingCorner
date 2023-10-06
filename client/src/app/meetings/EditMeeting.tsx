@@ -5,7 +5,6 @@ import { UploadImage } from "../components/UploadImage";
 import { AddMeetingType } from "@/lib/types/fetchTypes/addMeeting";
 import { Meetings } from "@prisma/client";
 import { Popup } from "../components/Popup";
-import { useRouter } from "next/navigation";
 
 type NameTypes =
   | "title"

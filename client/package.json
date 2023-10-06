@@ -4,15 +4,17 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npx prisma generate & next build & jest",
+    "build": "npx prisma generate & next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "test:deploy": "jest"
   },
   "dependencies": {
     "@google-cloud/storage": "^6.12.0",
     "@prisma/client": "^5.3.0",
     "@reduxjs/toolkit": "^1.9.5",
+    "@testing-library/user-event": "^14.5.1",
     "@types/node": "20.3.1",
     "@types/react": "18.2.12",
     "@types/react-dom": "18.2.5",
