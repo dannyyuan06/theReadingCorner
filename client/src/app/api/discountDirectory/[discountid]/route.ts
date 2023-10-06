@@ -1,5 +1,5 @@
 import { DiscountType } from "@/lib/types/fetchTypes/discount"
-import { Discount } from "@/models/Discount"
+import Discount from "@/models/Discount"
 import { NextRequest, NextResponse } from "next/server"
 import { apiMiddleware } from "../../middleware"
 

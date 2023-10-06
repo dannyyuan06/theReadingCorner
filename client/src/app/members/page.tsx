@@ -59,6 +59,7 @@ export default function Members() {
     const URLParams = new URLSearchParams({ search: usernameQuery });
     router.push(`/members?${URLParams}`);
   };
+  
 
   return (
     <div>
