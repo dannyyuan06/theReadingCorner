@@ -24,7 +24,7 @@ jest.mock("./InputText", () => ({
 }));
 
 describe('bulletinBoard component', () => {
-  it('renders without crashing', async () => {
+  it('renders correctly', async () => {
     render(await bulletinBoard());
 
     const bulletinBoardTitle = screen.getByText("BULLETIN BOARD")

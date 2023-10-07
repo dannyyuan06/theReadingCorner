@@ -1,19 +1,7 @@
 import "@testing-library/jest-dom";
 import { AddDiscount } from "./AddDiscount";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { DiscountDirectory } from "@prisma/client";
 import userEvent from "@testing-library/user-event";
-
-const mockDiscount: DiscountDirectory = {
-  discountdirectoryid: 12345,
-  title: "Test Discount",
-  description: "This is a test discount.",
-  code: "TESTCODE",
-  expireDate: new Date("2023-12-31T23:59:59Z"),
-  imageLink: "/images/profile-picture.png",
-  startDate: new Date("2023-08-28T23:59:59Z"),
-  link: "www.amazon.com",
-};
 
 jest.mock("next/navigation", () => ({
   useRouter: () => ({

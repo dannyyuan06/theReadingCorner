@@ -69,9 +69,7 @@ describe('WithoutBookMessage', () => {
   it('renders message details and buttons correctly', () => {
     render(<WithoutBookMessage message={mockMessage} />);
     
-    // Assertions for the rendered message content
     expect(screen.getByTestId('without-book-message')).toBeInTheDocument();
     expect(screen.getByText('This is my first message.')).toBeInTheDocument();
   });
-  // Add more test cases for other functionality as needed
 });
