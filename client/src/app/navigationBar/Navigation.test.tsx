@@ -3,13 +3,11 @@ import { render, screen } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import '@testing-library/jest-dom'
 import { Provider } from "react-redux";
-
-// Import the component to test
 import { Navigation } from "./Navigation";
 import { store } from "@/redux/store";
 import { useSession } from "next-auth/react";
 
-// Mock the useSession hook
+
 jest.mock("next-auth/react", () => ({
   useSession: jest.fn(),
 }));
@@ -38,7 +36,7 @@ describe("Navigation Component", () => {
     expect(screen.getByText("CLUB STATISTICS")).toBeInTheDocument();
   });
 
-  it("renders doesn't render admin buttons when use is not admin", async () => {
+  it("don't render admin buttons when use is not admin", async () => {
     mockUseSession.mockImplementation(() => ({ status: "authenticated", data: { accessLevel: 1, username: "testuser" } }))
     act(() => {
       render(

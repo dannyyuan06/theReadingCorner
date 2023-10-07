@@ -3,7 +3,7 @@ import { getMessagesType, booksRelationshipType } from "@/models/BulletinBoard";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { ProfileFriendType } from "@/models/User";
-import Pusher from "pusher";
+
 jest.mock("pusher-js", () => (
   jest.fn().mockImplementation(() => ({
     subscribe: jest.fn(() => ({

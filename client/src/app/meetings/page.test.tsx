@@ -54,9 +54,7 @@ jest.mock("next-auth/react", () => ({
   })),
 }));
 
-const headersMock = headers as any
-
-describe("meetings", () => {
+describe("Meetings page", () => {
   afterEach(() => {
     jest.restoreAllMocks();
   });
