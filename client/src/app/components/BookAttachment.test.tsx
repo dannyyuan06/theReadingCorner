@@ -3,21 +3,21 @@ import { BookAttackment } from "./BookAttachment";
 import { BookLink } from "../bulletinBoard/BookLink";
 import { Book } from "@prisma/client";
 import "@testing-library/jest-dom";
-import userEvent from '@testing-library/user-event'
+import userEvent from "@testing-library/user-event";
 
 jest.mock("react-redux", () => ({
-  useDispatch: jest.fn()
-}))
-
+  useDispatch: jest.fn(),
+}));
 
 const mockBook: Book = {
   bookid: "12345",
   title: "The Hitchhiker's Guide to the Galaxy",
   author: "Douglas Adams",
-  description: "A humorous science fiction comedy series created by Douglas Adams.",
+  description:
+    "A humorous science fiction comedy series created by Douglas Adams.",
   bookPicture: "https://example.com/book-picture.jpg",
   pageCount: 1,
-  averageRating: 2
+  averageRating: 2,
 };
 
 describe("BookAttachment", () => {
@@ -25,7 +25,7 @@ describe("BookAttachment", () => {
     render(<BookAttackment book={mockBook} index={0} />);
 
     const bookLinkElement = screen.getAllByRole("link");
-    expect(bookLinkElement.length).toEqual(2)
+    expect(bookLinkElement.length).toEqual(2);
   });
 
   it("should render the book author", () => {
@@ -57,10 +57,12 @@ describe("BookAttachment", () => {
   });
 
   it("should call the setBooks function when the cancel cross button is clicked", async () => {
-    const user = userEvent.setup()
+    const user = userEvent.setup();
     const setBooksMock = jest.fn();
 
-    render(<BookAttackment book={mockBook} index={0} setBooks={setBooksMock} />);
+    render(
+      <BookAttackment book={mockBook} index={0} setBooks={setBooksMock} />
+    );
 
     const cancelCrossElement = screen.getByRole("button");
     await user.click(cancelCrossElement);

@@ -10,10 +10,11 @@ const mockBook: Book = {
   bookid: "12345",
   title: "The Hitchhiker's Guide to the Galaxy",
   author: "Douglas Adams",
-  description: "A humorous science fiction comedy series created by Douglas Adams.",
+  description:
+    "A humorous science fiction comedy series created by Douglas Adams.",
   bookPicture: "https://example.com/book-picture.jpg",
   pageCount: 200,
-  averageRating: 2
+  averageRating: 2,
 };
 
 const mockUserBookWithBook: userBookWithBook = {
@@ -24,7 +25,7 @@ const mockUserBookWithBook: userBookWithBook = {
   score: 9,
   dateStarted: new Date(),
   dateFinished: new Date(),
-  book: mockBook
+  book: mockBook,
 };
 
 describe("SmallBook", () => {
@@ -37,9 +38,9 @@ describe("SmallBook", () => {
 
   it("should render the book author", () => {
     render(<SmallBook userbook={mockUserBookWithBook} />);
-    
-    const bookAuthorElement = screen.getByText("AUTHOR: Douglas Adams");
-    expect(bookAuthorElement).toBeInTheDocument();
+
+      const bookAuthorElement = screen.getByText("AUTHOR: Douglas Adams");
+      expect(bookAuthorElement).toBeInTheDocument();
   });
 
   it("should render the book page", () => {

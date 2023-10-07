@@ -67,9 +67,9 @@ describe("CurrentlyReadingBook", () => {
       <CurrentlyReadingBook currentlyReading={books[0]} />
     );
 
-    expect(
-      wrapper.getByText("The Hitchhiker's Guide to the Galaxy")
-    ).toBeInTheDocument();
+      expect(
+        wrapper.getByText("The Hitchhiker's Guide to the Galaxy")
+      ).toBeInTheDocument();
   });
 
   it("should render the book author", () => {
