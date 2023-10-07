@@ -27,21 +27,22 @@ jest.mock("../../models/Discount", () => ({
 
 describe("discountDirectory", () => {
   it("should render the correct components when discounts are found", async () => {
-
     render(await discountDirectory());
 
     const pageHeaderElement = screen.getByText("DISCOUNT DIRECTORY");
     expect(pageHeaderElement).toBeInTheDocument();
 
-    const discountTileElements = screen.getByTestId("discount-tile")
-    expect(discountTileElements).toBeInTheDocument()
+    const discountTileElements = screen.getByTestId("discount-tile");
+    expect(discountTileElements).toBeInTheDocument();
 
     const addDiscountElement = screen.queryByTestId("add-discount");
     expect(addDiscountElement).toBeNull();
   });
 
   it("should render an error message if no discounts are found", async () => {
-    (Discount.getDiscounts as any).mockReturnValueOnce(Promise.resolve([null, "Discounts not found."]))
+    (Discount.getDiscounts as any).mockReturnValueOnce(
+      Promise.resolve([null, "Discounts not found."])
+    );
     render(await discountDirectory());
 
     const pageHeaderElement = screen.getByText("DISCOUNTS NOT FOUND");
