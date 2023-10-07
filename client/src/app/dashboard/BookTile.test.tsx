@@ -11,10 +11,11 @@ const mockBook: Book = {
   bookid: "12345",
   title: "The Hitchhiker's Guide to the Galaxy",
   author: "Douglas Adams",
-  description: "A humorous science fiction comedy series created by Douglas Adams.",
+  description:
+    "A humorous science fiction comedy series created by Douglas Adams.",
   bookPicture: "https://example.com/book-picture.jpg",
   pageCount: 224,
-  averageRating: 2
+  averageRating: 2,
 };
 
 const mockCurrentlyReading: CurrentlyReadingIncludingBook = {
@@ -24,7 +25,7 @@ const mockCurrentlyReading: CurrentlyReadingIncludingBook = {
   dateStarted: new Date(),
   status: 1,
   affiliateLink: "1231tqgrebsf",
-  book: mockBook
+  book: mockBook,
 };
 
 describe("BookTile", () => {

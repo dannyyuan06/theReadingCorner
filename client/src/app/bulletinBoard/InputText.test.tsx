@@ -19,10 +19,10 @@ jest.mock("../../redux/store", () => ({
 }));
 
 jest.mock("react-redux", () => ({
-  useDispatch: jest.fn(() => jest.fn())
-}))
+  useDispatch: jest.fn(() => jest.fn()),
+}));
 
-const mockUseDispatch = useDispatch as any
+const mockUseDispatch = useDispatch as any;
 
 describe("InputText", () => {
   it("should render the input field", () => {
@@ -43,19 +43,21 @@ describe("InputText", () => {
     render(<InputText />);
 
     const sendButton = screen.getByText("SEND");
-    expect(sendButton).toHaveClass(styles.toolbarButtonCant)
+    expect(sendButton).toHaveClass(styles.toolbarButtonCant);
   });
 
   it("should enable the send button if the input field is not empty", async () => {
     render(<InputText />);
 
-    const inputField = screen.getByTestId("input-text"); 
-    fireEvent.input(inputField, {target: {textContent: "This is a test message."}})
+    const inputField = screen.getByTestId("input-text");
+    fireEvent.input(inputField, {
+      target: { textContent: "This is a test message." },
+    });
 
     const sendButton = screen.getByText("SEND");
     await waitFor(() => {
-      expect(sendButton).not.toHaveClass(styles.toolbarButtonCant)
-    })
+      expect(sendButton).not.toHaveClass(styles.toolbarButtonCant);
+    });
   });
 
   it("should call the dispatch function when the send button is clicked", async () => {
@@ -65,13 +67,15 @@ describe("InputText", () => {
     render(<InputText />);
 
     const inputField = screen.getByTestId("input-text");
-    fireEvent.input(inputField, {target: {textContent: "This is a test message."}})
+    fireEvent.input(inputField, {
+      target: { textContent: "This is a test message." },
+    });
 
     const sendButton = screen.getByText("SEND");
-    fireEvent(sendButton, new MouseEvent("click"))
+    fireEvent(sendButton, new MouseEvent("click"));
 
     await waitFor(() => {
       expect(dispatchMock).toHaveBeenCalledTimes(1);
-    })
+    });
   });
 });

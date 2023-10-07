@@ -5,7 +5,7 @@ import userEvent from "@testing-library/user-event";
 
 jest.mock("next/navigation", () => ({
   useRouter: () => ({
-    refresh: jest.fn()
+    refresh: jest.fn(),
   }),
 }));
 
@@ -49,8 +49,8 @@ describe("Popup component", () => {
     );
     const cancelButton = screen.getByText("Cancel");
     await user.click(cancelButton);
-    
-    expect(setClickedMock).toBeCalledWith(false)
+
+    expect(setClickedMock).toBeCalledWith(false);
   });
   it("should call the submit function when confirm button is clicked", async () => {
     const user = userEvent.setup();
@@ -67,7 +67,7 @@ describe("Popup component", () => {
     );
     const confirmButton = screen.getByText("Confirm");
     await user.click(confirmButton);
-    
+
     expect(submitMock).toBeCalled();
   });
 });
