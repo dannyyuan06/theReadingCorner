@@ -13,7 +13,7 @@ describe("NavigationButton Component", () => {
       />
     );
     // Add appropriate assertions to check if the component renders as expected.
-    expect(screen.getByText("HOME")).toBeInTheDocument(); // Replace with your expected text
+    expect(screen.getByText("HOME")).toBeInTheDocument();
   });
 
   it("displays the blue marker when currentPage matches pageTitle", () => {
