@@ -2,6 +2,7 @@ import React from "react";
 import { render, fireEvent, waitFor, screen } from "@testing-library/react";
 import SignInPage from "./page";
 import { signIn } from "next-auth/react";
+import '@testing-library/jest-dom'
 
 jest.mock("next/navigation", () => ({
   useSearchParams: () => ({ get: (_: string) => "" }),
@@ -15,20 +16,20 @@ describe("SignInPage Component", () => {
   it("renders without errors", () => {
     render(<SignInPage />);
 
-    const signInHeader = screen.getByText("SIGN IN");
-    expect(signInHeader).toBeInTheDocument();
+    const signInHeader = screen.getAllByText("SIGN IN");
+    expect(signInHeader[0]).toBeInTheDocument();
   });
 
   it("handles form submission correctly", async () => {
-    const { getByDisplayValue, getByTestId } = render(<SignInPage />);
+    const { getByTestId } = render(<SignInPage />);
     
     const usernameInput = getByTestId("username");
     const passwordInput = getByTestId("password");
     fireEvent.change(usernameInput, { target: { value: "your_username" } });
     fireEvent.change(passwordInput, { target: { value: "your_password" } });
 
-    const submitButton = getByDisplayValue("SIGN IN");
-    fireEvent.click(submitButton);
+    const submitButton = screen.getAllByText("SIGN IN");
+    fireEvent.click(submitButton[1]);
   });
 
   it("call the sign in function when submit button is clicked", async () => {
