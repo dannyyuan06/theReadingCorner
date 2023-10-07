@@ -7,7 +7,7 @@ jest.mock("next/navigation", () => ({
 }));
 
 describe("Register Component", () => {
-  it("should render the Form component with the correct props", () => {
+  it("should render the Form component with no errors", () => {
     render(<Register />);
   
     const form = screen.getByTestId("form-wrapper");

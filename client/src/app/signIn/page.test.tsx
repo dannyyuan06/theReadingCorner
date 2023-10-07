@@ -1,21 +1,22 @@
 import React from "react";
-import { render, fireEvent, waitFor } from "@testing-library/react";
+import { render, fireEvent, waitFor, screen } from "@testing-library/react";
 import SignInPage from "./page";
 import { signIn } from "next-auth/react";
 
 jest.mock("next/navigation", () => ({
-  useSearchParams: () => ({get: (_:string) => ""}),
+  useSearchParams: () => ({ get: (_: string) => "" }),
 }));
 
-
 jest.mock("next-auth/react", () => ({
-  signIn: jest.fn()
-}))
-
+  signIn: jest.fn(),
+}));
 
 describe("SignInPage Component", () => {
   it("renders without errors", () => {
     render(<SignInPage />);
+
+    const signInHeader = screen.getByText("SIGN IN");
+    expect(signInHeader).toBeInTheDocument();
   });
 
   it("handles form submission correctly", async () => {
@@ -28,12 +29,11 @@ describe("SignInPage Component", () => {
 
     const submitButton = getByDisplayValue("SIGN IN");
     fireEvent.click(submitButton);
-
   });
 
   it("call the sign in function when submit button is clicked", async () => {
     const { getByTestId } = render(<SignInPage />);
-    
+
     const usernameInput = getByTestId("username");
     const passwordInput = getByTestId("password");
     fireEvent.change(usernameInput, { target: { value: "dannyyuan" } });
@@ -44,13 +44,16 @@ describe("SignInPage Component", () => {
     fireEvent.click(submitButton);
 
     await waitFor(() => {
-      expect(signIn).toHaveBeenCalledWith("credentials", {"password": "Password0!", "username": "dannyyuan"})
+      expect(signIn).toHaveBeenCalledWith("credentials", {
+        password: "Password0!",
+        username: "dannyyuan",
+      });
     });
   });
 
   it("handles OAuth button clicks", async () => {
     const { getByAltText } = render(<SignInPage />);
-    
+
     const googleOAuthButton = getByAltText("Google Image").closest("button");
     fireEvent.click(googleOAuthButton!);
   });

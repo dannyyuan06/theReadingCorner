@@ -1,12 +1,11 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
-import '@testing-library/jest-dom'
+import "@testing-library/jest-dom";
 import { Provider } from "react-redux";
 import { Navigation } from "./Navigation";
 import { store } from "@/redux/store";
 import { useSession } from "next-auth/react";
-
 
 jest.mock("next-auth/react", () => ({
   useSession: jest.fn(),
@@ -16,11 +15,14 @@ jest.mock("next/navigation", () => ({
   usePathname: () => "/dashboard",
 }));
 
-const mockUseSession = useSession as any
+const mockUseSession = useSession as any;
 
 describe("Navigation Component", () => {
   it("renders navigation links when authenticated", async () => {
-    mockUseSession.mockImplementation(() => ({ status: "authenticated", data: { accessLevel: 3, username: "testuser" } }))
+    mockUseSession.mockImplementation(() => ({
+      status: "authenticated",
+      data: { accessLevel: 3, username: "testuser" },
+    }));
     act(() => {
       render(
         <Provider store={store}>
@@ -37,7 +39,10 @@ describe("Navigation Component", () => {
   });
 
   it("don't render admin buttons when use is not admin", async () => {
-    mockUseSession.mockImplementation(() => ({ status: "authenticated", data: { accessLevel: 1, username: "testuser" } }))
+    mockUseSession.mockImplementation(() => ({
+      status: "authenticated",
+      data: { accessLevel: 1, username: "testuser" },
+    }));
     act(() => {
       render(
         <Provider store={store}>
@@ -53,8 +58,7 @@ describe("Navigation Component", () => {
 
   it("does not render navigation links when not authenticated", async () => {
     // Mock the session to simulate unauthenticated user
-    mockUseSession.mockImplementation(() => ({ status: "unauthenticated" }))
-
+    mockUseSession.mockImplementation(() => ({ status: "unauthenticated" }));
 
     act(() => {
       render(
