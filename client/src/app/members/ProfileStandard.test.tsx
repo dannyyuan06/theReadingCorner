@@ -80,7 +80,7 @@ describe("ProfileStandard", () => {
     expect(moreButtonOptions[1].textContent).toEqual("Delete account");
     expect(moreButtonOptions[2].textContent).toEqual("Disable account");
   });
-  it("should render the correct more buttons for the user's access level 4", async () => {
+  it("should render the correct more buttons for the user's access level -1", async () => {
     const user = userEvent.setup()
     render(<ProfileStandard user={{...mockUser, accessLevel: -1}} setUsers={jest.fn()} index={0}/>);
 

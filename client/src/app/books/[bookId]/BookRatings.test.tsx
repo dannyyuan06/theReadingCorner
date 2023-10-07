@@ -63,7 +63,7 @@ describe("BookRatings", () => {
     expect(userStatusElement).toBeInTheDocument();
   });
 
-  it("should render the total's page", () => {
+  it("should render the total pages", () => {
     render(<BookRatings book={mockBook} userbook={mockUserBook} bookInDB={mockBookInDB} />);
 
     const userPageElement = screen.getByText("/207");
