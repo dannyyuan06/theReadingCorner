@@ -3,6 +3,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { useDispatch } from "react-redux";
 import styles from "./InputText.module.css";
 import "@testing-library/jest-dom";
+import userEvent from "@testing-library/user-event";
 
 jest.mock("next-auth/react", () => ({
   useSession: jest.fn(() => ({
@@ -61,21 +62,19 @@ describe("InputText", () => {
   });
 
   it("should call the dispatch function when the send button is clicked", async () => {
+    const user = userEvent.setup();
     const dispatchMock = jest.fn();
     mockUseDispatch.mockReturnValue(dispatchMock);
 
     render(<InputText />);
 
     const inputField = screen.getByTestId("input-text");
-    fireEvent.input(inputField, {
-      target: { textContent: "This is a test message." },
-    });
+    await user.click(inputField)
+    await user.type(inputField, "This is a test message.")
 
     const sendButton = screen.getByText("SEND");
-    fireEvent(sendButton, new MouseEvent("click"));
+    await user.click(sendButton)
 
-    await waitFor(() => {
-      expect(dispatchMock).toHaveBeenCalledTimes(1);
-    });
+    expect(dispatchMock).toHaveBeenCalledTimes(1);
   });
 });
