@@ -9,7 +9,8 @@ export function getLastOnlineStatus(inputDate: Date): string {
     // Calculate the time difference in days
     const timeDifferenceDays: number = timeDifferenceMs / (1000 * 60 * 60 * 24);
     
-    if (timeDifferenceMs <= 0.01) return "Now"
+    // Anything within an hour then return Now.
+    if (timeDifferenceMs <= 900000) return "Now"
   
     const timeZoneOptions:Intl.DateTimeFormatOptions = { timeZone: 'Europe/London', hour: '2-digit', minute: '2-digit', hour12: false }
 
