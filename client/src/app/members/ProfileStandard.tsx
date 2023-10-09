@@ -95,8 +95,6 @@ export function ProfileStandard({
     : (moreButtons["Disable account"] = () => {
         setDisableConfirm(true);
       });
-
-  console.log(user.accessLevel);
   
   return (
     <>

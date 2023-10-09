@@ -8,7 +8,7 @@ jest.mock("next/navigation", () => ({
     push: jest.fn(),
   }),
   useSearchParams: () => ({
-    get: null,
+    get: () => {},
   }),
 }));
 

@@ -103,7 +103,6 @@ async function getBook(
   const bookInDBPromise = Book.bookidMake(bookid); // Is book in database
   const bookPromise = Book.getBookWithId(bookid); // Get from Google API
   const userBookPromise = User.hasReadBook(userUsername, bookid); // User book relationship
-  console.log("got here");
   // Run queries in parallel
   const settleResult = await Promise.all([
     bookInDBPromise,
