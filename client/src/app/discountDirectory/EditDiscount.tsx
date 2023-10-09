@@ -55,7 +55,7 @@ export function EditDiscount({
   };
 
   return (
-    <Popup title="EDIT MEETING" setClicked={setClicked} confirm={submitHandler}>
+    <Popup title="EDIT DISCOUNT" setClicked={setClicked} confirm={submitHandler}>
       <form className={styles.popupWrapper}>
         <Field
           name="title"

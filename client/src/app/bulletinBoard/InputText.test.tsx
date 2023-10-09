@@ -5,23 +5,35 @@ import styles from "./InputText.module.css";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 
-jest.mock("next-auth/react", () => ({
-  useSession: jest.fn(() => ({
+jest.mock("next-auth/react", () => {
+  const sessionObject = {
     data: {
       username: "testuser",
       profilePicture: "https://example.com/profile-picture.jpg",
     },
-  })),
-}));
+  }
+  return {
+    useSession: jest.fn().mockReturnValue(sessionObject)
+  };
+});
 
 jest.mock("../../redux/store", () => ({
   useAppSelector: jest.fn(() => false),
-  useDispatch: jest.fn(() => jest.fn()),
+  AppDispatch: jest.fn(() => jest.fn()),
 }));
 
-jest.mock("react-redux", () => ({
-  useDispatch: jest.fn(() => jest.fn()),
-}));
+jest.mock("react-redux", () => {
+  const jestFunctions = jest.fn(() => jest.fn())
+  return {
+    useDispatch: jestFunctions,
+  };
+});
+
+jest.mock("../../redux/features/bulletinSlice", () => ({
+  changeBulletin: jest.fn(),
+}))
+
+global.fetch = jest.fn();
 
 const mockUseDispatch = useDispatch as any;
 
@@ -67,6 +79,7 @@ describe("InputText", () => {
     mockUseDispatch.mockReturnValue(dispatchMock);
 
     render(<InputText />);
+    expect(dispatchMock).toHaveBeenCalledTimes(1);
 
     const inputField = screen.getByTestId("input-text");
     await user.click(inputField)
@@ -75,6 +88,6 @@ describe("InputText", () => {
     const sendButton = screen.getByText("SEND");
     await user.click(sendButton)
 
-    expect(dispatchMock).toHaveBeenCalledTimes(1);
+    expect(dispatchMock).toHaveBeenCalledTimes(2);
   });
 });
