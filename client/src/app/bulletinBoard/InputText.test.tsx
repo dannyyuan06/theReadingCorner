@@ -90,4 +90,42 @@ describe("InputText", () => {
 
     expect(dispatchMock).toHaveBeenCalledTimes(2);
   });
+  it("should allow between 1 and 1000 characters inclusive", async () => {
+    const user = userEvent.setup();
+    
+    render(<InputText />);
+
+    const inputField = screen.getByTestId("input-text");
+    // add one bc join is inbetween the array
+    const longString = new Array(500 + 1).join("a");
+    await user.type(inputField, longString);
+    
+    const length = screen.getByText("500");
+    expect(length).toBeInTheDocument();
+    expect(length).not.toHaveStyle("color: red");
+
+    expect(inputField).not.toHaveStyle("color: red");
+
+    const sendButton = screen.getByText("SEND");
+    expect(sendButton).not.toHaveClass(styles.toolbarButtonCant);
+  })
+  it("should not allow more than 1000 characters", async () => {
+    const user = userEvent.setup();
+    
+    render(<InputText />);
+
+    const inputField = screen.getByTestId("input-text");
+    // add one bc join is inbetween the array
+    const longString = new Array(1001 + 1).join("a");
+    await user.type(inputField, longString);
+    
+    const length = screen.getByText("1001");
+    expect(length).toBeInTheDocument();
+    expect(length).toHaveStyle("color: red");
+
+    expect(inputField).toHaveStyle("color: red");
+
+    const sendButton = screen.getByText("SEND");
+    expect(sendButton).toHaveClass(styles.toolbarButtonCant);
+  });
 });
