@@ -4,7 +4,6 @@ import { MoreButton } from "../components/MoreButton";
 import { EditDiscount } from "./EditDiscount";
 import { DiscountDirectory } from "@prisma/client";
 import { Popup } from "../components/Popup";
-import { useRouter } from "next/navigation";
 
 export function EditDiscountButton({discountDetails}: {discountDetails: DiscountDirectory}) {
 

@@ -5,6 +5,8 @@
     width: 220px;
     min-width: fit-content;
     height: 100%;
+    flex-grow: 0;
+  flex-shrink: 0;
 }
 
 .container {

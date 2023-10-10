@@ -61,7 +61,7 @@ export function AddDiscount() {
 
   return (
     <>
-      <div className={styles.container}>
+      <div className={styles.container} data-testid="add-discount">
         <button className={styles.button} onClick={() => setClicked(true)}>
           ADD DISCOUNT
         </button>

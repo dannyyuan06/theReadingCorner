@@ -19,6 +19,7 @@ export default function Members() {
   // To refresh the page
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const searched = searchParams.get("search");
 
   // Function to fetch a book
   const fetchBooks = async (userQuery: string | null) => {
@@ -41,7 +42,6 @@ export default function Members() {
   // Runs if the search parameters change
   useEffect(() => {
     setLoading(true);
-    const searched = searchParams.get("search");
     fetchBooks(searched).then((users) => {
       setUsers(users);
       setLoading(false);
@@ -49,7 +49,7 @@ export default function Members() {
     if (searched && inputRef.current) {
       inputRef.current.value = searched;
     }
-  }, [searchParams]);
+  }, [searched]);
 
   // Change the search parameter to trigger the above function
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
@@ -59,6 +59,7 @@ export default function Members() {
     const URLParams = new URLSearchParams({ search: usernameQuery });
     router.push(`/members?${URLParams}`);
   };
+  
 
   return (
     <div>

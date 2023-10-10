@@ -57,7 +57,7 @@ export function AddBook({setDidAddBook, setBooks}: {setDidAddBook: Dispatch<SetS
     }
 
     return(
-        <div className={styles.container}>
+        <div className={styles.container} data-testid="add-book">
             <div className={styles.wrapper}>
                 <PageHeader>ADD BOOK</PageHeader>
                 <form className={styles.form} onSubmit={submitHandler}>

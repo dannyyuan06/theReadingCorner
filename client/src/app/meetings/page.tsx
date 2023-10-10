@@ -16,6 +16,7 @@ export default async function meetings() {
   const userAccessLevel = parseInt(
     headersList.get("accessLevel")?.toString() ?? ""
   );
+  
   // What JSX to return if there are no meetings
   if (meetings.length === 0) {
     return (
