@@ -3,6 +3,7 @@ import { render, fireEvent, waitFor, screen } from "@testing-library/react";
 import SignInPage from "./page";
 import { signIn } from "next-auth/react";
 import '@testing-library/jest-dom'
+import userEvent from "@testing-library/user-event";
 
 jest.mock("next/navigation", () => ({
   useSearchParams: () => ({ get: (_: string) => "" }),
@@ -21,15 +22,18 @@ describe("SignInPage Component", () => {
   });
 
   it("handles form submission correctly", async () => {
+    const user = userEvent.setup();
     const { getByTestId } = render(<SignInPage />);
     
     const usernameInput = getByTestId("username");
     const passwordInput = getByTestId("password");
-    fireEvent.change(usernameInput, { target: { value: "your_username" } });
-    fireEvent.change(passwordInput, { target: { value: "your_password" } });
+    await user.type(usernameInput, "your_username");
+    await user.type(passwordInput, "Password0!");
 
     const submitButton = screen.getAllByText("SIGN IN");
-    fireEvent.click(submitButton[1]);
+    await user.click(submitButton[1]);
+
+    expect(signIn).toBeCalledTimes(1);
   });
 
   it("call the sign in function when submit button is clicked", async () => {
@@ -57,5 +61,7 @@ describe("SignInPage Component", () => {
 
     const googleOAuthButton = getByAltText("Google Image").closest("button");
     fireEvent.click(googleOAuthButton!);
+
+    expect(signIn).toHaveBeenCalledWith("google");
   });
 });
