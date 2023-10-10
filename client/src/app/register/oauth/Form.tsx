@@ -114,8 +114,6 @@ export function Form({name, email, picture}: propsType) {
         else signIn()
     }
 
-    const correctBool = Object.values(isCorrect)
-
     return (
         <form onSubmit={(e) => submitHandler(e)} className={styles.form}>
             <div className={styles.formGrid}>

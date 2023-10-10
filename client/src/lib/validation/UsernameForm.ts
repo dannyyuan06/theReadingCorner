@@ -9,7 +9,7 @@ export const usernameFormValidation = (text: string):[boolean, string] => {
 
     // Start with alph char
     const alphRegex = /[A-Za-z]/
-    if (!(alphRegex.test(text[0]))) return [false, "The first character of the username must be an alphabetic character "]
+    if (!(alphRegex.test(text[0]))) return [false, "The first character of the username must be an alphabetic character."]
     
     // Final Check
     const finalRegex = /^([A-Za-z]\w{5,19})$/

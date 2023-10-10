@@ -87,7 +87,7 @@ export function ProfileStandard({
       setDeleteConfirm(true);
     },
   };
-
+  
   user.accessLevel === -1
     ? (moreButtons["Enable account"] = () => {
         setEnableConfirm(true);
@@ -95,11 +95,11 @@ export function ProfileStandard({
     : (moreButtons["Disable account"] = () => {
         setDisableConfirm(true);
       });
-
+  
   return (
     <>
       <hr />
-      <div className={styles.container}>
+      <div className={styles.container} data-testid="profile-standard">
         <Link href={`/profile/${user.username}`} id={styles.imagelink}>
           <Image
             alt="profile picture placeholder"
