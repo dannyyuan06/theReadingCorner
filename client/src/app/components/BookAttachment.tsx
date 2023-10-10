@@ -27,7 +27,7 @@ export function BookAttackment({
   return (
     <>
       {index !== 0 && <hr />}
-      <div className={styles.bookContainer}>
+      <div className={styles.bookContainer} data-testid="book-attachment">
         <BookLink link={`/books/${book.bookid}`} image={book.bookPicture} />
         <div className={styles.booksInfoTitleAuthor}>
           <Link href={`/books/${book.bookid}`}>

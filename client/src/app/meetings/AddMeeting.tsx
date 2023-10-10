@@ -1,12 +1,9 @@
 "use client";
 import { Dispatch, SetStateAction, useState } from "react";
-import { PageHeader } from "../components/PageHeader";
 import styles from "./AddMeeting.module.css";
 import { UploadImage } from "../components/UploadImage";
-import { useSession } from "next-auth/react";
 import { AddMeetingType } from "@/lib/types/fetchTypes/addMeeting";
 import { Popup } from "../components/Popup";
-import { useRouter } from "next/navigation";
 
 type NameTypes =
   | "title"

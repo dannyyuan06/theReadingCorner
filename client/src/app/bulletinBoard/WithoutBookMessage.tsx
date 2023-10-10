@@ -74,7 +74,7 @@ export function WithoutBookMessage({ message }: { message: getMessagesType }) {
 
   return (
     <>
-      <div className={styles.container} id={`${message.messageid}`}>
+      <div className={styles.container} id={`${message.messageid}`} data-testid="without-book-message">
         {copied && <div className={styles.copied}>Copied to clipboard</div>}
         <hr />
         <div className={styles.userContainer}>

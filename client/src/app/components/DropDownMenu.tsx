@@ -19,7 +19,7 @@ export function DropDownMenu({
 }) {
   //style={{top: position[0], left: position[1]}}
   return (
-    <div className={styles.container} ref={wrapperRef}>
+    <div className={styles.container} ref={wrapperRef} data-testid="drop-down-menu">
       {buttons.map((button: string) => (
         <DropDownMenuButton
           key={button}
@@ -47,6 +47,7 @@ function DropDownMenuButton({
   return (
     <button
       className={styles.button}
+      data-testid="drop-down-menu-button"
       onClick={() => {
         setState(name);
         setClicked(false);
