@@ -25,7 +25,9 @@ The page will reload if you make edits.
 ### Unit Tests
 
 You have to run this at the `/client` directory
-### `npm run test`
+```
+npm run test
+```
 
 ## Config
 
@@ -35,7 +37,9 @@ You have to run this at the `/client` directory
 
 You have to run this at the `/client` directory
 
-### `npm run build`
+```
+npm run build
+```
 
 Builds the app for production to the individual `dist` folders within the workspaces.
 
@@ -43,3 +47,7 @@ Builds the app for production to the individual `dist` folders within the worksp
 ## Production
 
 This can be found at: `https://club.thereadingcorner.uk/`
+
+## Authors
+
+This was created by Danny Yuan
