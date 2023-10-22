@@ -2,6 +2,10 @@
 
 This is a monorepo using `npx create-next-app@latest`.
 
+## NEA - Submission - Danny Yuan
+
+To see the original code for the submission of the NEA, go to the `NEA` branch. There will be minimal differences but there will be edits to the current master branch to achieve the rest of my strech Success Criteria.
+
 ## Set up & run
 
 Most of the code will be in the `/client/src` directory.
