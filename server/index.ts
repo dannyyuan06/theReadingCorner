@@ -1,6 +1,7 @@
 import express from 'express'
 import http from 'http'
 import { Server } from 'socket.io'
+import prisma from './prisma/db'
 
 const app = express()
 const server = http.createServer(app)
@@ -19,8 +20,8 @@ io.on('connection', (socket) => {
             messageid: 'desc'
         },
         include: {
-            Book: true,
-            Users: true
+            books: true,
+            user: true
         }
     })
     .then((res) => socket.emit("connected", res))
@@ -34,12 +35,9 @@ io.on('connection', (socket) => {
         console.log(message, typeof message)
         // Save the connection to the database
         try {
-            const prisma = new PrismaClient()
             prisma.bulletinBoardMessages.create({
                 data: {
-                    title: message.title,
                     body: message.body,
-                    bookid: message.bookid,
                     username: message.username,
                 }
             })
