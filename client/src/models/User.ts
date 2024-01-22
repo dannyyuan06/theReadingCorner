@@ -764,4 +764,37 @@ export default class User {
       return [null, `${err}`];
     }
   }
+
+  static async addSignUpTwoFactor(email: string, code: string, firstName:string, lastName: string) {
+    try {
+      const res = await prisma.userSignUp.create({
+        data: {
+          email,
+          code,
+          firstName,
+          lastName,
+          verified: false
+        }
+      })
+      return [res, ""]
+    } catch (err) {
+      return [null, `${err}`];
+    }
+  }
+
+  static async verifySignUpTwoFactor(email:string) {
+    try {
+      const res = await prisma.userSignUp.update({
+        where: {
+          email
+        },
+        data: {
+          verified: true
+        }
+      })
+      return [res, ""]
+    } catch (err) {
+      return [null, `${err}`];
+    }
+  }
 }

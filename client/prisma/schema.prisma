@@ -12,7 +12,10 @@ datasource db {
 
 model UserSignUp {
   email       String @id
-  
+  firstName   String
+  lastName    String
+  code        String
+  verified    Boolean @default(false)
 }
 
 model UserPasswords {

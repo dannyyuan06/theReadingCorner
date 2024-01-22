@@ -10,6 +10,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model UserSignUp {
+  email       String @id
+  firstName   String
+  lastName    String
+  code        String
+  verified    Boolean @default(false)
+}
+
 model UserPasswords {
   username          String @id
   password          String @default("")
