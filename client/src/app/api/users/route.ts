@@ -10,7 +10,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
     const {formData, type}:{formData:userModelType, type: string} = await req.json()
 
-    const {username, email, firstName, lastName, description, password, confirmPassword} = formData;
+    const {username, email, firstName, lastName, password, confirmPassword} = formData;
 
     const errorResult = (str: string) => NextResponse.json({
         body: "Error in sending data " + str,
@@ -25,8 +25,6 @@ export async function POST(req: NextRequest) {
     if (!isFirstNameValid) return errorResult("first name")
     const [isLastNameValid,] = nameValidation(lastName)
     if (!isLastNameValid) return errorResult("last name")
-    const isDescriptionValid = typeof description === "string"
-    if (!isDescriptionValid) return errorResult("description")
     const [isPasswordValid,] = passwordValidation(password)
     if (!isPasswordValid && type === "credentials") return errorResult("password")
     const [isConfirmPasswordValid,] = confirmPasswordValidation(password, confirmPassword)

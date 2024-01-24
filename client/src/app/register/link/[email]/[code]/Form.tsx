@@ -1,11 +1,9 @@
 'use client'
-import styles from '../Form.module.css'
+import styles from './Form.module.css'
 import { FormEvent, useEffect, useRef, useState } from 'react'
-import { Field } from '../Field'
-import { usernameValidation } from '../../../lib/validation/Username'
-import { passwordValidation } from '../../../lib/validation/Password'
-import { emailValidation } from '../../../lib/validation/Email'
-import { nameValidation } from '../../../lib/validation/name'
+import { Field } from '../../../Field'
+import { usernameValidation } from '../../../../../lib/validation/Username'
+import { passwordValidation } from '../../../../../lib/validation/Password'
 import { signIn } from 'next-auth/react'
 import { usernameFormValidation } from '@/lib/validation/UsernameForm'
 import confirmPasswordValidation from '@/lib/validation/ConfirmPassword'
@@ -14,23 +12,10 @@ import Link from 'next/link'
 
 type nameType = "username"|"password"|"confirmPassword"
 
-const userModelInput  = {
-  username: "",
-  password: "",
-  confirmPassword: "",
-}
-
-export type userModelInputType = typeof userModelInput
-
 const userModel = {
     username: "",
-    email: "",
-    firstName: "",
-    lastName: "",
-    description: "",
     password: "",
     confirmPassword: "",
-    code: ""
 }
 
 export type userModelType = typeof userModel
@@ -44,7 +29,7 @@ const initIsCorrect: isCorrectType = {
 export type isCorrectType = {
     username: [boolean, string],
     password: [boolean, string],
-    confirmPassword: [boolean, string]
+    confirmPassword: [boolean, string],
 }
 
 const validationMap = {
@@ -54,7 +39,7 @@ const validationMap = {
 }
 
 
-export function Form() {
+export function Form({firstName, lastName, email, code}: {firstName:string, lastName: string, email:string, code: string}) {
 
     const [formData, setFormData] = useState(userModel)
     const [isCorrect, setIsCorrect] = useState<isCorrectType>(initIsCorrect)
@@ -83,7 +68,7 @@ export function Form() {
 
         const res = await fetch("/api/users",{
             method: 'POST',
-            body: JSON.stringify({formData, type: "credentials"}),
+            body: JSON.stringify({formData: {...formData, firstName, lastName, email, code}, type: "credentials"}),
             headers: { "Content-Type": "application/json" }
         })
         const body = await res.json()
@@ -93,4 +78,17 @@ export function Form() {
 
     const correctBool = Object.values(isCorrect)
     const reduceCorrect = correctBool.length === 5 && correctBool.reduce((bool1, bool2) => bool1 && bool2)
+
+    return (
+        <form onSubmit={(e) => submitHandler(e)} className={styles.form}>
+            <div className={styles.formGrid}>
+                <Field isCorrect={isCorrect} formData={formData} type='text' name='username' validation={usernameValidation} setFormData={setFormData}/>
+                <Field isCorrect={isCorrect} formData={formData} type='password' name='password' setFormData={setFormData}/>
+                <Field isCorrect={isCorrect} formData={formData} type='password' name='confirmPassword' setFormData={setFormData}/>
+            </div>
+            <br/>
+            <Link href="/" className={styles.backButton} >BACK</Link>
+            <input style={{backgroundColor: changedRef.current ? "var(--theme-green)" : "var(--theme-light-light-grey)", color: 'black'}} type='submit'  value={"SUBMIT"}/>
+        </form>
+    )
 }

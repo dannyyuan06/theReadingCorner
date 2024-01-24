@@ -117,10 +117,10 @@ export function Form({name, email, picture}: propsType) {
     return (
         <form onSubmit={(e) => submitHandler(e)} className={styles.form}>
             <div className={styles.formGrid}>
-                <Field isCorrect={isCorrect} formData={formData} type='text' name='username' setFormData={setFormData} validation={usernameValidation}/>
+                {/* <Field isCorrect={isCorrect} formData={formData} type='text' name='username' setFormData={setFormData} validation={usernameValidation}/>
                 <Field isCorrect={isCorrect} formData={formData} type='text' name='email' setFormData={setFormData}/>
                 <Field isCorrect={isCorrect} formData={formData} type='text' name='firstName' setFormData={setFormData}/>
-                <Field isCorrect={isCorrect} formData={formData} type='text' name='lastName' setFormData={setFormData}/>
+                <Field isCorrect={isCorrect} formData={formData} type='text' name='lastName' setFormData={setFormData}/> */}
             </div>
             <label htmlFor="description">Description:</label><br/>
             <textarea onChange={e => setFormData(prev => ({...prev, description: e.target.value}))}/><br/>

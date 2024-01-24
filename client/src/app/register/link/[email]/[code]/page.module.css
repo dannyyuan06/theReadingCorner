@@ -1,0 +1,39 @@
+.container {
+  padding: 20px;
+  padding-top: 40px;
+}
+
+.wrapper {
+  display: flex;
+}
+
+.register {
+  font-family: var(--font-header);
+  font-size: 1.5em;
+}
+
+.provideContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-top: 23px;
+}
+
+.providers {
+  width: auto;
+  background-color: white;
+  text-align: center;
+  height: 52px;
+  box-shadow: var(--theme-card-box-shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+}
+
+.providers img {
+  position: absolute;
+  left: 20px;
+}

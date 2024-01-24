@@ -5,15 +5,6 @@ import nodemailer from "nodemailer";
 const smtpTransport = require('nodemailer-smtp-transport');
 import Stripe from "stripe";
 
-function generateRandomNumberString() {
-  // Generate a random decimal between 0 and 1
-  const randomDecimal = Math.random();
-  const randomNumber = Math.floor(randomDecimal * 1000000);
-  const randomNumberString = randomNumber.toString().padStart(6, '0');
-
-  return randomNumberString;
-}
-
 export async function POST(req: NextRequest) {
 
   let event:StripeEndpoint
@@ -25,9 +16,11 @@ export async function POST(req: NextRequest) {
 
     if (Object.keys(metadata).length == 0) return NextResponse.json({data: "Irrelevant", status: 200})
     if (metadata.donorbox_campaign != "Join us as a member") return NextResponse.json({data: "Irrelevant", status: 200})
-
     const {donorbox_email, donorbox_first_name, donorbox_last_name} = metadata;
-    const randomCode = generateRandomNumberString()
+
+    if (await User.checkEmail(donorbox_email)) return NextResponse.json({data: "Irrelevant", status: 200})
+
+    const randomCode = crypto.randomUUID()
 
     const transporter = nodemailer.createTransport(smtpTransport({
       service: "gmail",
@@ -36,12 +29,14 @@ export async function POST(req: NextRequest) {
         pass: process.env.GMAIL_TEST_PASSWORD,
       },
     }));
+
+    // Add 2 factor login
   
     const mailOptions = {
       from: process.env.GMAIL_TEST_USERNAME,
       to: donorbox_email,
-      subject: 'This is a very important test ',
-      text: `Code: ${randomCode}`,
+      subject: 'This is a very important test.',
+      text: `Do not share this link: ${process.env.NEXT_PUBLIC_HOST}register/link/${donorbox_email}/${randomCode}`,
     };
 
     const info = await transporter.sendMail(mailOptions);

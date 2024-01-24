@@ -6,20 +6,17 @@ import {
   useEffect,
   useState,
 } from "react";
-import { isCorrectType, userModelType } from "./credentials/Form";
+import { isCorrectType, userModelInputType, userModelType } from "./credentials/Form";
 import styles from "./Field.module.css";
 
 type nameType =
   | "username"
-  | "email"
-  | "firstName"
-  | "lastName"
   | "password"
   | "confirmPassword";
 
 type propsType = {
-  setFormData: Dispatch<SetStateAction<userModelType>>;
-  formData: userModelType;
+  setFormData: Dispatch<SetStateAction<userModelInputType>>;
+  formData: userModelInputType;
   validation?: (text: string) => [boolean, string] | Promise<[boolean, string]>;
   isCorrect: isCorrectType;
   type: string;
@@ -67,6 +64,16 @@ export function Field({
   return (
     <div>
       <label htmlFor={name}>{changedName}:</label>
+      &nbsp;
+      <div
+        className={styles.validation}
+        style={{
+          minHeight: "1em",
+          color: err === "Valid" ? "var(--theme-green)" : "",
+        }}
+      >
+        {err}
+      </div>
       <br />
       <input
         type={type}
@@ -77,15 +84,6 @@ export function Field({
         data-testid="input"
       />
       <br />
-      <div
-        className={styles.validation}
-        style={{
-          minHeight: "1em",
-          color: err === "Valid" ? "var(--theme-green)" : "",
-        }}
-      >
-        {err}
-      </div>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import prisma from "@/prisma/db";
 import * as bcrypt from "bcrypt";
 import { userBookWithBook } from "./UserBook";
-import { Book, UserBook, Users as UserPrismaType, Users } from "@prisma/client";
+import { Book, UserBook, Users as UserPrismaType, UserSignUp, Users } from "@prisma/client";
 import {
   AddUserbookBookType,
   UpdateUserbookBookType,
@@ -134,6 +134,17 @@ export default class User {
   static async addUserInDatabse(form: userModelType) {
     try {
       // Create user in user table
+
+      await prisma.userSignUp.update({
+        where: {
+          email: form.email,
+          code: form.code
+        },
+        data: {
+          verified: true
+        }
+      })
+
       const user = await prisma.users.create({
         data: {
           username: form.username,
@@ -141,7 +152,7 @@ export default class User {
           firstName: form.firstName,
           lastName: form.lastName,
           accessLevel: 1,
-          description: form.description,
+          description: "",
           lastOnline: new Date(),
           profilePicture: "/images/profile_picture_placeholder.png",
           lookedAtBulletin: false,
@@ -765,6 +776,20 @@ export default class User {
     }
   }
 
+  static async checkEmail(email:string) {
+    try {
+      const res = await prisma.userSignUp.findUnique({
+        where: {
+          email
+        }
+      })
+      if (Object.keys(res!).length != 0) return true
+    } catch {
+      return false
+    }
+    return false
+  }
+
   static async addSignUpTwoFactor(email: string, code: string, firstName:string, lastName: string) {
     try {
       const res = await prisma.userSignUp.create({
@@ -782,19 +807,35 @@ export default class User {
     }
   }
 
-  static async verifySignUpTwoFactor(email:string) {
+  static async verifySignUpTwoFactor(email:string, code: string): Promise<[UserSignUp | null, string]>  {
+    try {
+      const res = await prisma.userSignUp.findUnique({
+        where: {
+          email,
+          code
+        }
+      })
+      if (Object.keys(res!).length != 0) return [res, ""]
+    } catch (err) {
+      return [null, `${err}`];
+    }
+    return [null, "Something went wrong"];
+  }
+
+  static async changeVerificationSignUpTwoFactor(email: string, code: string): Promise<boolean> {
     try {
       const res = await prisma.userSignUp.update({
         where: {
-          email
+          email,
+          code
         },
         data: {
           verified: true
         }
       })
-      return [res, ""]
-    } catch (err) {
-      return [null, `${err}`];
+      return true
+    } catch {
+      return false
     }
   }
 }
