@@ -74,6 +74,7 @@ export function SmallBook({ userbook }: { userbook: userBookWithBook }) {
         <div className={styles.progressOutline}>
           <div
             className={styles.progressLine}
+            data-testid="progress-line"
             // Maths calc for changing the CSS for how much percent it covers
             style={{ width: `${(userbook.page / book.pageCount) * 100}%` }}
           ></div>

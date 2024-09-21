@@ -27,6 +27,7 @@ export function NavigationButton({
         <div
           className={styles.marker}
           style={{ backgroundColor: "var(--theme-blue)" }}
+          data-testid="blue-marker"
         ></div>
       )}
       <Link href={`/${pageTitle}`} onClick={() => setIsLoading(!isActive)}>

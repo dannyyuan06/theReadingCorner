@@ -19,37 +19,38 @@ export default function Members() {
   // To refresh the page
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const searched = searchParams.get("search");
 
-  // Function to fetch a book
-  const fetchBooks = async (userQuery: string | null) => {
+  // Function to fetch a member
+  const fetchMembers = async (userQuery: string | null) => {
     if (!userQuery) {
       const res = await fetch("/api/users/members", {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
       const body: MemberType[] = await res.json();
-      return body;
+      return body ?? [];
     }
+    // If there was a query
     const res = await fetch(`/api/users/members/${userQuery}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
     const body: MemberType[] = await res.json();
-    return body;
+    return body ?? [];
   };
 
   // Runs if the search parameters change
   useEffect(() => {
     setLoading(true);
-    const searched = searchParams.get("search");
-    fetchBooks(searched).then((users) => {
+    fetchMembers(searched).then((users) => {
       setUsers(users);
       setLoading(false);
     });
     if (searched && inputRef.current) {
       inputRef.current.value = searched;
     }
-  }, [searchParams]);
+  }, [searched]);
 
   // Change the search parameter to trigger the above function
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
@@ -83,19 +84,17 @@ export default function Members() {
       </div>
       <div className={styles.profilesContainer}>
         {loading && <Loading />}
-        {users.length !== 0 && (
-          <div className={styles.titles}>
-            <span style={{ width: 40 }}></span>
-            <h3 style={{ flex: 1 }}>USERNAME</h3>
-            <h3 style={{ flex: 1 }}>NAME</h3>
-            <h3 style={{ flex: 1 }}>DATE JOINED</h3>
-            <h3 style={{ flex: 1 }}>LAST ONLINE</h3>
-            <h3 style={{ flex: 2 }}>EMAIL</h3>
-            <h3 style={{ flex: 1 }}>ACCESS</h3>
-            <span style={{ width: 35 }}></span>
-          </div>
-        )}
-        {users.map((values: MemberType, index: number) => (
+        <div className={styles.titles}>
+          <span style={{ width: 40 }}></span>
+          <h3 style={{ flex: 1 }}>USERNAME</h3>
+          <h3 style={{ flex: 1 }}>NAME</h3>
+          <h3 style={{ flex: 1 }}>DATE JOINED</h3>
+          <h3 style={{ flex: 1 }}>LAST ONLINE</h3>
+          <h3 style={{ flex: 2 }}>EMAIL</h3>
+          <h3 style={{ flex: 1 }}>ACCESS</h3>
+          <span style={{ width: 35 }}></span>
+        </div>
+        {users && users.map((values: MemberType, index: number) => (
           <ProfileStandard
             key={values.username}
             user={values}

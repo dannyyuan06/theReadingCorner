@@ -7,13 +7,17 @@
 .textWithProfile {
     flex: 1;
     display: flex;
+    width: 100%;
+    overflow: hidden;
 }
 
 
 .textInputContainer {
     position: relative;
     margin-left: 10px;
-    flex: 1
+    flex: 1;
+    width: 90%;
+    overflow: hidden;
 }
 
 .newMessageInput {
@@ -22,9 +26,9 @@
     font-family: var(--font-mono);
     font-size: large;
     border: none;
-    overflow:visible;
+    overflow:hidden;
     min-height: 70px;
-    
+    overflow-wrap: break-word;
 }
 
 .newMessageInput:focus {

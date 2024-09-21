@@ -6,7 +6,7 @@ export default function register() {
     return (
         <div className={styles.container}>
             <PageHeader>Register</PageHeader>
-            <div className={styles.wrapper}>
+            <div className={styles.wrapper}  data-testid="form-wrapper">
                 <Form/>
             </div>
         </div>

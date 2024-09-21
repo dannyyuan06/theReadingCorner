@@ -23,7 +23,7 @@ export function Meeting(props: Meetings) {
   const [editMeeting, setEditMeeting] = useState(false);
   const [deleteMeeting, setDeleteMeeting] = useState(false);
   const { data }: any = useSession();
-
+  
   // Construct an object of more Buttons to pass
   // into more button component
   const moreButtons = {
@@ -42,7 +42,7 @@ export function Meeting(props: Meetings) {
     });
   };
   return (
-    <div className={styles.container}>
+    <div className={styles.container} data-testid="meeting">
       <div style={{ width: 450, height: 330 }}>
         <Image
           loading="eager"

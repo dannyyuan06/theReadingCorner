@@ -109,6 +109,8 @@ async function getBook(
     bookPromise,
     userBookPromise,
   ]);
+
+  
   const [bookInDB] = settleResult[0];
   const book = settleResult[1];
   const [userBook] = settleResult[2];

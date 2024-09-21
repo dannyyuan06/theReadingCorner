@@ -27,7 +27,7 @@ export function InputText() {
   
   // Logic to save if user has looked at bulletin in the database.
   useEffect(() => {
-    dispatch(changeBulletin(data?.lookedAtBulletin ?? false));
+    dispatch(changeBulletin(data?.lookedAtBulletin ?? false));    
   }, [data, dispatch]);
 
   // Pasting plaintext without formatted string
@@ -98,6 +98,7 @@ export function InputText() {
             contentEditable
             className={styles.newMessageInput}
             style={textContent.length > textCap ? { color: "red" } : {}}
+            data-testid="input-text"
             onInput={(e) =>
               setTextContent(
                 e.currentTarget.textContent ? e.currentTarget.textContent : ""

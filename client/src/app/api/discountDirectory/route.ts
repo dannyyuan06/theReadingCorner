@@ -1,7 +1,7 @@
 import { DiscountType } from "@/lib/types/fetchTypes/discount";
 import { NextRequest, NextResponse } from "next/server";
 import { apiMiddleware } from "../middleware";
-import { Discount } from "@/models/Discount";
+import Discount from "@/models/Discount";
 
 export async function POST(req: NextRequest) {
   // Get body content
