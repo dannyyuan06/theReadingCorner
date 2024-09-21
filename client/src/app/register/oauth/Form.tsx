@@ -104,14 +104,14 @@ export function Form({name, email, picture}: propsType) {
         if (!reduceCorrect) return setIsCorrect(allResults)
         setIsCorrect(initIsCorrect)
 
-        const res = await fetch("/api/users",{
-            method: 'POST',
-            body: JSON.stringify({formData, type: "oauth"}),
-            headers: { "Content-Type": "application/json" }
-        })
-        const body = await res.json()
-        if (body.body) console.error(body.body)
-        else signIn()
+        // const res = await fetch("/api/users",{
+        //     method: 'POST',
+        //     body: JSON.stringify({formData, type: "oauth"}),
+        //     headers: { "Content-Type": "application/json" }
+        // })
+        // const body = await res.json()
+        // if (body.body) console.error(body.body)
+        // else signIn()
     }
 
     return (
