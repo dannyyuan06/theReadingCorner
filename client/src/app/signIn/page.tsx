@@ -39,11 +39,11 @@ export default function SignInPage() {
     if (!passPassed) return setErr(passErr);
     setLoading(true);
     // signIn function sends credentials to the backend to verify
-    await signIn("credentials", {
-      username: credentials.username,
-      password: credentials.password,
-    });
-    setLoading(false);
+    // await signIn("credentials", {
+    //   username: credentials.username,
+    //   password: credentials.password,
+    // });
+    // setLoading(false);
   };
 
   const lengths = 30;

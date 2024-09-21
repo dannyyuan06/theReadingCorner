@@ -35,11 +35,12 @@ export default async function Home() {
             and knowledge is shared.
           </p>
           <div className={styles.buttonContainer}>
-            <SignInButton className={styles.authButton} signedIn={!!session} />
+            This service is now Unavailable
+            {/* <SignInButton className={styles.authButton} signedIn={!!session} />
             <RegisterButton
               className={styles.authButton}
               signedIn={!!session}
-            />
+            /> */}
           </div>
         </div>
       </div>
